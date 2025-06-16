@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SmartTray.Domain.Models;
 
 namespace SmartTray.Infra.Db
 {
@@ -7,6 +8,6 @@ namespace SmartTray.Infra.Db
         public SmartTrayDbContext(DbContextOptions<SmartTrayDbContext> options) : base(options) { }
 
         // Insert the tables to my database
-        //public DbSet<MyClass> MyTable { get; set; }
+        public DbSet<GrowthSettings> Settings { get; set; }
     }
 }
