@@ -1,0 +1,6 @@
+@SmartTray_HostAddress = http://localhost:5216
+
+GET {{SmartTray_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
