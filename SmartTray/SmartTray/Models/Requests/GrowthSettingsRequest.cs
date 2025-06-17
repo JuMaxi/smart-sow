@@ -2,9 +2,9 @@
 {
     public class GrowthSettingsRequest
     {
-        public double TemperatureCelsius { get; set; }
+        public double Temperature { get; set; }
         public double Humidity { get; set; }
-        public double DailySolarHours { get; set; }
-        public double TodaySolarHours { get; set; }
+        public double LightTime { get; set; }
+
     }
 }
