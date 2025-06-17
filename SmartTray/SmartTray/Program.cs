@@ -21,8 +21,8 @@ builder.Services.AddTransient<IGrowthSettingsMapper, GrowthSettingsMapper>();
 
 
 // The connection to the database
-string connectionString = builder.Configuration.GetValue<string>("ConnectionStringDBContext");
-builder.Services.AddDbContext<SmartTrayDbContext>(DB => DB.UseSqlServer(connectionString));
+builder.Services.AddDbContext<SmartTrayDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SmartTray")));
 
 var app = builder.Build();
 
