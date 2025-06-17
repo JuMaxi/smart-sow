@@ -21,7 +21,7 @@ namespace SmartTray.Controllers
         [HttpPost]
         public async Task Insert(GrowthSettingsRequest settingsRequest)
         {
-
+           await _growthSettingsService.Insert(_growthSettingsMapper.ConvertFromRequest(settingsRequest));
         }
     }
 }
