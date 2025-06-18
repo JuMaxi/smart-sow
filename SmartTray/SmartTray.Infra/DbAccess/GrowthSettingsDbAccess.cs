@@ -24,5 +24,11 @@ namespace SmartTray.Infra.DbAccess
         {
             return await _dbContext.Settings.Where(s => s.Id == id).FirstOrDefaultAsync();
         }
+
+        public async Task Update(GrowthSettings settings)
+        {
+            _dbContext.Settings.Update(settings);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

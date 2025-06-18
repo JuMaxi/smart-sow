@@ -21,6 +21,17 @@ namespace SmartTray.Domain.Services
         {
             return await _growthSettingsDbAccess.GetById(id);
         }
+
+        public async Task Update(GrowthSettings settings)
+        {
+            GrowthSettings toUpdate = await _growthSettingsDbAccess.GetById(settings.Id);
+
+            toUpdate.TemperatureCelsius = settings.TemperatureCelsius;
+            toUpdate.Humidity = settings.Humidity;
+            toUpdate.DailySolarHours = settings.DailySolarHours;
+
+            await _growthSettingsDbAccess.Update(toUpdate);
+        }
     }
 
 }
