@@ -5,7 +5,7 @@ using SmartTray.API.Models.Responses;
 using SmartTray.Domain.Interfaces;
 using SmartTray.Domain.Models;
 
-namespace SmartTray.Controllers
+namespace SmartTray.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
