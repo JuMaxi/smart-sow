@@ -16,6 +16,11 @@ namespace SmartTray.Domain.Services
         {
             await _growthSettingsDbAccess.Insert(settings);
         }
+
+        public async Task<GrowthSettings> GetById(int id)
+        {
+            return await _growthSettingsDbAccess.GetById(id);
+        }
     }
 
 }

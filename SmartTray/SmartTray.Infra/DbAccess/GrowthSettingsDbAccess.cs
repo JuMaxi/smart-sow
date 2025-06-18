@@ -1,4 +1,5 @@
-﻿using SmartTray.Domain.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartTray.Domain.Interfaces;
 using SmartTray.Domain.Models;
 using SmartTray.Infra.Db;
 
@@ -19,5 +20,9 @@ namespace SmartTray.Infra.DbAccess
             await _dbContext.SaveChangesAsync();
         }
         
+        public async Task<GrowthSettings> GetById(int id)
+        {
+            return await _dbContext.Settings.Where(s => s.Id == id).FirstOrDefaultAsync();
+        }
     }
 }
