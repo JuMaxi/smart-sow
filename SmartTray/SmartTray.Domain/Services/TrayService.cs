@@ -17,6 +17,11 @@ namespace SmartTray.Domain.Services
             await _trayDbAccess.Insert(tray);
         }
 
+        public async Task<Tray> GetLastId()
+        {
+            return await _trayDbAccess.GetLastId();
+        }
+
         public async Task<Tray> GetById(int id)
         {
             return await _trayDbAccess.GetById(id);

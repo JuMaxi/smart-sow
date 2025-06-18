@@ -20,6 +20,11 @@ namespace SmartTray.Infra.DbAccess
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task<Tray> GetLastId()
+        {
+            return await _dbContext.Trays.OrderByDescending(t => t.Id).FirstOrDefaultAsync();
+        }
+
         public async Task<Tray> GetById(int id)
         {
             return await _dbContext.Trays.Where(t => t.Id == id).FirstOrDefaultAsync();
