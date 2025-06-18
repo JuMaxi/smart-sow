@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
 
-        public Tray TrayId { get; set; }
+        public Tray Tray { get; set; }
         public DateTime RegisterDate { get; set; }
         public double TemperatureCelsius { get; set; }
         public double Humidity { get; set; }
