@@ -1,6 +1,60 @@
-﻿namespace SmartTray.API.Mappers
+﻿using SmartTray.API.Models.Requests;
+using SmartTray.API.Models.Responses;
+using SmartTray.Domain.Models;
+
+namespace SmartTray.API.Mappers
 {
     public class TraySensorReadingMapper : ITraySensorReadingMapper
     {
+        public TraySensorReading ConvertFromRequest(TraySensorReadingRequest request)
+        {
+            TraySensorReading reading = new()
+            {
+                Date = request.Date,
+                Temperature = request.Temperature,
+                Humidity = request.Humidity,
+                UvReading = request.UvReading,
+                WaterAdded = request.WaterAdded,
+                UvLedsOn = request.UvLedsOn
+            };
+
+            return reading;
+        }
+
+        public TraySensorReadingResponse ConvertToResponse(TraySensorReading reading)
+        {
+            TraySensorReadingResponse response = new()
+            {
+                Date = reading.Date,
+                Temperature = reading.Temperature,
+                Humidity = reading.Humidity,
+                UvReading = reading.UvReading,
+                WaterAdded = reading.WaterAdded,
+                UvLedsOn = reading.UvLedsOn
+            };
+
+            return response;
+        }
+
+        public List<TraySensorReadingResponse> ConvertListToResponse(List<TraySensorReading> readings)
+        {
+            List<TraySensorReadingResponse> responses = new();
+
+            foreach(TraySensorReading reading in readings)
+            {
+                TraySensorReadingResponse response = new()
+                {
+                    Date = reading.Date,
+                    Temperature = reading.Temperature,
+                    Humidity = reading.Humidity,
+                    UvReading = reading.UvReading,
+                    WaterAdded = reading.WaterAdded,
+                    UvLedsOn = reading.UvLedsOn
+                };
+
+                responses.Add(response);
+            }
+            return responses;
+        }
     }
 }
