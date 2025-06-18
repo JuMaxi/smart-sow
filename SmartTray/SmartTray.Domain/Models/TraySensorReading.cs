@@ -3,7 +3,7 @@
     public class TraySensorReading
     {
         public int Id { get; set; }
-        //public int SensorId { get; set; }
+        public Tray TrayId { get; set; }
         public DateTime Date { get; set; }
         public double Temperature { get; set; }
         public double Humidity { get; set; }
