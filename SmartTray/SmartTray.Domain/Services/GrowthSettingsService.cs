@@ -32,6 +32,11 @@ namespace SmartTray.Domain.Services
 
             await _growthSettingsDbAccess.Update(toUpdate);
         }
+
+        public async Task Delete(int id)
+        {
+            await _growthSettingsDbAccess.Delete(id);
+        }
     }
 
 }

@@ -30,5 +30,11 @@ namespace SmartTray.Infra.DbAccess
             _dbContext.Settings.Update(settings);
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task Delete(int id)
+        {
+            _dbContext.Settings.Remove(await GetById(id));
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

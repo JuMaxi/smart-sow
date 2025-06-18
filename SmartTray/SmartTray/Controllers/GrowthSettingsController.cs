@@ -29,7 +29,7 @@ namespace SmartTray.Controllers
            await _growthSettingsService.Insert(_growthSettingsMapper.ConvertFromRequest(settingsRequest));
         }
 
-        // This method retrieves the tray target settings saved into the database 
+        // This method fetch the tray target settings saved into the database 
         [HttpGet("{id}")]
         public async Task<GrowthSettingsResponse> GetById([FromRoute] int id)
         {
@@ -38,7 +38,7 @@ namespace SmartTray.Controllers
             return _growthSettingsMapper.ConvertToResponse(settings);
         }
 
-        // This method update the tray settings
+        // This method updates the tray target settings
         [HttpPut("{id}")]
         public async Task Update([FromRoute] int id, [FromBody] GrowthSettingsRequest settingRequest)
         {
@@ -46,6 +46,13 @@ namespace SmartTray.Controllers
             settings.Id = id;
 
             await _growthSettingsService.Update(settings);
+        }
+
+        // This method deletes the tray target settings
+        [HttpDelete("{id}")]
+        public async Task Delete([FromRoute] int id)
+        {
+            await _growthSettingsService.Delete(id);
         }
     }
 }
