@@ -21,6 +21,9 @@ builder.Services.AddTransient<IGrowthSettingsMapper, GrowthSettingsMapper>();
 builder.Services.AddTransient<ITraySensorReadingService, TraySensorReadingService>();
 builder.Services.AddTransient<ITraySensorReadingDbAccess, TraySensorReadingDbAccess>();
 builder.Services.AddTransient<ITraySensorReadingMapper, TraySensorReadingMapper>();
+builder.Services.AddTransient<ITrayService, TrayService>();
+builder.Services.AddTransient<ITrayDbAccess, TrayDbAccess>();
+builder.Services.AddTransient<ITrayMapper, TrayMapper>();
 
 
 // The connection to the database
