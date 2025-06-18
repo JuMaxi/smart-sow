@@ -18,6 +18,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IGrowthSettingsService, GrowthSettingsService>();
 builder.Services.AddTransient<IGrowthSettingsDbAccess, GrowthSettingsDbAccess>();
 builder.Services.AddTransient<IGrowthSettingsMapper, GrowthSettingsMapper>();
+builder.Services.AddTransient<ITraySensorReadingService, TraySensorReadingService>();
+builder.Services.AddTransient<ITraySensorReadingDbAccess, TraySensorReadingDbAccess>();
+builder.Services.AddTransient<ITraySensorReadingMapper, TraySensorReadingMapper>();
 
 
 // The connection to the database

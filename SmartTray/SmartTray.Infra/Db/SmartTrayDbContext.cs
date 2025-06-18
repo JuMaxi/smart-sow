@@ -9,5 +9,6 @@ namespace SmartTray.Infra.Db
 
         // Insert the tables to my database
         public DbSet<GrowthSettings> Settings { get; set; }
+        public DbSet<TraySensorReading> TraySensorReadings { get; set; }
     }
 }
