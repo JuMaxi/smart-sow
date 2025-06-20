@@ -35,18 +35,6 @@ h1, h2, nav button {
     border: 1px solid rgba(245, 245, 245, 0.151);
 }
 
-/* Make the Bootstrap navbar toggler (sandwich) icon white */
-.navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-}
-
-/* Remove black border from Bootstrap navbar toggler when active/focused */
-.navbar-toggler:focus, .navbar-toggler:active {
-    box-shadow: none !important;
-    outline: none !important;
-    border-color: transparent !important;
-}
-
 /* Glassmorphism hover effect for navbar links */
 .navbar-nav .nav-link {
     transition: background 0.2s, color 0.2s, box-shadow 0.2s;
@@ -75,37 +63,17 @@ h1, h2, nav button {
     border: 1px solid rgba(245, 245, 245, 0.18);
     color: #fff;
     max-width: 382px;
+    margin-bottom: 24px;
+    min-height: 205px;
 }
-
-@media (max-width: 575.98px) {
-    body {
-        height: 110vh;
-    }
+@media (max-width: 575.98px){
     .glass-main {
         width: 90%;
     }
+
+    body {
+        height: 140vh;
+    }
+
 }
 
-/* Style dropdown menu into the toggle */
-@media (max-width: 767.98px) {
-    .glass-navbar-dropdown.show {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 24px;
-        padding: 1rem;
-        z-index: 1050;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        margin-top: 6px;
-    }
-
-    .glass-navbar-dropdown ul.navbar-nav {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end; /* Aligns <li> items to the right */
-    }
-
-    .glass-navbar-dropdown .nav-link {
-        width: 100%;
-        text-align: right;
-    }
-}
