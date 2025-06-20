@@ -24,29 +24,33 @@
     <main class="glass-card">
         <section>
             <div class="row">
-                
-                <div class="col-12 col-lg-6">
-                    <div class="col-12">
-                        <!-- Brand -->
-                        <a href="index.html" class="navbar-brand text-center mx-3 text-white">
-                            Smart Tray
-                        </a>
+                <div class="col-12 col-md-6 d-flex flex-column justify-content-center position-relative">
+                    <!-- Brand and Toggler -->
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <a href="index.html" class="navbar-brand text-white mb-0">Smart Tray</a>
+                        <button class="navbar-toggler d-md-none ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
                     </div>
-                    
-                    <div class="col-12 d-flex flex-column align-items-center justify-content-center text-center m-2 p-2">
+
+                    <!-- Centered Content -->
+                    <div class="d-flex flex-column align-items-center justify-content-center text-center flex-grow-1">
                         <h2>GrowSmart: Your Intelligent Garden Companion</h2>
                         <p>Control watering, light, and temperature. All in one smart system.</p>
                         <p>Grow your seeds smarter, from sprout to bloom.</p>
                         <a href="#get-started" class="btn btn-outline-light">Try It Now</a>
                     </div>
-                    
                 </div>
-                <div class="col-12 col-lg-6">
-                    <nav class="d-flex justify-content-center gap-2">
-                        <button>Home</button>
-                        <button>About</button>
-                        <button>Contact</button>
-                        <button>Login</button>
+                <!-- Navbar links column -->
+                <div class="col-12 col-md-6 d-flex align-items-start justify-content-md-end">
+                    <nav class="navbar navbar-expand-md w-100 justify-content-center">
+                        <div class="collapse navbar-collapse mt-2 mt-md-0 justify-content-center" id="mainNavbar">
+                            <div class="navbar-nav gap-2 mx-auto">
+                                <button class="nav-link btn btn-link text-white active" aria-current="page">Home</button>
+                                <button class="nav-link btn btn-link text-white">About Us</button>
+                                <button class="nav-link btn btn-link text-white"><i class="fa-solid fa-user fa-2x"></i></button>
+                            </div>
+                        </div>
                     </nav>
                 </div>
             </div>

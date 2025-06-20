@@ -39,19 +39,24 @@ h1, h2, nav button {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
-/* Button style */
-nav button {
-    background: none;
-    border: none;
+/* Highlight navbar buttons on hover with a glassy light effect */
+.navbar-nav .btn-link {
+    transition: background 0.2s, color 0.2s;
     border-radius: 8px;
-    padding: 0.5rem 1rem;
-    color: white;
-    cursor: pointer;
-    transition: background 0.3s ease;
+    padding: 10px;
 }
 
-nav button:hover {
-    background: rgba(255, 255, 255, 0.35);
+.navbar-nav .btn-link:hover, 
+.navbar-nav .btn-link:focus {
+    background: rgba(255, 255, 255, 0.473);
+    color: #fff;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.08);
+    text-decoration: none;
 }
 
-
+.navbar-nav .btn-link.active,
+.navbar-nav .btn-link.active:focus {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
+}
