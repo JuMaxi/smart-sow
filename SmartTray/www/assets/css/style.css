@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@500;700&display=swap');
 
 body{
-    background: url("../images/background-image.jpg") no-repeat center center/cover;
+    background: url("../images/background-image.webp") no-repeat center center/cover;
     display: flex;
     justify-content: center;  
     align-items: center;      
@@ -21,17 +21,18 @@ h1, h2, nav button {
     font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', sans-serif;
 }
 
-.glass-card {
+/* Style the glass efect to the main section */
+.glass-main {
     width: 80%;
-    padding: 2rem;
+    padding: 1rem;
     border-radius: 40px;
     background: rgba(255, 255, 255, 0.1); 
-    backdrop-filter: blur(20px);           
+    backdrop-filter: blur(13px);           
     -webkit-backdrop-filter: blur(20px);  
-    border: 1px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
     color: #fff;
     height: auto;
+    border: 1px solid rgba(245, 245, 245, 0.151);
 }
 
 /* Make the Bootstrap navbar toggler (sandwich) icon white */
@@ -64,12 +65,33 @@ h1, h2, nav button {
     text-decoration: none;
 }
 
-/* Style dropdown menu into the toggle button*/
+/* Glassmorphism style for custom card */
+.glass-card-custom {
+    background: rgba(255, 255, 255, 0.13);
+    border-radius: 24px;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.18);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(245, 245, 245, 0.18);
+    color: #fff;
+    max-width: 382px;
+}
+
+@media (max-width: 575.98px) {
+    body {
+        height: 110vh;
+    }
+    .glass-main {
+        width: 90%;
+    }
+}
+
+/* Style dropdown menu into the toggle */
 @media (max-width: 767.98px) {
     .glass-navbar-dropdown.show {
         background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(10px);
-        border-radius: 1rem;
+        border-radius: 24px;
         padding: 1rem;
         z-index: 1050;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
