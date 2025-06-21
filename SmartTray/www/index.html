@@ -58,42 +58,56 @@
                 <div class="col-12 col-sm-6">
                     <div class="d-flex flex-column align-items-center justify-content-center text-center flex-grow-1 w-100 h-100">
                         <h1 class="display-6 my-4">GrowSmart: Your Intelligent Garden Companion</h1>
-                        <p class="my-3 lead">Control watering, light, and temperature. All in one smart system.</p>
-                        <p class="my-3 lead">Grow your seeds smarter, from sprout to bloom.</p>
+                        <p class="my-3 lead">Control watering, light, and temperature. <br>All in one smart system.</p>
                         <a href="#get-started" class="btn btn-outline-light mt-3 mb-4">Try It Now</a>
                     </div>
                 </div>
-                <!-- 3 vertical cards in the other 6 columns -->
+                <!-- 3 vertical cards replaced by a Bootstrap 5 carousel -->
                 <div class="col-12 col-sm-6 d-flex flex-column justify-content-center align-items-center">
-                    <div class="card glass-card-custom p-2 mb-4 w-100">
-                        <div class="card-body text-center">
-                            <h5 class="card-title" id="temperature">Temperature</h5>
-                            <p class="card-text">
-                                Discover how Smart Tray automates your seedling care with intelligent watering.
-                            </p>
+                    <div id="featuresCarousel" class="carousel slide w-100" data-bs-ride="carousel" data-bs-interval="5000">
+                        <!-- Indicators -->
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#featuresCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Temperature"></button>
+                            <button type="button" data-bs-target="#featuresCarousel" data-bs-slide-to="1" aria-label="Lighting"></button>
+                            <button type="button" data-bs-target="#featuresCarousel" data-bs-slide-to="2" aria-label="Moisture"></button>
                         </div>
-                    </div>
-                    <div class="card glass-card-custom p-2 mb-4 w-100">
-                        <div class="card-body text-center">
-                            <h5 class="card-title" id="lighting">Lighting</h5>
-                            <p class="card-text">
-                                Ensure your plants get the perfect amount of light for healthy growth.
-                            </p>
+                        <!-- Carousel items -->
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="card card-custom p-2 w-100 card-bg-temperature">
+                                    <div class="card-body">
+                                        <h5 class="card-title vertical-title">Temperature</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="card card-custom p-2 w-100 card-bg-lighting">
+                                    <div class="card-body">
+                                        <h5 class="card-title vertical-title">Lighting</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="card card-custom p-2 w-100 card-bg-moisture">
+                                    <div class="card-body">
+                                        <h5 class="card-title vertical-title">Moisture</h5>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card glass-card-custom p-2 w-100">
-                        <div class="card-body text-center">
-                            <h5 class="card-title" id="moisture">Moisture</h5>
-                            <p class="card-text">
-                                Automatic moisture monitoring keeps your seedlings thriving.
-                            </p>
-                        </div>
+                        <!-- Controls -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#featuresCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#featuresCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
                 </div>
             </div>
         </section>
-
-        
     </main>
 
 

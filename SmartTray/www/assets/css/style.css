@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@500;700&display=swap');
 
 body{
-    background: url("../images/background-image.webp") no-repeat center center/cover;
+    background: url("../images/homepage/background-image.webp") no-repeat center center/cover;
     display: flex;
     justify-content: center;  
     align-items: center;      
@@ -55,40 +55,84 @@ h1, h2, nav button {
 
 }
 
-/* Glassmorphism style for custom card */
-.glass-card-custom {
-    background: rgba(255, 255, 255, 0.13);
+/* Style for custom card */
+
+/* Style title card */
+.card-title.vertical-title {
+    writing-mode: initial;           /* Remove vertical-rl */
+    transform: none;                 /* Remove rotation */
+    position: absolute;
+    right: 0.5rem;
+    top: 1rem;
+    bottom: 1rem;
+    margin: auto 0;
+    text-align: center;
+    height: fit-content;
+    font-size: 1.5rem;
+    text-shadow: 1px 2px 8px rgba(0,0,0,0.25);
+    letter-spacing: 2px;
+    z-index: 2;
+    background: rgba(0,0,0,0.08); /* optional for readability */
+    padding: 0.5rem 0.2rem;
+    border-radius: 12px;
+    writing-mode: vertical-lr;       /* Stack letters vertically, top to bottom */
+    text-orientation: upright;       /* Make each letter upright */
+}
+
+.card-custom {
+    position: relative;
     border-radius: 24px;
     box-shadow: 0 4px 30px rgba(0,0,0,0.18);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(245, 245, 245, 0.123);
     color: #fff;
-    max-width: 382px;
     margin-bottom: 24px;
-    min-height: 205px;
+    height: 100%;
+    border: none;
+    background: rgba(255, 255, 255, 0.13);      /* glassmorphism background */
+    backdrop-filter: blur(-24px);                /* glassmorphism blur */
+    -webkit-backdrop-filter: blur(-24px);        /* Safari support */
+    max-width: 450px;
+
+    /* Center the card horizontally and vertically */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-#temperature {
-    color: rgb(228, 8, 8);
-    text-shadow: 1px 1px 2px #fff;
-}
-#moisture {
-    color: #083cb7;
-    text-shadow: 1px 1px 2px #fff;
+.card-bg-temperature {
+    background-image: url("../images/homepage/temperature.png");
 }
 
-#lighting {
-    color: yellow;
-    text-shadow: 1px 1px 2px #fff;
+.card-bg-lighting {
+    background-image: url("../images/homepage/lighting.png");
 }
+
+.card-bg-moisture {
+    background-image: url("../images/homepage/moisture.png");
+}
+
+.card-bg-temperature,
+.card-bg-lighting,
+.card-bg-moisture {
+    position: relative;
+    background-size: contain;
+    background-position: left center;
+    background-repeat: no-repeat;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
 @media (max-width: 575.98px){
     .glass-main {
         width: 90%;
     }
 
     body {
-        height: 145vh;
+        height: 105vh;
     }
 
 }
