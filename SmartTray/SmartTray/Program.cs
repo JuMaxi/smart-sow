@@ -28,7 +28,7 @@ builder.Services.AddTransient<ITrayMapper, TrayMapper>();
 
 // The connection to the database
 builder.Services.AddDbContext<SmartTrayDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("SmartTray")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("SmartTray")));
 
 var app = builder.Build();
 
