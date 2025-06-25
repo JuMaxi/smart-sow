@@ -47,18 +47,19 @@ h1, h2, nav button {
 
 }
 
-.content {
-    height: 300px;
-    max-height: 300px;
-}
-
 #tray {
     width: 80%;
 }
 
+.content {
+    max-height: 300px;
+}
+
 .gauge-charts {
+    padding-bottom: 0 !important;
+    margin-bottom: 0.5rem; /* Reduce if needed */
+    height: 360px;
     width: 100%;
-    min-height: 202px;
 }
 
 @media (max-width: 767.98px){
@@ -66,7 +67,7 @@ h1, h2, nav button {
         width: 90%;
     }
     body {
-        height: 173vh;
+        height: 205vh;
     }
 
 }
