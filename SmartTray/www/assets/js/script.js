@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
             title: {
                 text: text,
                 left: 'center',
-                top: 10,
+                top: -5,
                 textStyle: {
                     color: '#fff',
                     fontSize: 18
@@ -27,10 +27,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     endAngle: -20,
                     min: 0,
                     max: 40,
-                    splitNumber: 8,
+                    splitNumber: 4,
                     axisLine: {
                         lineStyle: {
-                            width: 8,
+                            width: 6,
                             color: [
                                 [0.5, '#91cc75'],
                                 [0.75, '#fac858'],
@@ -61,14 +61,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     },
                     axisLabel: {
                         color: '#fff',
-                        distance: 20,
-                        fontSize: 8
+                        distance: -8,
+                        fontSize: 9
                     },
                     detail: {
                         valueAnimation: true,
                         formatter: '{value} °C',
                         color: '#fff',
-                        fontSize: 20
+                        fontSize: 20,
                     },
                     data: [
                         {

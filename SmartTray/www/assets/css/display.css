@@ -47,6 +47,28 @@ h1, h2, nav button {
 
 }
 
+.content {
+    height: 300px;
+    max-height: 300px;
+}
+
 #tray {
     width: 80%;
 }
+
+.gauge-charts {
+    width: 100%;
+    min-height: 202px;
+}
+
+@media (max-width: 767.98px){
+    .glass-main {
+        width: 90%;
+    }
+    body {
+        height: 173vh;
+    }
+
+}
+
+

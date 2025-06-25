@@ -54,25 +54,28 @@
             </section>
             <section>
                 <div class="row">
-                    <div class="col-12">
-                        <h1>Plant Name</h1>
+                    <div class="col-12 col-md-6 my-4 p-2">
+                        <h1 >Plant Name</h1>
                         <p>Last reading</p>
-                        
+                    </div>
+                    <div class="col-12 col-md-6 justify-content-end my-3 p-3 content">
+                        <img id="tray" src="assets/images/display-data/tray.png" alt="A white seedling tray with young green plants." class="img-fluid" loading="lazy">
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 col-lg-2 d-flex justify-content-center align-items-center">
-                        <div id="temperatureChart" style="width:100%;height:300px" ></div>
+                    <div class="col-12 col-md-4 d-flex flex-column justify-content-center align-items-center content">
+                        <div id="temperatureChart" class="gauge-charts"></div>
+                        <p>Reference value</p>
                     </div>
-                    <div class="col-12 col-lg-2 d-flex justify-content-center align-items-center">
-                        <div id="moistureChart" style="width:100%;height:300px" ></div>
+                    <div class="col-12 col-md-4 d-flex flex-column justify-content-center align-items-center content">
+                        <div id="moistureChart" class="gauge-charts"></div>
+                        <p>Reference value</p>
                     </div>
-                    <div class="col-12 col-lg-2 d-flex justify-content-center align-items-center">
-                        <div id="lightChart" style="width:100%;height:300px" ></div>
+                    <div class="col-12 col-md-4 d-flex flex-column justify-content-center align-items-center content">
+                            <div id="lightChart" class="gauge-charts"></div>
+                            <p>Reference value</p>
                     </div>
-                    <div class="col-12 col-lg-6 d-flex justify-content-end">
-                        <img id="tray" src="assets/images/display-data/tray.png" alt="A white seedling tray with young green plants." class="img-fluid" loading="lazy">
-                    </div>
+
                 </div>
             </section>
         </main>
