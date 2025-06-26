@@ -289,24 +289,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to create the orbit and position it around the image tray
     async function setupOrbitAndTray() {
-        const containerSize = 600;
-
         const container = document.getElementById('container');
         const tray = document.getElementById('tray');
         const svg = document.getElementById('orbitSVG');
         const path = document.getElementById('orbitPath');
-        console.log(path);
+        
+        // Get the actual container dimensions (CSS now handles the sizing)
+        const containerRect = container.getBoundingClientRect();
+        const containerSize = containerRect.width; // Use width since it's square
+        
+        console.log('Container size:', containerSize);
 
-        // Set container and SVG size
-        container.style.width = containerSize + 'px';
-        container.style.height = containerSize + 'px';
+        // Set SVG size to match container
         svg.setAttribute('width', containerSize);
         svg.setAttribute('height', containerSize);
 
-        // Tray dimensions and position
+        // Tray dimensions and position (using percentages for responsiveness)
         const traySize = containerSize * 0.6;
         const trayTop = containerSize * 0.2;
-        const trayLeft = containerSize * 0.4;
+        const trayLeft = containerSize * 0.2;
         tray.style.width = traySize + 'px';
         tray.style.top = trayTop + 'px';
         tray.style.left = trayLeft + 'px';
@@ -320,6 +321,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const ry = (arcEndY - arcStartY) / 2;
         const d = `M ${arcStartX} ${arcStartY} A ${rx} ${ry} 0 0 0 ${arcEndX} ${arcEndY}`;
         path.setAttribute('d', d);
+        
+        // Set responsive stroke width
+        const strokeWidth = Math.max(2, Math.min(6, containerSize / 150));
+        path.setAttribute('stroke-width', strokeWidth);
 
         return path; // needed for sun animation
     }
@@ -357,38 +362,83 @@ document.addEventListener('DOMContentLoaded', function () {
             progress = Math.max(0, Math.min(1, progress)); // Clamp between 0 and 1
 
             const pathLength = path.getTotalLength();
-
             const sunPoint = path.getPointAtLength(progress * pathLength);
-            sun.style.left = (sunPoint.x - 15) + 'px';
-            sun.style.top = (sunPoint.y - 15) + 'px';
+            
+            // Calculate sun size for positioning offset
+            const sunSize = parseFloat(getComputedStyle(sun).width) || 30;
+            const sunOffset = sunSize / 2;
+            
+            sun.style.left = (sunPoint.x - sunOffset) + 'px';
+            sun.style.top = (sunPoint.y - sunOffset) + 'px';
 
             // Set marker positions slightly offset from arc ends
             const sunriseProgress = 0.9; // near start
             const sunsetProgress = 0.2;  // near end
 
             const sunrisePoint = path.getPointAtLength(sunriseProgress * pathLength);
-            sunriseMarker.style.left = (sunrisePoint.x - 15) + 'px';
-            sunriseMarker.style.top = (sunrisePoint.y - 15) + 'px';
-
             const sunsetPoint = path.getPointAtLength(sunsetProgress * pathLength);
-            sunsetMarker.style.left = (sunsetPoint.x - 15) + 'px';
-            sunsetMarker.style.top = (sunsetPoint.y - 15) + 'px';
+            
+            // Calculate marker offsets
+            const markerOffset = 15; // Fixed offset for markers
+            
+            sunriseMarker.style.left = (sunrisePoint.x - markerOffset) + 'px';
+            sunriseMarker.style.top = (sunrisePoint.y - markerOffset) + 'px';
+
+            sunsetMarker.style.left = (sunsetPoint.x - markerOffset) + 'px';
+            sunsetMarker.style.top = (sunsetPoint.y - markerOffset) + 'px';
 
         } catch (error) {
             console.error('Failed to get sun position:', error);
         }
     }
 
+    // Function to force recalculation of orbit and tray
+    async function recalculateOrbit() {
+        console.log('Forcing recalculation...');
+        const path = await setupOrbitAndTray();
+        positionSunFromTime(path);
+    }
 
     renderGauge(23, "temperatureChart", temperatureGradientStops); // Call function to generate temperature chart
     renderGauge(12, "lightChart", lightingGradientStops); // Call function to generate lighting chart
     renderGauge(60, "moistureChart", blueGradientStops); // Call function to generate moisture chart
 
     window.onload = async () => {
-        const path = await setupOrbitAndTray();  // Wait for the async function
+        // Small delay to ensure container is properly rendered
+        setTimeout(async () => {
+            const path = await setupOrbitAndTray();  // Wait for the async function
 
-        // Immediately position the sun
-        positionSunFromTime(path);
+            // Immediately position the sun
+            positionSunFromTime(path);
+        }, 100);
+        
+        // Add resize listener for responsiveness
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(async () => {
+                console.log('Window resized, recalculating...');
+                // Force a reflow to ensure CSS has updated
+                const container = document.getElementById('container');
+                container.offsetHeight; // Force reflow
+                const newPath = await setupOrbitAndTray();
+                positionSunFromTime(newPath);
+            }, 150); // Slightly longer debounce for CSS to update
+        });
+        
+        // Also handle orientation change for mobile devices
+        window.addEventListener('orientationchange', () => {
+            setTimeout(async () => {
+                console.log('Orientation changed, recalculating...');
+                const newPath = await setupOrbitAndTray();
+                positionSunFromTime(newPath);
+            }, 500); // Longer delay for orientation change
+        });
+        
+        // Force recalculation after a longer delay to handle any layout issues
+        setTimeout(async () => {
+            await recalculateOrbit();
+        }, 1000);
     };
 
 });
