@@ -60,9 +60,13 @@ h1, h2, nav button {
     align-items: center;
 }
 
+.chart-parent {
+    max-height: 300px;
+}
+
 .gauge-charts {
     padding-bottom: 0 !important;
-    margin-bottom: 0.5rem; /* Reduce if needed */
+    margin-bottom: 0.5rem;
     height: 360px;
     width: 100%;
 }
