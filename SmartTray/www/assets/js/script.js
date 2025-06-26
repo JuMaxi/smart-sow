@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-    // Temperature chart gradient colors
+    // Temperature chart gradient 50 colors
     const temperatureGradientStops = [
         [0.00, "#FFFFE0"],
         [0.02, "#FFF9D4"],
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
         [1.00, "#690000"]
     ];
 
-    // Lighting chart gradient colors
+    // Lighting chart gradient 100 colors
     const lightingGradientStops = [
     [0.00, "#000000"],
     [0.01, "#020202"],
@@ -160,93 +160,64 @@ document.addEventListener('DOMContentLoaded', function () {
     [1.00, "#ffffff"]
     ];
 
-    // Moisture chart gradient colors
+    // Moisture chart gradient 50 colors
     const blueGradientStops = [
         [0.00, "#cceeff"],
-        [0.013, "#c9e9fb"],
-        [0.027, "#c5e4f8"],
-        [0.040, "#c1dff4"],
-        [0.053, "#bddaf1"],
-        [0.067, "#b9d5ed"],
-        [0.080, "#b5d0ea"],
-        [0.093, "#b1cbe6"],
-        [0.107, "#adc6e3"],
-        [0.120, "#a8c1df"],
-        [0.133, "#a4bcdb"],
-        [0.147, "#a0b7d8"],
-        [0.160, "#9cb2d4"],
-        [0.173, "#98add1"],
-        [0.187, "#94a8cd"],
-        [0.200, "#90a3ca"],
-        [0.213, "#8c9ec6"],
-        [0.227, "#8899c3"],
-        [0.240, "#8494bf"],
-        [0.253, "#808fbb"],
-        [0.267, "#7c8abb"],
-        [0.280, "#7893c4"],
-        [0.293, "#749ccd"],
-        [0.307, "#70a5d7"],
-        [0.320, "#6cb0e0"],
-        [0.333, "#68bbe9"],
-        [0.347, "#64c5f2"],
-        [0.360, "#60d0fb"],
-        [0.373, "#5cd9ff"],
-        [0.387, "#58e4ff"],
-        [0.400, "#54eeff"],
-        [0.413, "#50f8ff"],
-        [0.427, "#4cffff"],
-        [0.440, "#48f0ff"],
-        [0.453, "#44e1ff"],
-        [0.467, "#40d3ff"],
-        [0.480, "#3cc4ff"],
-        [0.493, "#38b5ff"],
-        [0.507, "#34a6ff"],
-        [0.520, "#3097ff"],
-        [0.533, "#2c88ff"],
-        [0.547, "#287aff"],
-        [0.560, "#246bff"],
-        [0.573, "#205cff"],
-        [0.587, "#1c4dff"],
-        [0.600, "#183fff"],
-        [0.613, "#1430ff"],
-        [0.627, "#1021ff"],
-        [0.640, "#0c12ff"],
-        [0.653, "#0803ff"],
-        [0.667, "#0600f2"],
-        [0.680, "#0500c9"],
-        [0.693, "#0400a0"],
-        [0.707, "#030077"],
-        [0.720, "#02004e"],
-        [0.733, "#010025"],
-        [0.747, "#000000"],
-        [0.760, "#000022"],
-        [0.773, "#000044"],
-        [0.787, "#000066"],
-        [0.800, "#000088"],
-        [0.813, "#0000aa"],
-        [0.827, "#0000cc"],
-        [0.840, "#0000ee"],
-        [0.853, "#0000ff"],
-        [0.867, "#0000ee"],
-        [0.880, "#0000cc"],
-        [0.893, "#0000aa"],
-        [0.907, "#000088"],
-        [0.920, "#000066"],
-        [0.933, "#000044"],
-        [0.947, "#000022"],
-        [0.960, "#000011"],
-        [0.973, "#000022"],
-        [0.987, "#000033"],
-        [1.00,  "#000044"]
+        [0.02, "#c1defc"],
+        [0.04, "#b6cff9"],
+        [0.06, "#abdff7"],
+        [0.08, "#a0d1f4"],
+        [0.10, "#95c2f2"],
+        [0.12, "#8ac3ef"],
+        [0.14, "#7fc4ec"],
+        [0.16, "#74b6e9"],
+        [0.18, "#69a7e7"],
+        [0.20, "#5e99e4"],
+        [0.22, "#538add"],
+        [0.24, "#4a7cdb"],
+        [0.26, "#416ddb"],
+        [0.28, "#386fdd"],
+        [0.30, "#2f6fe1"],
+        [0.32, "#276ddf"],
+        [0.34, "#2166dc"],
+        [0.36, "#1c60d9"],
+        [0.38, "#1759d6"],
+        [0.40, "#1351d1"],
+        [0.42, "#104acb"],
+        [0.44, "#0f43c4"],
+        [0.46, "#0e3dbe"],
+        [0.48, "#0e37b9"],
+        [0.50, "#0d32b3"],
+        [0.52, "#0c2ea8"],
+        [0.54, "#0b299d"],
+        [0.56, "#0b2592"],
+        [0.58, "#0a2387"],
+        [0.60, "#0a217c"],
+        [0.62, "#091f72"],
+        [0.64, "#081c68"],
+        [0.66, "#081a5f"],
+        [0.68, "#071856"],
+        [0.70, "#06164d"],
+        [0.72, "#061345"],
+        [0.74, "#05103c"],
+        [0.76, "#040f34"],
+        [0.78, "#040c2c"],
+        [0.80, "#030b25"],
+        [0.82, "#02091d"],
+        [0.84, "#020715"],
+        [0.86, "#01050e"],
+        [0.88, "#010406"],
+        [0.90, "#000300"],
+        [0.92, "#000200"],
+        [0.94, "#000100"],
+        [0.96, "#000000"],
+        [0.98, "#000000"],
+        [1.00, "#000033"]
     ];
 
-
-
-
-
-    renderGauge(23, "temperatureChart", temperatureGradientStops); // Call with your desired value
-    renderGauge(60, "moistureChart", blueGradientStops); // Call with your desired value
-    renderGauge(12, "lightChart", lightingGradientStops); // Call with your desired value
+    renderGauge(23, "temperatureChart", temperatureGradientStops); // Call function to generate temperature chart
+    renderGauge(12, "lightChart", lightingGradientStops); // Call function to generate lighting chart
+    renderGauge(60, "moistureChart", blueGradientStops); // Call function to generate moisture chart
 
     // Function to generate gauge chart
     function renderGauge(value, id, colors) {
