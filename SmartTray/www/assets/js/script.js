@@ -291,4 +291,26 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    const path = document.getElementById('orbitPath');
+    const sun = document.getElementById('sun');
+    const pathLength = path.getTotalLength();
+
+    function moveSun(percentage) {
+        if (percentage < 0) percentage = 0;
+        if (percentage > 1) percentage = 1;
+
+        const point = path.getPointAtLength(percentage * pathLength);
+        sun.style.left = (point.x - 15) + 'px';  // center sun icon horizontally
+        sun.style.top = (point.y - 15) + 'px';   // center sun icon vertically
+    }
+
+    // Example: simple animation from sunrise (0) to sunset (1)
+    let t = 0;
+    setInterval(() => {
+        moveSun(t);
+        t += 0.01;
+        if (t > 1) t = 0;
+    }, 100);
+
+    // TODO: replace above interval with real sun position from API and convert it to percentage
 });
