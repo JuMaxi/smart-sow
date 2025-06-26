@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to create the orbit and position it around the image tray
     async function setupOrbitAndTray() {
-        const containerSize = 500;
+        const containerSize = 600;
 
         const container = document.getElementById('container');
         const tray = document.getElementById('tray');
@@ -327,9 +327,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // Function to get the exact sun position from a public API and calculate its relative position in the orbit
     async function positionSunFromTime(path) {
         const sun = document.getElementById('sun');
+        const sunriseMarker = document.getElementById('sunriseMarker');
+        const sunsetMarker = document.getElementById('sunsetMarker');
+        const sunriseLabel = document.getElementById('sunriseTime');
+        const sunsetLabel = document.getElementById('sunsetTime');
 
-        // Example location: London
-        const lat = 51.5074;
+        const lat = 51.5074; // London
         const lng = -0.1278;
 
         try {
@@ -340,25 +343,49 @@ document.addEventListener('DOMContentLoaded', function () {
             const sunset = new Date(data.results.sunset);
             const now = new Date();
 
+            // Convert to local time
+            const toLocalTime = (utcDate) => {
+                const local = new Date(utcDate);
+                return local.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+            };
+
+            sunriseLabel.textContent = toLocalTime(sunrise);
+            sunsetLabel.textContent = toLocalTime(sunset);
+
+            // Animate sun
             let progress = (now - sunrise) / (sunset - sunrise);
-            progress = Math.max(0, Math.min(1, progress)); // Clamp 0–1
+            progress = Math.max(0, Math.min(1, progress)); // Clamp between 0 and 1
 
             const pathLength = path.getTotalLength();
-            const point = path.getPointAtLength(progress * pathLength);
 
-            sun.style.left = (point.x - 15) + 'px';
-            sun.style.top = (point.y - 15) + 'px';
+            const sunPoint = path.getPointAtLength(progress * pathLength);
+            sun.style.left = (sunPoint.x - 15) + 'px';
+            sun.style.top = (sunPoint.y - 15) + 'px';
+
+            // Set marker positions slightly offset from arc ends
+            const sunriseProgress = 0.9; // near start
+            const sunsetProgress = 0.2;  // near end
+
+            const sunrisePoint = path.getPointAtLength(sunriseProgress * pathLength);
+            sunriseMarker.style.left = (sunrisePoint.x - 15) + 'px';
+            sunriseMarker.style.top = (sunrisePoint.y - 15) + 'px';
+
+            const sunsetPoint = path.getPointAtLength(sunsetProgress * pathLength);
+            sunsetMarker.style.left = (sunsetPoint.x - 15) + 'px';
+            sunsetMarker.style.top = (sunsetPoint.y - 15) + 'px';
+
         } catch (error) {
             console.error('Failed to get sun position:', error);
         }
     }
+
 
     renderGauge(23, "temperatureChart", temperatureGradientStops); // Call function to generate temperature chart
     renderGauge(12, "lightChart", lightingGradientStops); // Call function to generate lighting chart
     renderGauge(60, "moistureChart", blueGradientStops); // Call function to generate moisture chart
 
     window.onload = async () => {
-        const path = await setupOrbitAndTray();  // Wait for the async functio
+        const path = await setupOrbitAndTray();  // Wait for the async function
 
         // Immediately position the sun
         positionSunFromTime(path);

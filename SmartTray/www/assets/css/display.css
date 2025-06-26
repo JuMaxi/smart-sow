@@ -59,6 +59,7 @@ h1, h2, nav button {
 
 #tray {
     position: absolute;
+    width: 390px !important;
 }
 
 #sun {
@@ -73,6 +74,19 @@ svg {
     top: 0;
     left: 0;
     pointer-events: none;
+}
+
+/* Style the hours and icon around the orbit */
+.time-marker {
+    position: absolute;
+    display: flex;
+    font-size: 14px;
+    color: #333;
+}
+
+.icon {
+    font-size: 20px;
+    margin: 6px;
 }
 
 .content {
