@@ -288,63 +288,80 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Function to create the orbit and position it around the image tray
-    function orbitPath() {
-        const containerSize = 500; // Change this to scale everything
+    async function setupOrbitAndTray() {
+        const containerSize = 500;
 
         const container = document.getElementById('container');
         const tray = document.getElementById('tray');
         const svg = document.getElementById('orbitSVG');
         const path = document.getElementById('orbitPath');
-        const sun = document.getElementById('sun');
+        console.log(path);
 
-        // Set container dimensions
+        // Set container and SVG size
         container.style.width = containerSize + 'px';
         container.style.height = containerSize + 'px';
-
-        // Set SVG size
         svg.setAttribute('width', containerSize);
         svg.setAttribute('height', containerSize);
 
         // Tray dimensions and position
-        const traySize = containerSize * 0.6; // image is 60% of container width
+        const traySize = containerSize * 0.6;
         const trayTop = containerSize * 0.2;
-        const trayLeft = containerSize * 0.4; // image sticks to the right side
-
+        const trayLeft = containerSize * 0.4;
         tray.style.width = traySize + 'px';
         tray.style.top = trayTop + 'px';
         tray.style.left = trayLeft + 'px';
 
-        // Arc start and end: from top right of tray to bottom left of tray
-        const arcStartX = trayLeft + traySize; // top-right of tray
+        // Arc from top-right to bottom-left of tray
+        const arcStartX = trayLeft + traySize;
         const arcStartY = trayTop;
-
-        const arcEndX = trayLeft; // bottom-left of tray
+        const arcEndX = trayLeft;
         const arcEndY = trayTop + traySize;
-
         const rx = (arcStartX - arcEndX) / 2;
         const ry = (arcEndY - arcStartY) / 2;
-
         const d = `M ${arcStartX} ${arcStartY} A ${rx} ${ry} 0 0 0 ${arcEndX} ${arcEndY}`;
         path.setAttribute('d', d);
 
-        // Animate sun
-        const pathLength = path.getTotalLength();
-        let t = 0;
-        function moveSun(progress) {
+        return path; // needed for sun animation
+    }
+
+    // Function to get the exact sun position from a public API and calculate its relative position in the orbit
+    async function positionSunFromTime(path) {
+        const sun = document.getElementById('sun');
+
+        // Example location: London
+        const lat = 51.5074;
+        const lng = -0.1278;
+
+        try {
+            const res = await fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&formatted=0`);
+            const data = await res.json();
+
+            const sunrise = new Date(data.results.sunrise);
+            const sunset = new Date(data.results.sunset);
+            const now = new Date();
+
+            let progress = (now - sunrise) / (sunset - sunrise);
+            progress = Math.max(0, Math.min(1, progress)); // Clamp 0–1
+
+            const pathLength = path.getTotalLength();
             const point = path.getPointAtLength(progress * pathLength);
+
             sun.style.left = (point.x - 15) + 'px';
             sun.style.top = (point.y - 15) + 'px';
+        } catch (error) {
+            console.error('Failed to get sun position:', error);
         }
-
-        setInterval(() => {
-            moveSun(t);
-            t += 0.005;
-            if (t > 1) t = 0;
-        }, 50);
     }
 
     renderGauge(23, "temperatureChart", temperatureGradientStops); // Call function to generate temperature chart
     renderGauge(12, "lightChart", lightingGradientStops); // Call function to generate lighting chart
     renderGauge(60, "moistureChart", blueGradientStops); // Call function to generate moisture chart
-    orbitPath();
+
+    window.onload = async () => {
+        const path = await setupOrbitAndTray();  // Wait for the async functio
+
+        // Immediately position the sun
+        positionSunFromTime(path);
+    };
+
 });
