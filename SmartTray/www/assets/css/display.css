@@ -50,9 +50,30 @@ h1, h2, nav button {
 
 }
 
-/* #tray {
-    width: 80%;
-} */
+/* Style the orbit around the tray image */
+#container {
+    position: relative;
+    margin: 20px;
+    overflow: hidden;
+}
+
+#tray {
+    position: absolute;
+}
+
+#sun {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    font-size: 24px;
+}
+
+svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
 
 .content {
     height: auto;

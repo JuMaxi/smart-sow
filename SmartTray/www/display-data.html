@@ -59,37 +59,14 @@
                         <p>Last reading</p>
                     </div>
 
-                    <div id="container" class="col-12 col-md-6 justify-content-end my-3 p-3" style="position: relative; width: 300px; height: 300px; margin: 20px;">
-
-                        <img id="tray" src="assets/images/display-data/tray.png" alt="A white seedling tray with young green plants." 
-                            class="img-fluid" loading="lazy" 
-                            style="width: 200px; position: absolute; top: 50px; right: 0;">
-
-                        <!-- SVG curve orbit -->
-                        <svg width="300" height="300" style="position: absolute; top: 0; left: 0; pointer-events: none;">
-                            <!-- 
-                            Arc path:
-                            Start: top right corner of image at (300, 50)
-                            End: bottom left corner of image at (100, 250)
-                            Arc curves left and down around the image.
-                            -->
-                            <path id="orbitPath" 
-                                d="M 300 50 
-                                    A 140 140 0 0 0 100 250" 
-                                stroke="orange" 
-                                stroke-width="3" 
-                                fill="none" />
+                    <div id="container" class="col-12 col-md-6 justify-content-end my-3 p-3">
+                        <img id="tray" src="assets/images/display-data/tray.png" alt="A white seedling tray with young green plants." class="img-fluid" loading="lazy">
+                        <svg id="orbitSVG">
+                            <path id="orbitPath" stroke="orange" stroke-width="3" fill="none" />
                         </svg>
-
-                        <!-- Sun icon -->
-                        <div id="sun" style="position: absolute; width: 30px; height: 30px;">
-                            ☀️
-                        </div>
+                        <div id="sun">☀️</div>
                     </div>
 
-
-
-                    
                 </div>
                 <div class="row content d-flex flex-wrap justify-content-center">
                     <div class="col-12 col-md-4 d-flex flex-column justify-content-center align-items-center chart-parent">

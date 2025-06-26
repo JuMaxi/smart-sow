@@ -215,10 +215,6 @@ document.addEventListener('DOMContentLoaded', function () {
         [1.00, "#000033"]
     ];
 
-    renderGauge(23, "temperatureChart", temperatureGradientStops); // Call function to generate temperature chart
-    renderGauge(12, "lightChart", lightingGradientStops); // Call function to generate lighting chart
-    renderGauge(60, "moistureChart", blueGradientStops); // Call function to generate moisture chart
-
     // Function to generate gauge chart
     function renderGauge(value, id, colors) {
         var chartDom = document.getElementById(id);
@@ -291,26 +287,64 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    const path = document.getElementById('orbitPath');
-    const sun = document.getElementById('sun');
-    const pathLength = path.getTotalLength();
+    // Function to create the orbit and position it around the image tray
+    function orbitPath() {
+        const containerSize = 500; // Change this to scale everything
 
-    function moveSun(percentage) {
-        if (percentage < 0) percentage = 0;
-        if (percentage > 1) percentage = 1;
+        const container = document.getElementById('container');
+        const tray = document.getElementById('tray');
+        const svg = document.getElementById('orbitSVG');
+        const path = document.getElementById('orbitPath');
+        const sun = document.getElementById('sun');
 
-        const point = path.getPointAtLength(percentage * pathLength);
-        sun.style.left = (point.x - 15) + 'px';  // center sun icon horizontally
-        sun.style.top = (point.y - 15) + 'px';   // center sun icon vertically
+        // Set container dimensions
+        container.style.width = containerSize + 'px';
+        container.style.height = containerSize + 'px';
+
+        // Set SVG size
+        svg.setAttribute('width', containerSize);
+        svg.setAttribute('height', containerSize);
+
+        // Tray dimensions and position
+        const traySize = containerSize * 0.6; // image is 60% of container width
+        const trayTop = containerSize * 0.2;
+        const trayLeft = containerSize * 0.4; // image sticks to the right side
+
+        tray.style.width = traySize + 'px';
+        tray.style.top = trayTop + 'px';
+        tray.style.left = trayLeft + 'px';
+
+        // Arc start and end: from top right of tray to bottom left of tray
+        const arcStartX = trayLeft + traySize; // top-right of tray
+        const arcStartY = trayTop;
+
+        const arcEndX = trayLeft; // bottom-left of tray
+        const arcEndY = trayTop + traySize;
+
+        const rx = (arcStartX - arcEndX) / 2;
+        const ry = (arcEndY - arcStartY) / 2;
+
+        const d = `M ${arcStartX} ${arcStartY} A ${rx} ${ry} 0 0 0 ${arcEndX} ${arcEndY}`;
+        path.setAttribute('d', d);
+
+        // Animate sun
+        const pathLength = path.getTotalLength();
+        let t = 0;
+        function moveSun(progress) {
+            const point = path.getPointAtLength(progress * pathLength);
+            sun.style.left = (point.x - 15) + 'px';
+            sun.style.top = (point.y - 15) + 'px';
+        }
+
+        setInterval(() => {
+            moveSun(t);
+            t += 0.005;
+            if (t > 1) t = 0;
+        }, 50);
     }
 
-    // Example: simple animation from sunrise (0) to sunset (1)
-    let t = 0;
-    setInterval(() => {
-        moveSun(t);
-        t += 0.01;
-        if (t > 1) t = 0;
-    }, 100);
-
-    // TODO: replace above interval with real sun position from API and convert it to percentage
+    renderGauge(23, "temperatureChart", temperatureGradientStops); // Call function to generate temperature chart
+    renderGauge(12, "lightChart", lightingGradientStops); // Call function to generate lighting chart
+    renderGauge(60, "moistureChart", blueGradientStops); // Call function to generate moisture chart
+    orbitPath();
 });
