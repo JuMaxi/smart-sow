@@ -54,9 +54,25 @@
             </section>
             <section>
                 <div class="row">
-                    <div class="col-12 col-md-6 my-4 p-2">
-                        <h1 >Plant Name</h1>
-                        <p>Last reading</p>
+                    <div class="col-12 col-md-6 my-5">
+                        <div class="row">
+                            <h1>Plant Name</h1>
+                            <p>Last reading</p>
+                        </div>
+                        <div class="row my-5">
+                            <div class="col-12 col-sm-4 d-flex flex-column justify-content-center align-items-center chart-parent">
+                                <div id="temperatureChart" class="gauge-charts"></div>
+                                <p>Expected</p>
+                            </div>
+                            <div class="col-12 col-sm-4 d-flex flex-column justify-content-center align-items-center chart-parent">
+                                <div id="lightChart" class="gauge-charts"></div>
+                                <p>Expected</p>
+                            </div>
+                            <div class="col-12 col-sm-4 d-flex flex-column justify-content-center align-items-center chart-parent">
+                                <div id="moistureChart" class="gauge-charts"></div>
+                                <p>Expected</p>
+                            </div>
+                        </div>    
                     </div>
 
                     <div id="container" class="col-12 col-md-6">
@@ -75,35 +91,9 @@
                             <span class="icon"><i class="fa-solid fa-sun"></i></span>
                             <span id="sunriseTime" class="time-label">--:-- AM</span>
                         </div>
-
-                        
                     </div>
-
                 </div>
-                <div class="row content d-flex justify-content-center">
-                    <div class="col-12 col-sm-4 d-flex flex-column justify-content-center align-items-center chart-parent">
-                        <p>Temperature
-                             <i class="fa-solid fa-temperature-three-quarters" style="color: #e70d0d;"></i>
-                        </p>
-                        <div id="temperatureChart" class="gauge-charts"></div>
-                        <p>Expected</p>
-                    </div>
-                    <div class="col-12 col-sm-4 d-flex flex-column justify-content-center align-items-center chart-parent">
-                        <p>Lighting
-                            <i class="fa-solid fa-sun" style="color: #FFD43B;"></i>
-                        </p>
-                        <div id="lightChart" class="gauge-charts"></div>
-                        <p>Expected</p>
-                    </div>
-                    <div class="col-12 col-sm-4 d-flex flex-column justify-content-center align-items-center chart-parent">
-                        <p>Moisture
-                            <i class="fa-solid fa-droplet" style="color: #74C0FC;"></i>
-                        </p>
-                        <div id="moistureChart" class="gauge-charts"></div>
-                        <p>Expected</p>
-                    </div>
 
-                </div>
             </section>
         </main>
         

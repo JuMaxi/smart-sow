@@ -294,12 +294,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const svg = document.getElementById('orbitSVG');
         const path = document.getElementById('orbitPath');
         
-        // Get the actual container dimensions (CSS now handles the sizing)
+        // Get the actual container dimensions (CSS handles the sizing)
         const containerRect = container.getBoundingClientRect();
         const containerSize = containerRect.width; // Use width since it's square
         
-        console.log('Container size:', containerSize);
-
         // Set SVG size to match container
         svg.setAttribute('width', containerSize);
         svg.setAttribute('height', containerSize);
