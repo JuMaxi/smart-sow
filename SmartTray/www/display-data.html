@@ -54,7 +54,7 @@
             </section>
             <section>
                 <div class="row">
-                    <div class="col-12 col-md-6 my-5">
+                    <div class="col-12 col-xl-6 my-5">
                         <div class="row">
                             <h1>Plant Name</h1>
                             <p>Last reading</p>
@@ -75,20 +75,24 @@
                         </div>    
                     </div>
 
-                    <div id="container" class="col-12 col-md-6">
+                    <div id="container">
                         <img id="tray" src="assets/images/display-data/tray.png" alt="A white seedling tray with young green plants." class="img-fluid" loading="lazy">
                         <svg id="orbitSVG">
                             <path id="orbitPath" stroke="orange" stroke-width="3" fill="none" />
                         </svg>
                         <div id="sun">☀️</div>
                         <!-- Sunset marker -->
+                        <div id="sunsetIcon" class="orbit-icon">
+                            <i class="fa-regular fa-moon"></i>
+                        </div>
                         <div id="sunsetMarker" class="time-marker">
-                            <span class="icon"><i class="fa-regular fa-moon"></i></span>
                             <span id="sunsetTime" class="time-label">--:-- PM</span>
                         </div>
                         <!-- Sunrise marker -->
+                        <div id="sunriseIcon" class="orbit-icon">
+                            <i class="fa-solid fa-sun"></i>
+                        </div>
                         <div id="sunriseMarker" class="time-marker">
-                            <span class="icon"><i class="fa-solid fa-sun"></i></span>
                             <span id="sunriseTime" class="time-label">--:-- AM</span>
                         </div>
                     </div>

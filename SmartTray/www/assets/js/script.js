@@ -302,21 +302,22 @@ document.addEventListener('DOMContentLoaded', function () {
         svg.setAttribute('width', containerSize);
         svg.setAttribute('height', containerSize);
 
-        // Tray dimensions and position (using percentages for responsiveness)
+        // Calculate orbit path
         const traySize = containerSize * 0.6;
         const trayTop = containerSize * 0.2;
         const trayLeft = containerSize * 0.2;
-        tray.style.width = traySize + 'px';
-        tray.style.top = trayTop + 'px';
-        tray.style.left = trayLeft + 'px';
 
-        // Arc from top-right to bottom-left of tray
-        const arcStartX = trayLeft + traySize;
-        const arcStartY = trayTop;
-        const arcEndX = trayLeft;
-        const arcEndY = trayTop + traySize;
-        const rx = (arcStartX - arcEndX) / 2;
-        const ry = (arcEndY - arcStartY) / 2;
+        // Arc calculations for orbit around tray, starting from right border
+        const arcStartX = containerSize; // Start at right border
+        const arcStartY = containerSize * 0.3; // Adjusted start height
+        const arcEndX = containerSize * 0.2; // End at left side of tray
+        const arcEndY = containerSize * 0.8; // End lower for visual balance
+        
+        // Calculate control points for a more natural curve
+        const rx = containerSize * 0.4; // Adjusted for tighter curve
+        const ry = containerSize * 0.3; // Adjusted for visual balance
+        
+        // Create the path with a more natural curve
         const d = `M ${arcStartX} ${arcStartY} A ${rx} ${ry} 0 0 0 ${arcEndX} ${arcEndY}`;
         path.setAttribute('d', d);
         
@@ -330,6 +331,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Function to get the exact sun position from a public API and calculate its relative position in the orbit
     async function positionSunFromTime(path) {
         const sun = document.getElementById('sun');
+        const sunriseIcon = document.getElementById('sunriseIcon');
+        const sunsetIcon = document.getElementById('sunsetIcon');
         const sunriseMarker = document.getElementById('sunriseMarker');
         const sunsetMarker = document.getElementById('sunsetMarker');
         const sunriseLabel = document.getElementById('sunriseTime');
@@ -355,35 +358,37 @@ document.addEventListener('DOMContentLoaded', function () {
             sunriseLabel.textContent = toLocalTime(sunrise);
             sunsetLabel.textContent = toLocalTime(sunset);
 
-            // Animate sun
+            // Calculate sun position based on current time between sunrise and sunset
             let progress = (now - sunrise) / (sunset - sunrise);
             progress = Math.max(0, Math.min(1, progress)); // Clamp between 0 and 1
 
             const pathLength = path.getTotalLength();
+            
+            // Position sun exactly on the orbit path
             const sunPoint = path.getPointAtLength(progress * pathLength);
-            
-            // Calculate sun size for positioning offset
-            const sunSize = parseFloat(getComputedStyle(sun).width) || 30;
-            const sunOffset = sunSize / 2;
-            
-            sun.style.left = (sunPoint.x - sunOffset) + 'px';
-            sun.style.top = (sunPoint.y - sunOffset) + 'px';
+            sun.style.left = sunPoint.x + 'px';
+            sun.style.top = sunPoint.y + 'px';
+            sun.style.transform = 'translate(-50%, -50%)';
 
-            // Set marker positions slightly offset from arc ends
-            const sunriseProgress = 0.9; // near start
-            const sunsetProgress = 0.2;  // near end
+            // Position sunrise icon and label
+            const sunrisePoint = path.getPointAtLength(0.05 * pathLength);
+            // Position the icon exactly on the orbit
+            sunriseIcon.style.left = sunrisePoint.x + 'px';
+            sunriseIcon.style.top = sunrisePoint.y + 'px';
+            // Position the label outside the orbit
+            sunriseMarker.style.left = (sunrisePoint.x + 30) + 'px';
+            sunriseMarker.style.top = sunrisePoint.y + 'px';
+            sunriseMarker.style.transform = 'translate(0, -50%)';
 
-            const sunrisePoint = path.getPointAtLength(sunriseProgress * pathLength);
-            const sunsetPoint = path.getPointAtLength(sunsetProgress * pathLength);
-            
-            // Calculate marker offsets
-            const markerOffset = 15; // Fixed offset for markers
-            
-            sunriseMarker.style.left = (sunrisePoint.x - markerOffset) + 'px';
-            sunriseMarker.style.top = (sunrisePoint.y - markerOffset) + 'px';
-
-            sunsetMarker.style.left = (sunsetPoint.x - markerOffset) + 'px';
-            sunsetMarker.style.top = (sunsetPoint.y - markerOffset) + 'px';
+            // Position sunset icon and label
+            const sunsetPoint = path.getPointAtLength(0.95 * pathLength);
+            // Position the icon exactly on the orbit
+            sunsetIcon.style.left = sunsetPoint.x + 'px';
+            sunsetIcon.style.top = sunsetPoint.y + 'px';
+            // Position the label outside the orbit
+            sunsetMarker.style.left = (sunsetPoint.x - 30) + 'px';
+            sunsetMarker.style.top = sunsetPoint.y + 'px';
+            sunsetMarker.style.transform = 'translate(-100%, -50%)';
 
         } catch (error) {
             console.error('Failed to get sun position:', error);
