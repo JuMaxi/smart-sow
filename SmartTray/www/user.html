@@ -18,11 +18,11 @@
         <link rel="icon" type="image/png" sizes="16x16" href="">
 
         <!-- Custom CSS -->
-        <link rel="stylesheet" href="assets/css/display.css">
-
+        <link rel="stylesheet" href="assets/css/user.css">
     </head>
     <body>
         <main class="glass-main my-4">
+            <!-- Section to header brand and navbar links -->
             <section>
                 <div class="row">
                     <div class="col-12">
@@ -52,66 +52,62 @@
                     </div>
                 </div>
             </section>
-            <section>
-                <div class="row">
-                    <!-- Column to the plant last reading, and charts -->
-                    <div class="col-12 col-lg-6 d-flex flex-column justify-content-center">
-                        <div class="row my-4">
-                            <div class="col-12 mx-3">
-                                <h1>Plant Name</h1>
-                                <p>Last reading</p>
-                            </div>
-                        </div>
-                        <div class="row my-4">
-                            <div class="col-12 col-sm-4 d-flex flex-column justify-content-center align-items-center chart-parent">
-                                <div id="temperatureChart" class="gauge-charts"></div>
-                                <p>Expected</p>
-                            </div>
-                            <div class="col-12 col-sm-4 d-flex flex-column justify-content-center align-items-center chart-parent">
-                                <div id="lightChart" class="gauge-charts"></div>
-                                <p>Expected</p>
-                            </div>
-                            <div class="col-12 col-sm-4 d-flex flex-column justify-content-center align-items-center chart-parent">
-                                <div id="moistureChart" class="gauge-charts"></div>
-                                <p>Expected</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Column with the tray image and orbit -->
-                    <div id="container" class="col-12 col-lg-6 justify-content-center">
-                        <img id="tray" src="assets/images/display-data/tray.png" alt="A white seedling tray with young green plants." class="img-fluid" loading="lazy">
-                        <svg id="orbitSVG">
-                            <path id="orbitPath" stroke="orange" stroke-width="3" fill="none" />
-                        </svg>
-                        <div id="sun">☀️</div>
-                        <!-- Sunset marker -->
-                        <div id="sunsetIcon" class="orbit-icon">
-                            <i class="fa-regular fa-moon"></i>
-                        </div>
-                        <div id="sunsetMarker" class="time-marker">
-                            <span id="sunsetTime" class="time-label">--:-- PM</span>
-                        </div>
-                        <!-- Sunrise marker -->
-                        <div id="sunriseIcon" class="orbit-icon">
-                            <i class="fa-solid fa-sun"></i>
-                        </div>
-                        <div id="sunriseMarker" class="time-marker">
-                            <span id="sunriseTime" class="time-label">--:-- AM</span>
-                        </div>
-                    </div>
-
+            <!-- Section to Register User account -->            
+            <form>
+                <div class="mb-3">
+                    <label for="registerName" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="registerName" name="name" required>
                 </div>
+                <div class="mb-3">
+                    <label for="registerEmail" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="registerEmail" name="email" required>
+                </div>
+                <div class="mb-3 position-relative">
+                    <label for="registerPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="registerPassword" name="password" required>
+                    <span class="toggle-password" onclick="togglePassword('registerPassword', this)">
+                        <i class="fa fa-eye-slash"></i>
+                    </span>
+                </div>
+                <div class="mb-3">
+                    <label for="registerConfirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="registerConfirmPassword" name="confirmPassword" required>
+                </div>
+                <div class="mb-3">
+                    <label for="registerPostcode" class="form-label">Postcode</label>
+                    <input type="text" class="form-control" id="registerPostcode" name="postcode" required>
+                </div>
+                <button type="submit" class="btn btn-success">Register</button>
+            </form>
+            <!-- Section to login -->
+            <section>
+                <form class="my-4" autocomplete="off">
+                    <div class="mb-3">
+                        <label for="loginEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="loginEmail" name="email" required>
+                    </div>
+                    <div class="mb-3 position-relative">
+                        <label for="loginPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="loginPassword" name="password" required>
+                        <span class="toggle-password" onclick="togglePassword('loginPassword', this)">
+                            <i class="fa fa-eye-slash"></i>
+                        </span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <div class="text-center mt-3">
+                        <span>Don't have an account?</span>
+                        <a href="#register" onclick="document.querySelector('form').scrollIntoView({behavior: 'smooth'});">Create one</a>
+                    </div>
+                </form>
             </section>
+
         </main>
-        
         <!-- Font Awesome kit-->
         <script src="https://kit.fontawesome.com/6ec5d9a39e.js" crossorigin="anonymous"></script>
         <!-- Bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
         <!-- JavaScript -->
-        <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
-        <script src="assets/js/script.js"></script>
+        <script src="assets/js/user.js"></script>
     </body>
 </html>
