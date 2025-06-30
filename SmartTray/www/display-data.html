@@ -53,13 +53,16 @@
                 </div>
             </section>
             <section>
-                <div class="row my-5">
-                    <h1>Plant Name</h1>
-                    <p>Last reading</p>
-                </div>
                 <div class="row">
-                    <div class="col-12 col-xl-6">
-                        <div class="row my-5">
+                    <!-- Column to the plant last reading, and charts -->
+                    <div class="col-12 col-xl-6 d-flex flex-column justify-content-center">
+                        <div class="row my-4">
+                            <div class="col-12 mx-3">
+                                <h1>Plant Name</h1>
+                                <p>Last reading</p>
+                            </div>
+                        </div>
+                        <div class="row my-4">
                             <div class="col-12 col-sm-4 d-flex flex-column justify-content-center align-items-center chart-parent">
                                 <div id="temperatureChart" class="gauge-charts"></div>
                                 <p>Expected</p>
@@ -72,8 +75,10 @@
                                 <div id="moistureChart" class="gauge-charts"></div>
                                 <p>Expected</p>
                             </div>
-                        </div>    
+                        </div>
                     </div>
+
+                    <!-- Column with the tray image and orbit -->
                     <div id="container" class="col-12 col-xl-6 d-flex justify-content-center">
                         <img id="tray" src="assets/images/display-data/tray.png" alt="A white seedling tray with young green plants." class="img-fluid" loading="lazy">
                         <svg id="orbitSVG">
@@ -97,7 +102,6 @@
                     </div>
 
                 </div>
-
             </section>
         </main>
         
