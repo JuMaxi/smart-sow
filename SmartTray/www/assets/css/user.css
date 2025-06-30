@@ -162,12 +162,23 @@ a[href="#register"]:hover {
     border-top: 1px solid rgba(255,255,255,0.22);
 }
 
-/* Style the image in the form */
-.form-top-right-img {
+/* Style and position the image in the form login */
+.form-login-img {
     position: absolute;
     top: 193px;
     right: -16px;
     width: 82px; 
+    max-width: 20%;
+    height: auto;
+    z-index: 2;
+}
+
+/* Style and position the image in the form create account */
+.form-account-img {
+    position: absolute;
+    top: 431px;
+    right: -16px;
+    width: 69px;
     max-width: 20%;
     height: auto;
     z-index: 2;
