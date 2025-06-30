@@ -5,7 +5,7 @@ body{
     display: flex;
     justify-content: center;  
     align-items: center;      
-    height: 122vh;
+    height: 100vh;
     font-family: 'Inter', 'Roboto', 'Arial', sans-serif;
 }
 
@@ -23,7 +23,7 @@ h1, h2, nav button {
 
 /* Style the glass efect to the main section */
 .glass-main {
-    width: 50%;
+    width: 90%;
     padding: 1rem;
     border-radius: 40px;
     background: rgba(255, 255, 255, 0.1); 
@@ -65,7 +65,7 @@ form {
     border: 1px solid rgba(255, 255, 255, 0.22);
     padding: 2rem 1.5rem;
     margin: 2rem auto;
-    max-width: 500px;
+    max-width: 900px;
 }
 
 form label {
@@ -157,7 +157,7 @@ form .btn-success:focus {
 /* Style and position img to the tray form */ 
 .form-tray-img {
     position: absolute;
-    top: 705px;
+    top: 346px;
     right: -16px;
     width: 80px;
     max-width: 20%;
@@ -165,11 +165,24 @@ form .btn-success:focus {
     z-index: 2;
 }
 
-@media (max-width: 991.98px){
-    .glass-main {
-        width: 90%;
+@media (max-width: 767.98px){
+    body {
+        height: 122vh;
     }
 
+    /* Change the image vertical position */
+    .form-tray-img {
+        top: 706px;
+    }
+}
+
+@media (min-width: 1300px){
+    .glass-main {
+        width: 65%;
+    }
+}
+
+@media (max-width: 991.98px){
     /* Take out the transparency from the dropdown menu to make it more visible in screens with less than 992px */
     .dropdown-menu {
         background: rgb(233, 236, 239);
