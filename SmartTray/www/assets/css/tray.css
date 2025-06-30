@@ -135,6 +135,7 @@ form .btn-success:focus {
     border-top: 1px solid rgba(255,255,255,0.22);
 }
 
+/* Style the form fieldset and legends */
 .fieldset-tray {
     border: 1px solid rgba(116, 233, 7, 0.22);
     color: white;
