@@ -290,7 +290,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Function to create the orbit and position it around the image tray
     async function setupOrbitAndTray() {
         const container = document.getElementById('container');
-        const tray = document.getElementById('tray');
         const svg = document.getElementById('orbitSVG');
         const path = document.getElementById('orbitPath');
         
@@ -302,20 +301,17 @@ document.addEventListener('DOMContentLoaded', function () {
         svg.setAttribute('width', containerSize);
         svg.setAttribute('height', containerSize);
 
-        // Calculate orbit path
-        const traySize = containerSize * 0.6;
-        const trayTop = containerSize * 0.2;
-        const trayLeft = containerSize * 0.2;
-
         // Arc calculations for orbit around tray, starting from right border
-        const arcStartX = containerSize; // Start at right border
-        const arcStartY = containerSize * 0.3; // Adjusted start height
-        const arcEndX = containerSize * 0.2; // End at left side of tray
-        const arcEndY = containerSize * 0.8; // End lower for visual balance
+        const arcStartX = containerSize * 0.85; // Start at right border
+        const arcStartY = containerSize * 0.25; // Adjusted start height
+        const arcEndX = containerSize * 0.25; // End at left side of tray
+        const arcEndY = containerSize * 0.75; // End lower for visual balance
         
         // Calculate control points for a more natural curve
-        const rx = containerSize * 0.4; // Adjusted for tighter curve
+        const rx = containerSize * 0.3; // Adjusted for tighter curve
         const ry = containerSize * 0.3; // Adjusted for visual balance
+
+
         
         // Create the path with a more natural curve
         const d = `M ${arcStartX} ${arcStartY} A ${rx} ${ry} 0 0 0 ${arcEndX} ${arcEndY}`;

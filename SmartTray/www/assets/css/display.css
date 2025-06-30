@@ -39,17 +39,36 @@ h1, h2, nav button {
     position: relative;
 }
 
+/* Glassmorphism hover effect for navbar links */
+.nav-link {
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    border-radius: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #fff;
+    box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10);
+    text-decoration: none;
+    padding: 6px;
+}
+
 /* Style the orbit around the tray image */
 #container {
     position: relative;
-    margin: 20px 0;
     overflow: visible;
-    width: min(60vw, 500px);
-    height: min(60vw, 500px);
-    max-width: 500px;
-    max-height: 500px;
-    margin-left: auto; /* Push to the right */
+    width: min(60vw, 450px);
+    height: min(60vw, 450px);
+    max-width: 450px;
+    max-height: 450px;
     transition: width 0.3s ease, height 0.3s ease;
+    padding: 0px;
+    margin: 14px;
 }
 
 #tray {
@@ -112,7 +131,6 @@ svg {
 
 .icon {
     font-size: clamp(14px, 3.5vw, 20px);
-    margin: 0 4px;
 }
 
 .time-label {
