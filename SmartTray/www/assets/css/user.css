@@ -75,7 +75,7 @@ form label {
 }
 
 form .form-control {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(233, 236, 239, 0.753);
     border: 1px solid rgba(255,255,255,0.18);
     color: #222;
     border-radius: 12px;
@@ -84,7 +84,7 @@ form .form-control {
 }
 
 form .form-control:focus {
-    background: rgba(255,255,255,0.35);
+    background: rgba(233, 236, 239, 0.863);
     border-color: #aee1f9;
     box-shadow: 0 0 0 2px rgba(174,225,249,0.25);
     color: #222;
@@ -99,9 +99,9 @@ form .btn-primary {
     transition: background 0.2s, box-shadow 0.2s;
 }
 
-form .btn-primary:hover, 
-form .btn-primary:focus {
-    background: rgba(30, 144, 255, 1);
+form .btn-success:hover, 
+form .btn-success:focus {
+    background: rgb(5, 175, 81);
     box-shadow: 0 4px 24px 0 rgba(31, 38, 135, 0.18);
 }
 
@@ -118,8 +118,57 @@ form .btn-primary:focus {
     color: #088a03;
 }
 
+/* Style the create one text */
+a[href="#register"] {
+    color: #1e90ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+    text-decoration: underline;
+}
+
+a[href="#register"]:hover {
+    color: #7baaf0;
+    text-decoration: underline;
+}
+
+/* Glassmorphism style for Bootstrap dropdown menu */
+.dropdown-menu {
+    background: rgba(233, 236, 239, 0.753);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    padding: 0.5rem 0;
+    min-width: 200px;
+}
+
+.dropdown-menu .dropdown-item {
+    color: #012506;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    transition: background 0.2s, color 0.2s;
+    background: transparent;
+}
+
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+    background: rgba(30, 144, 255, 0.12);
+    color: #1e90ff;
+}
+
+.dropdown-menu .dropdown-divider {
+    border-top: 1px solid rgba(255,255,255,0.22);
+}
+
 @media (max-width: 991.98px){
     .glass-main {
         width: 90%;
+    }
+
+    /* Take out the transparency from the dropdown menu to make it more visible in screens with less than 992px */
+    .dropdown-menu {
+        background: rgb(233, 236, 239);
     }
 }

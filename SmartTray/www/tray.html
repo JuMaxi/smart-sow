@@ -18,7 +18,7 @@
         <link rel="icon" type="image/png" sizes="16x16" href="">
 
         <!-- Custom CSS -->
-        <link rel="stylesheet" href="assets/css/user.css">
+        <link rel="stylesheet" href="assets/css/tray.css">
     </head>
     <body>
         <main class="glass-main my-4">
@@ -67,55 +67,44 @@
                     </div>
                 </div>
             </section>
-            <!-- Section to Register User account -->            
-            <section>
-                <form>
-                    <div class="mb-3">
-                        <label for="registerName" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="registerName" name="name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="registerEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="registerEmail" name="email" required>
-                    </div>
-                    <div class="mb-3 position-relative">
-                        <label for="registerPassword" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="registerPassword" name="password" required>
-                        <span class="toggle-password" onclick="togglePassword('registerPassword', this)">
-                            <i class="fa fa-eye-slash"></i>
-                        </span>
-                    </div>
-                    <div class="mb-3">
-                        <label for="registerConfirmPassword" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control" id="registerConfirmPassword" name="confirmPassword" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="registerPostcode" class="form-label">Postcode</label>
-                        <input type="text" class="form-control" id="registerPostcode" name="postcode" required>
-                    </div>
-                    <button type="submit" class="btn btn-success">Register</button>
-                </form>
-            </section>
 
-            <!-- Section to login -->
             <section>
                 <form class="my-4" autocomplete="off">
-                    <div class="mb-3">
-                        <label for="loginEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="loginEmail" name="email" required>
-                    </div>
-                    <div class="mb-3 position-relative">
-                        <label for="loginPassword" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="loginPassword" name="password" required>
-                        <span class="toggle-password" onclick="togglePassword('loginPassword', this)">
-                            <i class="fa fa-eye-slash"></i>
-                        </span>
-                    </div>
-                    <button type="submit" class="btn btn-success">Login</button>
-                    <div class="text-center mt-3">
-                        <span>Don't have an account?</span>
-                        <a href="#register" onclick="document.querySelector('form').scrollIntoView({behavior: 'smooth'});">Create one</a>
-                    </div>
+                    <!-- Tray Registration Section -->
+                    <fieldset class="p-3 mb-4 rounded-4 fieldset-tray">
+                        <legend class="float-none w-auto px-2 fs-5 mb-3 legend-tray">Tray Information</legend>
+                        <div class="mb-3">
+                            <label for="trayName" class="form-label">Tray Name</label>
+                            <input type="text" class="form-control" id="trayName" name="trayName" required placeholder="Enter tray name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="cropType" class="form-label">Crop Type</label>
+                            <input type="text" class="form-control" id="cropType" name="cropType" required placeholder="e.g. Lettuce">
+                        </div>
+                        <div class="mb-3">
+                            <label for="sowingDate" class="form-label">Sowing Date</label>
+                            <input type="date" class="form-control" id="sowingDate" name="sowingDate" required placeholder="Select sowing date">
+                        </div>
+                    </fieldset>
+
+                    <!-- Tray Settings Section -->
+                    <fieldset class="p-3 mb-4 rounded-4 fieldset-settings">
+                        <legend class="float-none w-auto px-2 fs-5 fw-bold mb-3 legend-settings">Tray Settings</legend>
+                        <div class="mb-3">
+                            <label for="trayTemperature" class="form-label">Temperature (°C)</label>
+                            <input type="number" class="form-control" id="trayTemperature" name="temperature" required placeholder="e.g. 22">
+                        </div>
+                        <div class="mb-3">
+                            <label for="trayHumidity" class="form-label">Humidity (%)</label>
+                            <input type="number" class="form-control" id="trayHumidity" name="humidity" required placeholder="e.g. 60">
+                        </div>
+                        <div class="mb-3">
+                            <label for="traySolarHours" class="form-label">Daily Solar Hours</label>
+                            <input type="number" class="form-control" id="traySolarHours" name="solarHours" required placeholder="e.g. 8">
+                        </div>
+                    </fieldset>
+
+                    <button type="submit" class="btn btn-success">Register Tray & Settings</button>
                 </form>
             </section>
 

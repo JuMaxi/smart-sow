@@ -1,13 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@500;700&display=swap');
 
 body{
-    min-height: 100vh; 
-    height: auto;      
-    overflow-x: hidden; /* Prevent horizontal scroll */
     background: url("../images/homepage/background-image.jpg") no-repeat center center/cover;
     display: flex;
-    justify-content: center;
-    align-items: center; /* Change from center to start */
+    justify-content: center;  
+    align-items: center;      
+    height: 122vh;
     font-family: 'Inter', 'Roboto', 'Arial', sans-serif;
 }
 
@@ -25,7 +23,7 @@ h1, h2, nav button {
 
 /* Style the glass efect to the main section */
 .glass-main {
-    width: 80%;
+    width: 50%;
     padding: 1rem;
     border-radius: 40px;
     background: rgba(255, 255, 255, 0.1); 
@@ -33,10 +31,8 @@ h1, h2, nav button {
     -webkit-backdrop-filter: blur(20px);  
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
     color: #fff;
-    border: 1px solid rgba(245, 245, 245, 0.151);
     height: auto;
-    overflow: hidden;
-    position: relative;
+    border: 1px solid rgba(245, 245, 245, 0.151);
 }
 
 /* Glassmorphism hover effect for navbar links */
@@ -56,97 +52,57 @@ h1, h2, nav button {
     box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10);
     text-decoration: none;
     padding: 6px;
+
 }
 
-/* Style the orbit around the tray image */
-#container {
-    position: relative;
-    overflow: visible;
-    width: min(80vw, 700px);
-    height: min(80vw, 700px);
-    /* max-width: 600px;
-    max-height: 600px;  */
-    transition: width 0.3s ease, height 0.3s ease;
-    padding: 0px;
-    margin: 14px auto;
+/* Glassmorphism style for the registration form */
+form {
+    background: rgba(7, 22, 0, 0.452);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    padding: 2rem 1.5rem;
+    margin: 2rem auto;
+    max-width: 500px;
 }
 
-#tray {
-    position: absolute;
-    width: 60% !important;
-    height: auto;
-    top: 20%;
-    left: 20%;
-    z-index: 1;
-}
-
-#sun {
-    position: absolute;
-    width: 5%;
-    height: 5%;
-    font-size: clamp(16px, 4vw, 24px);
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: translate(-50%, -50%);
-}
-
-.orbit-icon {
-    position: absolute;
-    font-size: clamp(14px, 3.5vw, 20px);
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: translate(-50%, -50%);
-}
-
-svg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 2;
-}
-
-#orbitPath {
-    stroke-width: clamp(2px, 0.5vw, 3px);
-}
-
-/* Style the hours and icon around the orbit */
-.time-marker {
-    position: absolute;
-    display: flex;
-    font-size: clamp(10px, 2.5vw, 14px);
-    color: #333;
-    z-index: 3;
-    border-radius: 8px;
-    padding: 4px 8px;
-    white-space: nowrap;
-    background: rgba(255, 255, 255, 0.8);
-}
-
-.icon {
-    font-size: clamp(14px, 3.5vw, 20px);
-}
-
-.time-label {
+form label {
+    color: #fff;
     font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.08);
 }
 
-/* Style charts and its divs*/
-.chart-parent {
-    max-height: 300px;
+form .form-control {
+    background: rgba(233, 236, 239, 0.753);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: #222;
+    border-radius: 12px;
+    box-shadow: none;
+    transition: background 0.2s, border 0.2s;
 }
 
-.gauge-charts {
-    padding-bottom: 0 !important;
-    margin-bottom: 0.5rem;
-    height: 360px;
-    width: 100%;
+form .form-control:focus {
+    background: rgba(233, 236, 239, 0.863);
+    border-color: #aee1f9;
+    box-shadow: 0 0 0 2px rgba(174,225,249,0.25);
+    color: #222;
+}
+
+form .btn-primary {
+    border-radius: 12px;
+    font-weight: 600;
+    box-shadow: 0 2px 12px 0 rgba(31, 38, 135, 0.10);
+    background: rgba(30, 144, 255, 0.85);
+    border: none;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+form .btn-success:hover, 
+form .btn-success:focus {
+    background: rgb(5, 175, 81);
+    box-shadow: 0 4px 24px 0 rgba(31, 38, 135, 0.18);
 }
 
 /* Glassmorphism style for Bootstrap dropdown menu */
@@ -179,28 +135,28 @@ svg {
     border-top: 1px solid rgba(255,255,255,0.22);
 }
 
+.fieldset-tray {
+    border: 1px solid rgba(116, 233, 7, 0.22);
+    color: white;
+}
 
-/* Responsive adjustments */
-@media (max-width: 767.98px) {
+.fieldset-settings {
+    border: 1px solid rgba(0, 153, 255, 0.247);
+
+} 
+
+.legend-tray {
+    color: rgba(116, 233, 7, 0.863);
+}
+
+.legend-settings {
+    color: rgba(0, 153, 255, 0.815);
+}
+@media (max-width: 991.98px){
     .glass-main {
         width: 90%;
     }
-    
-    #container {
-        width: min(70vw, 400px);
-        height: min(70vw, 400px);
-        margin: 20px auto;
-    }
-}
 
-@media (max-width: 575.98px) {
-    #container {
-        width: min(80vw, 300px);
-        height: min(80vw, 300px);
-    }
-}
-
-@media (max-width: 991.98px){
     /* Take out the transparency from the dropdown menu to make it more visible in screens with less than 992px */
     .dropdown-menu {
         background: rgb(233, 236, 239);

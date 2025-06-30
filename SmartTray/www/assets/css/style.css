@@ -132,67 +132,34 @@ h1, h2, nav button {
    
 }
 
-
-/* Glassmorphism style for the registration form */
-form {
-    background: rgba(7, 22, 0, 0.452);
+/* Glassmorphism style for Bootstrap dropdown menu */
+.dropdown-menu {
+    background: rgba(233, 236, 239, 0.753);
     border-radius: 24px;
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.22);
-    padding: 2rem 1.5rem;
-    margin: 2rem auto;
-    max-width: 500px;
+    padding: 0.5rem 0;
+    min-width: 200px;
 }
 
-form label {
-    color: #fff;
-    font-weight: 500;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.08);
+.dropdown-menu .dropdown-item {
+    color: #012506;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    transition: background 0.2s, color 0.2s;
+    background: transparent;
 }
 
-form .form-control {
-    background: rgba(255, 255, 255, 0.5);
-    border: 1px solid rgba(255,255,255,0.18);
-    color: #222;
-    border-radius: 12px;
-    box-shadow: none;
-    transition: background 0.2s, border 0.2s;
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+    background: rgba(30, 144, 255, 0.12);
+    color: #1e90ff;
 }
 
-form .form-control:focus {
-    background: rgba(255,255,255,0.35);
-    border-color: #aee1f9;
-    box-shadow: 0 0 0 2px rgba(174,225,249,0.25);
-    color: #222;
-}
-
-form .btn-primary {
-    border-radius: 12px;
-    font-weight: 600;
-    box-shadow: 0 2px 12px 0 rgba(31, 38, 135, 0.10);
-    background: rgba(30, 144, 255, 0.85);
-    border: none;
-    transition: background 0.2s, box-shadow 0.2s;
-}
-
-form .btn-primary:hover, 
-form .btn-primary:focus {
-    background: rgba(30, 144, 255, 1);
-    box-shadow: 0 4px 24px 0 rgba(31, 38, 135, 0.18);
-}
-
-.toggle-password {
-    position: absolute;
-    top: 38px;
-    right: 16px;
-    cursor: pointer;
-    color: #0e1810;
-    z-index: 2;
-}
-.toggle-password:hover {
-    color: #088a03;
+.dropdown-menu .dropdown-divider {
+    border-top: 1px solid rgba(255,255,255,0.22);
 }
 
 
@@ -202,5 +169,10 @@ form .btn-primary:focus {
     }
     body {
         height: 114vh;
+    }
+
+    /* Take out the transparency from the dropdown menu to make it more visible in screens with less than 992px */
+    .dropdown-menu {
+        background: rgb(233, 236, 239);
     }
 }
