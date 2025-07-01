@@ -5,6 +5,7 @@ body{
     height: auto;      
     overflow-x: hidden; /* Prevent horizontal scroll */
     background: url("../images/homepage/background-image.jpg") no-repeat center center/cover;
+    background-attachment: fixed;
     display: flex;
     justify-content: center;
     align-items: center; /* Change from center to start */

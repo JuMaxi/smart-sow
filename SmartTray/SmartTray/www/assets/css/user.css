@@ -2,6 +2,7 @@
 
 body{
     background: url("../images/homepage/background-image.jpg") no-repeat center center/cover;
+    background-attachment: fixed;
     display: flex;
     justify-content: center;  
     align-items: center;      

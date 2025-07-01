@@ -2,6 +2,7 @@
 
 body{
     background: url("../images/homepage/background-image.jpg") no-repeat center center/cover;
+    background-attachment: fixed;
     display: flex;
     justify-content: center;  
     align-items: center;      
@@ -23,7 +24,7 @@ h1, h2, nav button {
 
 /* Style the glass efect to the main section */
 .glass-main {
-    width: 80%;
+    width: 70%;
     padding: 1rem;
     border-radius: 40px;
     background: rgba(255, 255, 255, 0.1); 
