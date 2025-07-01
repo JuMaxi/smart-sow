@@ -5,7 +5,7 @@ body{
     display: flex;
     justify-content: center;  
     align-items: center;      
-    height: 100vh;
+    height: 101vh;
     font-family: 'Inter', 'Roboto', 'Arial', sans-serif;
 }
 
@@ -23,7 +23,7 @@ h1, h2, nav button {
 
 /* Style the glass efect to the main section */
 .glass-main {
-    width: 50%;
+    width: 60%;
     padding: 1rem;
     border-radius: 40px;
     background: rgba(255, 255, 255, 0.1); 
@@ -53,17 +53,6 @@ h1, h2, nav button {
     text-decoration: none;
     padding: 6px;
 
-}
-
-/* Style and position img */ 
-.smile-img {
-    position: absolute;
-    top: 171px;
-    right: -16px;
-    width: 80px;
-    max-width: 20%;
-    height: auto;
-    z-index: 2;
 }
 
 /* Glassmorphism style for Bootstrap dropdown menu */
@@ -96,6 +85,101 @@ h1, h2, nav button {
     border-top: 1px solid rgba(255,255,255,0.22);
 }
 
+/* Style and position img */ 
+.smile-img {
+    position: absolute;
+    bottom: 0px;
+    right: -16px;
+    width: 75px;
+    max-width: 20%;
+    height: auto;
+    z-index: 2;
+}
+
+/* Style to the table and its container */
+.container {
+    max-width: 90%;
+    background: rgba(7, 22, 0, 0.452);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    padding: 2rem 1.5rem;
+    margin: 2rem auto;
+    width: 700px;
+    height: auto;
+}
+
+/* Make table horizontally scrolable in small screens */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    /* Add a subtle shadow for visual feedback */
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+
+/* Optional: Prevent table from wrapping text in cells */
+.table th, .table td {
+    white-space: nowrap;
+}
+
+/* Glassmorphism effect for the table */
+.table {
+    background: rgba(255, 255, 255, 0.13);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px 0 rgba(31, 38, 135, 0.10);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+}
+
+.table thead {
+    background: rgb(214 239 205 / 35%);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.table th, .table td {
+    border: none;
+    color: #fff;
+    background: transparent;
+    vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+    background: rgba(81, 255, 0, 0.1);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: background 0.2s;
+}
+
+.table .btn {
+    transition: 
+        background 0.18s,
+        color 0.18s,
+        box-shadow 0.18s,
+        transform 0.15s;
+}
+
+.table .btn:hover, 
+.table .btn:focus {
+    transform: scale(1.12);
+    box-shadow: 0 4px 18px 0 rgba(0, 153, 255, 0.18);
+    opacity: 0.92;
+    filter: brightness(1.15);
+    z-index: 2;
+}
+
+/* Optional: subtle icon color change on hover */
+.table .btn-success:hover i { color: #fff; }
+.table .btn-primary:hover i { color: #fff; }
+.table .btn-info:hover i { color: #fff; }
+.table .btn-danger:hover i { color: #fff; }
+
 /* Style the form fieldset and legends */
 .fieldset-tray {
     border: 1px solid rgba(116, 233, 7, 0.22);
@@ -115,34 +199,24 @@ h1, h2, nav button {
     color: rgba(0, 153, 255, 0.815);
 }
 
-.container {
-    max-width: 500px;
-    background: rgba(7, 22, 0, 0.452);
-    border-radius: 24px;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    padding: 2rem 1.5rem;
-    margin: 2rem auto;
-    width: 100%;
+@media (max-width: 991.98px){
+    .smile-img {
+        right: -33px; 
+    }
 }
 
-@media (max-width: 1199.98px) {
-    .glass-main {
-        width: 65%;
-    }
-}
-@media (max-width: 900px) {
-    .glass-main {
-        width: 80%;
-    }
-}
 @media (max-width: 767.98px) {
     .glass-main {
         width: 95%;
     }
 }
+
+@media (max-width: 370px){
+    .smile-img {
+        right: -7px;
+    }
+}
+
 
 
 
