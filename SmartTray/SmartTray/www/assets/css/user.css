@@ -165,7 +165,7 @@ a[href="#register"]:hover {
 /* Style and position the image in the form login */
 .form-login-img {
     position: absolute;
-    top: 193px;
+    bottom: 0px;
     right: -16px;
     width: 82px; 
     max-width: 20%;
@@ -176,7 +176,7 @@ a[href="#register"]:hover {
 /* Style and position the image in the form create account */
 .form-account-img {
     position: absolute;
-    top: 431px;
+    bottom: 0px;
     right: -16px;
     width: 69px;
     max-width: 20%;

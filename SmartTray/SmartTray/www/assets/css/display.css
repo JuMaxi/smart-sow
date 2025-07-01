@@ -201,7 +201,7 @@ svg {
 }
 
 @media (max-width: 991.98px){
-    /* Take out the transparency from the dropdown menu to make it more visible in screens with less than 992px */
+    /* Remove the transparency from the dropdown menu to make it more visible in screens with less than 992px */
     .dropdown-menu {
         background: rgb(233, 236, 239);
     }
