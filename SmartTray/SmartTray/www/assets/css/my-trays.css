@@ -97,7 +97,7 @@ h1, h2, nav button {
 }
 
 /* Style to the table and its container */
-.container {
+/* .container {
     max-width: 90%;
     background: rgba(7, 22, 0, 0.452);
     border-radius: 24px;
@@ -109,7 +109,7 @@ h1, h2, nav button {
     margin: 2rem auto;
     width: 700px;
     height: auto;
-}
+} */
 
 /* Make table horizontally scrolable in small screens */
 .table-responsive {
@@ -138,13 +138,20 @@ h1, h2, nav button {
 }
 
 .table thead {
-    background: rgb(214 239 205 / 35%);
+    background: #012804cc;
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
+    
+}
+
+/* Make header row grid lines a bit more visible */
+.table thead th {
+    border-bottom: 2px solid rgba(116, 233, 7, 0.18);
+    padding: 13px;
 }
 
 .table th, .table td {
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.068); /* Subtle white grid lines */
     color: #fff;
     background: transparent;
     vertical-align: middle;
@@ -181,22 +188,14 @@ h1, h2, nav button {
 .table .btn-danger:hover i { color: #fff; }
 
 /* Style the form fieldset and legends */
-.fieldset-tray {
-    border: 1px solid rgba(116, 233, 7, 0.22);
-    color: white;
-}
 
 .fieldset-settings {
-    border: 1px solid rgba(0, 153, 255, 0.247);
+    border: 1px solid #fff;
 
 } 
 
-.legend-tray {
-    color: rgba(116, 233, 7, 0.863);
-}
-
 .legend-settings {
-    color: rgba(0, 153, 255, 0.815);
+    color: #fff;
 }
 
 @media (max-width: 991.98px){
