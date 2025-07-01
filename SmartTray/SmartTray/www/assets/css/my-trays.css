@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@500;700&display=swap');
+
+body{
+    background: url("../images/homepage/background-image.jpg") no-repeat center center/cover;
+    display: flex;
+    justify-content: center;  
+    align-items: center;      
+    height: 100vh;
+    font-family: 'Inter', 'Roboto', 'Arial', sans-serif;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* semi-transparent dark layer */
+    z-index: -1;
+}
+
+h1, h2, nav button {
+    font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', sans-serif;
+}
+
+/* Style the glass efect to the main section */
+.glass-main {
+    width: 50%;
+    padding: 1rem;
+    border-radius: 40px;
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(13px);           
+    -webkit-backdrop-filter: blur(20px);  
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    height: auto;
+    border: 1px solid rgba(245, 245, 245, 0.151);
+}
+
+/* Glassmorphism hover effect for navbar links */
+.nav-link {
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    border-radius: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #fff;
+    box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10);
+    text-decoration: none;
+    padding: 6px;
+
+}
+
+/* Style and position img */ 
+.smile-img {
+    position: absolute;
+    top: 171px;
+    right: -16px;
+    width: 80px;
+    max-width: 20%;
+    height: auto;
+    z-index: 2;
+}
+
+/* Glassmorphism style for Bootstrap dropdown menu */
+.dropdown-menu {
+    background: rgba(233, 236, 239, 0.753);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    padding: 0.5rem 0;
+    min-width: 200px;
+}
+
+.dropdown-menu .dropdown-item {
+    color: #012506;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    transition: background 0.2s, color 0.2s;
+    background: transparent;
+}
+
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+    background: rgba(30, 144, 255, 0.12);
+    color: #1e90ff;
+}
+
+.dropdown-menu .dropdown-divider {
+    border-top: 1px solid rgba(255,255,255,0.22);
+}
+
+/* Style the form fieldset and legends */
+.fieldset-tray {
+    border: 1px solid rgba(116, 233, 7, 0.22);
+    color: white;
+}
+
+.fieldset-settings {
+    border: 1px solid rgba(0, 153, 255, 0.247);
+
+} 
+
+.legend-tray {
+    color: rgba(116, 233, 7, 0.863);
+}
+
+.legend-settings {
+    color: rgba(0, 153, 255, 0.815);
+}
+
+.container {
+    max-width: 500px;
+    background: rgba(7, 22, 0, 0.452);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    padding: 2rem 1.5rem;
+    margin: 2rem auto;
+    width: 100%;
+}
+
+@media (max-width: 1199.98px) {
+    .glass-main {
+        width: 65%;
+    }
+}
+@media (max-width: 900px) {
+    .glass-main {
+        width: 80%;
+    }
+}
+@media (max-width: 767.98px) {
+    .glass-main {
+        width: 95%;
+    }
+}
+
+
+
+
+
+
+
