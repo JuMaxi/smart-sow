@@ -69,88 +69,48 @@
             </section>
 
             <section>
-                <!-- <form class="my-4" autocomplete="off">
-                    <img src="assets/images/user/smile-plant.png" alt="A smiling green cute plant" class="form-tra-img img-fluid">
-                   
-                    <fieldset class="p-3 mb-4 rounded-4 fieldset-tray">
-                        <legend class="float-none w-auto px-2 fs-5 mb-3 legend-tray">Tray Information</legend>
-                        <div class="mb-3">
-                            <label for="trayName" class="form-label">Tray Name</label>
-                            <input type="text" class="form-control" id="trayName" name="trayName" required placeholder="Enter tray name">
+                <form class="my-4" autocomplete="off">
+                    <img src="assets/images/user/smile-plant.png" alt="A smiling green cute plant" class="form-tray-img img-fluid">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <!-- Tray Registration Section -->
+                            <fieldset class="p-3 rounded-4 fieldset-tray h-100">
+                                <legend class="float-none w-auto px-2 fs-5 mb-3 legend-tray">Tray Information</legend>
+                                <div class="mb-3">
+                                    <label for="trayName" class="form-label">Tray Name</label>
+                                    <input type="text" class="form-control" id="trayName" name="trayName" required placeholder="Enter tray name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="cropType" class="form-label">Crop Type</label>
+                                    <input type="text" class="form-control" id="cropType" name="cropType" required placeholder="e.g. Lettuce">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="sowingDate" class="form-label">Sowing Date</label>
+                                    <input type="date" class="form-control" id="sowingDate" name="sowingDate" required placeholder="Select sowing date">
+                                </div>
+                            </fieldset>
                         </div>
-                        <div class="mb-3">
-                            <label for="cropType" class="form-label">Crop Type</label>
-                            <input type="text" class="form-control" id="cropType" name="cropType" required placeholder="e.g. Lettuce">
+                        <div class="col-md-6 mb-4">
+                            <!-- Tray Settings Section -->
+                            <fieldset class="p-3 rounded-4 fieldset-settings h-100">
+                                <legend class="float-none w-auto px-2 fs-5 fw-bold mb-3 legend-settings">Tray Settings</legend>
+                                <div class="mb-3">
+                                    <label for="trayTemperature" class="form-label">Temperature (°C)</label>
+                                    <input type="number" class="form-control" id="trayTemperature" name="temperature" required placeholder="e.g. 22">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="trayHumidity" class="form-label">Humidity (%)</label>
+                                    <input type="number" class="form-control" id="trayHumidity" name="humidity" required placeholder="e.g. 60">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="traySolarHours" class="form-label">Daily Solar Hours</label>
+                                    <input type="number" class="form-control" id="traySolarHours" name="solarHours" required placeholder="e.g. 8">
+                                </div>
+                            </fieldset>
                         </div>
-                        <div class="mb-3">
-                            <label for="sowingDate" class="form-label">Sowing Date</label>
-                            <input type="date" class="form-control" id="sowingDate" name="sowingDate" required placeholder="Select sowing date">
-                        </div>
-                    </fieldset>
-
-                    
-                    <fieldset class="p-3 mb-4 rounded-4 fieldset-settings">
-                        <legend class="float-none w-auto px-2 fs-5 fw-bold mb-3 legend-settings">Tray Settings</legend>
-                        <div class="mb-3">
-                            <label for="trayTemperature" class="form-label">Temperature (°C)</label>
-                            <input type="number" class="form-control" id="trayTemperature" name="temperature" required placeholder="e.g. 22">
-                        </div>
-                        <div class="mb-3">
-                            <label for="trayHumidity" class="form-label">Humidity (%)</label>
-                            <input type="number" class="form-control" id="trayHumidity" name="humidity" required placeholder="e.g. 60">
-                        </div>
-                        <div class="mb-3">
-                            <label for="traySolarHours" class="form-label">Daily Solar Hours</label>
-                            <input type="number" class="form-control" id="traySolarHours" name="solarHours" required placeholder="e.g. 8">
-                        </div>
-                    </fieldset>
-
+                    </div>
                     <button type="submit" class="btn btn-success">Register Tray & Settings</button>
-                </form> -->
-<form class="my-4" autocomplete="off">
-    <img src="assets/images/user/smile-plant.png" alt="A smiling green cute plant" class="form-tray-img img-fluid">
-    <div class="row">
-        <div class="col-md-6 mb-4">
-            <!-- Tray Registration Section -->
-            <fieldset class="p-3 rounded-4 fieldset-tray h-100">
-                <legend class="float-none w-auto px-2 fs-5 mb-3 legend-tray">Tray Information</legend>
-                <div class="mb-3">
-                    <label for="trayName" class="form-label">Tray Name</label>
-                    <input type="text" class="form-control" id="trayName" name="trayName" required placeholder="Enter tray name">
-                </div>
-                <div class="mb-3">
-                    <label for="cropType" class="form-label">Crop Type</label>
-                    <input type="text" class="form-control" id="cropType" name="cropType" required placeholder="e.g. Lettuce">
-                </div>
-                <div class="mb-3">
-                    <label for="sowingDate" class="form-label">Sowing Date</label>
-                    <input type="date" class="form-control" id="sowingDate" name="sowingDate" required placeholder="Select sowing date">
-                </div>
-            </fieldset>
-        </div>
-        <div class="col-md-6 mb-4">
-            <!-- Tray Settings Section -->
-            <fieldset class="p-3 rounded-4 fieldset-settings h-100">
-                <legend class="float-none w-auto px-2 fs-5 fw-bold mb-3 legend-settings">Tray Settings</legend>
-                <div class="mb-3">
-                    <label for="trayTemperature" class="form-label">Temperature (°C)</label>
-                    <input type="number" class="form-control" id="trayTemperature" name="temperature" required placeholder="e.g. 22">
-                </div>
-                <div class="mb-3">
-                    <label for="trayHumidity" class="form-label">Humidity (%)</label>
-                    <input type="number" class="form-control" id="trayHumidity" name="humidity" required placeholder="e.g. 60">
-                </div>
-                <div class="mb-3">
-                    <label for="traySolarHours" class="form-label">Daily Solar Hours</label>
-                    <input type="number" class="form-control" id="traySolarHours" name="solarHours" required placeholder="e.g. 8">
-                </div>
-            </fieldset>
-        </div>
-    </div>
-    <button type="submit" class="btn btn-success">Register Tray & Settings</button>
-</form>
-
-
+                </form>
             </section>
 
         </main>
