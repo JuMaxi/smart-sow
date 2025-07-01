@@ -85,31 +85,7 @@ h1, h2, nav button {
     border-top: 1px solid rgba(255,255,255,0.22);
 }
 
-/* Style and position img */ 
-.smile-img {
-    position: absolute;
-    bottom: 0px;
-    right: -16px;
-    width: 75px;
-    max-width: 20%;
-    height: auto;
-    z-index: 2;
-}
-
-/* Style to the table and its container */
-/* .container {
-    max-width: 90%;
-    background: rgba(7, 22, 0, 0.452);
-    border-radius: 24px;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    padding: 2rem 1.5rem;
-    margin: 2rem auto;
-    width: 700px;
-    height: auto;
-} */
+/* Style to the table and its content */
 
 /* Make table horizontally scrolable in small screens */
 .table-responsive {
@@ -135,6 +111,7 @@ h1, h2, nav button {
     border-collapse: separate;
     border-spacing: 0;
     overflow: hidden;
+    margin-bottom: 0px;
 }
 
 .table thead {
@@ -187,21 +164,39 @@ h1, h2, nav button {
 .table .btn-info:hover i { color: #fff; }
 .table .btn-danger:hover i { color: #fff; }
 
-/* Style the form fieldset and legends */
+/* Style and position img */ 
+.smile-img {
+    position: absolute;
+    bottom: 0px;
+    right: -11px; 
+    width: 60px;
+    max-width: 20%;
+    height: auto;
+    z-index: 2;
+}
 
+/* Style the form fieldset and legends */
 .fieldset-settings {
     border: 1px solid #fff;
-
 } 
 
 .legend-settings {
     color: #fff;
 }
 
-@media (max-width: 991.98px){
-    .smile-img {
-        right: -33px; 
-    }
+#table-trays,
+.table-responsive {
+    max-width: 90%;
+    width: 1000px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    /* Add top/bottom margin for spacing */
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 1200px){
 
     /* Remove the transparency from the dropdown menu to make it more visible in screens with less than 992px */
     .dropdown-menu {

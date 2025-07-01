@@ -184,12 +184,31 @@ a[href="#register"]:hover {
     z-index: 2;
 }
 
+/* Style the form fieldset and legends */
+
+fieldset {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    /* Add top/bottom margin for spacing */
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.fieldset-settings {
+    border: 1px solid #fff;
+} 
+
+.legend-settings {
+    color: #fff;
+}
+
 @media (max-width: 991.98px){
     .glass-main {
         width: 90%;
     }
 
-    /* Take out the transparency from the dropdown menu to make it more visible in screens with less than 992px */
+    /* Remove the transparency from the dropdown menu to make it more visible in screens with less than 992px */
     .dropdown-menu {
         background: rgb(233, 236, 239);
     }

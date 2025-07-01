@@ -5,35 +5,56 @@ document.addEventListener('DOMContentLoaded', function () {
         const icon = el.querySelector('i');
         if (input.type === "password") {
             input.type = "text";
-            // Show open eye when visible
             icon.classList.remove('fa-eye-slash');
             icon.classList.add('fa-eye');
         } else {
             input.type = "password";
-            // Show closed eye when hidden
             icon.classList.remove('fa-eye');
             icon.classList.add('fa-eye-slash');
         }
     };
 
-     // Show only login form by default, hide register form
-    const forms = document.querySelectorAll('main > form, main > section > form');
-    const registerForm = forms[0];
-    const loginForm = forms[1];
+    // Utility: Check if user is logged in (adjust logic as needed)
+    function isUserLoggedIn() {
+        return !!localStorage.getItem('userLoggedIn');
+    }
 
-    if (registerForm && loginForm) {
-        registerForm.style.display = "none";
-        loginForm.style.display = "block";
+    // Show only login form if user is not logged in
+    function showLoginOnly() {
+        // Register section fieldset
+        const registerSection = document.querySelector('section fieldset');
+        // Login section form (with .my-4)
+        const loginSection = document.querySelector('section form.my-4');
 
-        // Handle "Create one" link
-        const createOneLink = loginForm.querySelector('a[href="#register"]');
-        if (createOneLink) {
+        if (!isUserLoggedIn()) {
+            if (registerSection) registerSection.style.display = "none";
+            if (loginSection) loginSection.style.display = "block";
+        } else {
+            // If logged in, you may want to hide both or redirect
+            if (registerSection) registerSection.style.display = "none";
+            if (loginSection) loginSection.style.display = "none";
+        }
+    }
+
+    // Handle "Create one" link to show register form
+    function setupCreateAccountLink() {
+        const registerSection = document.querySelector('section fieldset');
+        const loginSection = document.querySelector('section form.my-4');
+        const createOneLink = loginSection
+            ? loginSection.querySelector('a[href="#register"]')
+            : null;
+
+        if (createOneLink && registerSection && loginSection) {
             createOneLink.addEventListener('click', function (e) {
                 e.preventDefault();
-                loginForm.style.display = "none";
-                registerForm.style.display = "block";
-                registerForm.scrollIntoView({behavior: 'smooth'});
+                loginSection.style.display = "none";
+                registerSection.style.display = "block";
+                registerSection.scrollIntoView({behavior: 'smooth'});
             });
         }
     }
+
+    // Initial state: show only login if not logged in
+    showLoginOnly();
+    setupCreateAccountLink();
 });
