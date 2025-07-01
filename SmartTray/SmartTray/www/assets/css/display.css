@@ -26,7 +26,7 @@ h1, h2, nav button {
 
 /* Style the glass efect to the main section */
 .glass-main {
-    width: 80%;
+    width: 91vw;
     padding: 1rem;
     border-radius: 40px;
     background: rgba(255, 255, 255, 0.1); 
@@ -62,14 +62,14 @@ h1, h2, nav button {
 /* Style the orbit around the tray image */
 #container {
     position: relative;
-    overflow: visible;
-    width: min(80vw, 700px);
-    height: min(80vw, 700px);
-    /* max-width: 600px;
-    max-height: 600px;  */
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Always square */
+    max-width: 500px;    /* Limit max size on huge screens */
+    max-height: 80vh;    /* Limit height on very tall screens */
+    margin: 0 auto;
     transition: width 0.3s ease, height 0.3s ease;
-    padding: 0px;
-    margin: 14px auto;
+    padding: 0;
+    background: transparent;
 }
 
 #tray {
@@ -148,6 +148,7 @@ svg {
     margin-bottom: 0.5rem;
     height: 360px;
     width: 100%;
+    max-width: 180px;
 }
 
 /* Glassmorphism style for Bootstrap dropdown menu */
@@ -178,27 +179,6 @@ svg {
 
 .dropdown-menu .dropdown-divider {
     border-top: 1px solid rgba(255,255,255,0.22);
-}
-
-
-/* Responsive adjustments */
-@media (max-width: 767.98px) {
-    .glass-main {
-        width: 90%;
-    }
-    
-    #container {
-        width: min(70vw, 400px);
-        height: min(70vw, 400px);
-        margin: 20px auto;
-    }
-}
-
-@media (max-width: 575.98px) {
-    #container {
-        width: min(80vw, 300px);
-        height: min(80vw, 300px);
-    }
 }
 
 @media (max-width: 991.98px){
