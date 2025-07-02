@@ -2,7 +2,7 @@
 
 namespace SmartTray.Domain.Interfaces
 {
-    public interface ITrayDbAccess
+    public interface ITrayRepository
     {
         public Task Insert(Tray tray);
         public Task<Tray> GetLastId();

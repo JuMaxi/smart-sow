@@ -5,11 +5,11 @@ using SmartTray.Infra.Db;
 
 namespace SmartTray.Infra.DbAccess
 {
-    public class GrowthSettingsDbAccess : IGrowthSettingsDbAccess
+    public class GrowthSettingsRepository : IGrowthSettingsRepository
     {
         private readonly SmartTrayDbContext _dbContext;
 
-        public GrowthSettingsDbAccess(SmartTrayDbContext dbContext)
+        public GrowthSettingsRepository(SmartTrayDbContext dbContext)
         {
             _dbContext = dbContext;
         }

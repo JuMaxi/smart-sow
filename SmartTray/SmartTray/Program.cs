@@ -15,17 +15,19 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// The Dependency Injection to the interfaces/models
+// The Dependency Injection to the interfaces/services/repository
 builder.Services.AddTransient<IGrowthSettingsService, GrowthSettingsService>();
-builder.Services.AddTransient<IGrowthSettingsDbAccess, GrowthSettingsDbAccess>();
+builder.Services.AddTransient<IGrowthSettingsRepository, GrowthSettingsRepository>();
 builder.Services.AddTransient<IGrowthSettingsMapper, GrowthSettingsMapper>();
 builder.Services.AddTransient<ITraySensorReadingService, TraySensorReadingService>();
-builder.Services.AddTransient<ITraySensorReadingDbAccess, TraySensorReadingDbAccess>();
+builder.Services.AddTransient<ITraySensorReadingRepository, TraySensorReadingRepository>();
 builder.Services.AddTransient<ITraySensorReadingMapper, TraySensorReadingMapper>();
 builder.Services.AddTransient<ITrayService, TrayService>();
-builder.Services.AddTransient<ITrayDbAccess, TrayDbAccess>();
+builder.Services.AddTransient<ITrayRepository, TrayRepository>();
 builder.Services.AddTransient<ITrayMapper, TrayMapper>();
-
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IUserMapper, UserMapper>();
 
 // The connection to the database
 builder.Services.AddDbContext<SmartTrayDbContext>(options =>
@@ -40,6 +42,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Using this to have the /file.html after the port 7134
 app.UseDefaultFiles(new DefaultFilesOptions
 {
     FileProvider = new PhysicalFileProvider(

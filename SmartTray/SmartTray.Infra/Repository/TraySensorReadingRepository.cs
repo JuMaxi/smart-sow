@@ -5,11 +5,11 @@ using SmartTray.Infra.Db;
 
 namespace SmartTray.Infra.DbAccess
 {
-    public class TraySensorReadingDbAccess : ITraySensorReadingDbAccess
+    public class TraySensorReadingRepository : ITraySensorReadingRepository
     {
         private readonly SmartTrayDbContext _dbContext;
 
-        public TraySensorReadingDbAccess(SmartTrayDbContext dbContext)
+        public TraySensorReadingRepository(SmartTrayDbContext dbContext)
         {
             _dbContext = dbContext;
         }

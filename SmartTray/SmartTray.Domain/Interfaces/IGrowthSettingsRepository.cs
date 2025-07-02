@@ -2,7 +2,7 @@
 
 namespace SmartTray.Domain.Interfaces
 {
-    public interface IGrowthSettingsDbAccess
+    public interface IGrowthSettingsRepository
     {
         public Task Insert(GrowthSettings settings);
         public Task<GrowthSettings> GetById(int id);

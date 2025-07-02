@@ -2,7 +2,7 @@
 
 namespace SmartTray.Domain.Interfaces
 {
-    public interface ITraySensorReadingDbAccess
+    public interface ITraySensorReadingRepository
     {
         public Task Insert(TraySensorReading reading);
         public Task<TraySensorReading> GetById(int id);

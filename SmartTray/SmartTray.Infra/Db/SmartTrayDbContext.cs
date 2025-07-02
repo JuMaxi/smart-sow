@@ -11,5 +11,7 @@ namespace SmartTray.Infra.Db
         public DbSet<GrowthSettings> Settings { get; set; }
         public DbSet<TraySensorReading> TraySensorReadings { get; set; }
         public DbSet<Tray> Trays { get; set; }
+
+        public DbSet<User> Users { get; set; }
     }
 }

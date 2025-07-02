@@ -5,37 +5,44 @@ namespace SmartTray.Domain.Services
 {
     public class GrowthSettingsService : IGrowthSettingsService
     {
-        private readonly IGrowthSettingsDbAccess _growthSettingsDbAccess;
+        private readonly IGrowthSettingsRepository _growthSettingsRepository;
 
-        public GrowthSettingsService(IGrowthSettingsDbAccess growthSettingsDbAccess)
+        public GrowthSettingsService(IGrowthSettingsRepository growthSettingsDbAccess)
         {
-            _growthSettingsDbAccess = growthSettingsDbAccess;
+            _growthSettingsRepository = growthSettingsDbAccess;
         }
 
         public async Task Insert(GrowthSettings settings)
         {
-            await _growthSettingsDbAccess.Insert(settings);
+            await _growthSettingsRepository.Insert(settings);
         }
 
         public async Task<GrowthSettings> GetById(int id)
         {
-            return await _growthSettingsDbAccess.GetById(id);
+            return await _growthSettingsRepository.GetById(id);
         }
+
+        //public async Task Deacivate(int id)
+        //{ 
+        //    var tray = await _growthSettingsRepository.GetById(id);
+        //    tray.Active = false;
+        //    await _growthSettingsRepository.Update(tray);
+        //}
 
         public async Task Update(GrowthSettings settings)
         {
-            GrowthSettings toUpdate = await _growthSettingsDbAccess.GetById(settings.Id);
+            GrowthSettings toUpdate = await _growthSettingsRepository.GetById(settings.Id);
 
             toUpdate.TemperatureCelsius = settings.TemperatureCelsius;
             toUpdate.Humidity = settings.Humidity;
             toUpdate.DailySolarHours = settings.DailySolarHours;
 
-            await _growthSettingsDbAccess.Update(toUpdate);
+            await _growthSettingsRepository.Update(toUpdate);
         }
 
         public async Task Delete(int id)
         {
-            await _growthSettingsDbAccess.Delete(id);
+            await _growthSettingsRepository.Delete(id);
         }
     }
 

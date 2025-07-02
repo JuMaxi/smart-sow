@@ -5,31 +5,31 @@ namespace SmartTray.Domain.Services
 {
     public class TrayService : ITrayService
     {
-        private readonly ITrayDbAccess _trayDbAccess;
+        private readonly ITrayRepository _trayRepository;
 
-        public TrayService(ITrayDbAccess trayDbAccess)
+        public TrayService(ITrayRepository trayDbAccess)
         {
-            _trayDbAccess = trayDbAccess;
+            _trayRepository = trayDbAccess;
         }
 
         public async Task Insert(Tray tray)
         {
-            await _trayDbAccess.Insert(tray);
+            await _trayRepository.Insert(tray);
         }
 
         public async Task<Tray> GetLastId()
         {
-            return await _trayDbAccess.GetLastId();
+            return await _trayRepository.GetLastId();
         }
 
         public async Task<Tray> GetById(int id)
         {
-            return await _trayDbAccess.GetById(id);
+            return await _trayRepository.GetById(id);
         }
 
         public async Task<List<Tray>> GetAll()
         {
-            return await _trayDbAccess.GetAll();
+            return await _trayRepository.GetAll();
         }
     }
 }
