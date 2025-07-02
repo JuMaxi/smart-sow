@@ -13,7 +13,7 @@ namespace SmartTray.API.Mappers
                 Date = request.Date,
                 Temperature = request.Temperature,
                 Humidity = request.Humidity,
-                UvReading = request.UvReading,
+                UV = request.UvReading,
                 WaterAdded = request.WaterAdded,
                 UvLedsOn = request.UvLedsOn
             };
@@ -28,7 +28,7 @@ namespace SmartTray.API.Mappers
                 Date = reading.Date,
                 Temperature = reading.Temperature,
                 Humidity = reading.Humidity,
-                UvReading = reading.UvReading,
+                UvReading = reading.UV,
                 WaterAdded = reading.WaterAdded,
                 UvLedsOn = reading.UvLedsOn
             };
@@ -47,7 +47,7 @@ namespace SmartTray.API.Mappers
                     Date = reading.Date,
                     Temperature = reading.Temperature,
                     Humidity = reading.Humidity,
-                    UvReading = reading.UvReading,
+                    UvReading = reading.UV,
                     WaterAdded = reading.WaterAdded,
                     UvLedsOn = reading.UvLedsOn
                 };

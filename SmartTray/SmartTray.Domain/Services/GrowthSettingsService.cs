@@ -22,13 +22,6 @@ namespace SmartTray.Domain.Services
             return await _growthSettingsRepository.GetById(id);
         }
 
-        //public async Task Deacivate(int id)
-        //{ 
-        //    var tray = await _growthSettingsRepository.GetById(id);
-        //    tray.Active = false;
-        //    await _growthSettingsRepository.Update(tray);
-        //}
-
         public async Task Update(GrowthSettings settings)
         {
             GrowthSettings toUpdate = await _growthSettingsRepository.GetById(settings.Id);

@@ -5,8 +5,7 @@ namespace SmartTray.Domain.Interfaces
     public interface ITrayRepository
     {
         public Task Insert(Tray tray);
-        public Task<Tray> GetLastId();
-        public Task<Tray> GetById(int id);
-        public Task<List<Tray>> GetAll();
+        public Task<Tray> GetById(int id, int userId);
+        public Task<List<Tray>> GetAll(int userId);
     }
 }

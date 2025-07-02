@@ -12,24 +12,29 @@ namespace SmartTray.Domain.Services
             _trayRepository = trayDbAccess;
         }
 
-        public async Task Insert(Tray tray)
+        public async Task Insert(Tray tray, GrowthSettings settings)
         {
+            settings.Tray = tray;
             await _trayRepository.Insert(tray);
         }
 
-        public async Task<Tray> GetLastId()
+        public async Task<Tray> GetById(int id, int userId)
         {
-            return await _trayRepository.GetLastId();
+            return await _trayRepository.GetById(id, userId);
+            
         }
 
-        public async Task<Tray> GetById(int id)
+        public async Task<List<Tray>> GetAll(int userId)
         {
-            return await _trayRepository.GetById(id);
+            return await _trayRepository.GetAll(userId);
         }
 
-        public async Task<List<Tray>> GetAll()
-        {
-            return await _trayRepository.GetAll();
-        }
+
+        //public async Task Deacivate(int id)
+        //{ 
+        //    var tray = await _growthSettingsRepository.GetById(id);
+        //    tray.Active = false;
+        //    await _growthSettingsRepository.Update(tray);
+        //}
     }
 }

@@ -2,9 +2,9 @@
 {
     public class GrowthSettingsRequest
     {
-        public double Temperature { get; set; }
-        public double Humidity { get; set; }
-        public double LightTime { get; set; }
+        public int Temperature { get; set; }
+        public int Humidity { get; set; }
+        public int LightTime { get; set; }
 
     }
 }

@@ -17,7 +17,7 @@ namespace SmartTray.API.Mappers
             {
                 Name = request.Name,
                 Email = request.Email,
-                Password = request.Password,
+                //Password = request.Password,
                 Postcode = request.Postcode
             };
 
@@ -30,8 +30,8 @@ namespace SmartTray.API.Mappers
             {
                 Name = user.Name,
                 Email = user.Email,
-                Password = user.Password,
-                Postcode = user.Password
+                //Password = user.Password,
+                Postcode = user.Postcode
             };
 
             return response;

@@ -20,20 +20,15 @@ namespace SmartTray.Infra.DbAccess
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<Tray> GetLastId()
+        public async Task<Tray> GetById(int id, int userId)
         {
-            return await _dbContext.Trays.OrderByDescending(t => t.Id).FirstOrDefaultAsync();
+            return await _dbContext.Trays.Where(t => t.Id == id && t.User.Id == userId).FirstOrDefaultAsync();
         }
 
-        public async Task<Tray> GetById(int id)
+        // Fetch all user trays
+        public async Task<List<Tray>> GetAll(int userId)
         {
-            return await _dbContext.Trays.Where(t => t.Id == id).FirstOrDefaultAsync();
-        }
-
-        // Fetch all trays
-        public async Task<List<Tray>> GetAll()
-        {
-            return await _dbContext.Trays.ToListAsync();
+            return await _dbContext.Trays.Where(u => u.User.Id == userId).ToListAsync();
         }
     }
 }

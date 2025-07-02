@@ -12,7 +12,7 @@ namespace SmartTray.API.Mappers
             {
                 RegisterDate = DateTime.Now,
                 TemperatureCelsius = request.Temperature,
-                Humidity = request.Humidity,
+                Humidity = (HumidityLevel)request.Humidity,
                 DailySolarHours = request.LightTime
             };
 
@@ -25,7 +25,7 @@ namespace SmartTray.API.Mappers
             {
                 RegisterDate = settings.RegisterDate,
                 TemperatureCelsius = settings.TemperatureCelsius,
-                Humidity = settings.Humidity,
+                Humidity = (int)settings.Humidity,
                 DailySolarHours = settings.DailySolarHours
             };
 

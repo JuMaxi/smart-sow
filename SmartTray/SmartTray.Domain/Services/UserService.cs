@@ -13,9 +13,11 @@ namespace SmartTray.Domain.Services
             _userRepository = userRepository;
         }
 
+        // TODO: Before adding the user, needs to calculate hash function and generate salt
         // Method to insert a new user
         public async Task Insert(User user)
         {
+            // TODO: Before adding the user, needs to calculate hash function and generate salt
             await _userRepository.Insert(user);
         }
 
@@ -38,9 +40,9 @@ namespace SmartTray.Domain.Services
             await _userRepository.Update(toUpdate);
         }
 
-        // Insert the updatePassword method. It must have a salt and a hash function.
+        // TODO: Insert the updatePassword method. It must have a salt and a hash function.
 
-        // Insert the delete method
-        // While deleting an user account, it must delete user's trays, tray's sensor readings, tray's growth settings
+        // TODO: Insert the delete method
+        // TODO: While deleting an user account, it must delete user's trays, tray's sensor readings, tray's growth settings
     }
 }

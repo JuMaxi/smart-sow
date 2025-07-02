@@ -19,19 +19,10 @@ namespace SmartTray.Domain.Services
 
         public async Task Insert(TraySensorReading reading)
         {
-            // Fetch the last tray Id
-            Tray lastTray = await _trayService.GetLastId();
-            reading.Tray = lastTray;
-
             await _traySensorReadingRepository.Insert(reading);
         }
 
-        public async Task<TraySensorReading> GetById(int id)
-        {
-            return await _traySensorReadingRepository.GetById(id);
-        }
-
-        public async Task<List<TraySensorReading>> GetAll()
+        public async Task<List<TraySensorReading>> GetAll(int trayId)
         {
             return await _traySensorReadingRepository.GetAll();
         }
