@@ -20,6 +20,7 @@ namespace SmartTray.Infra.DbAccess
             await _dbContext.SaveChangesAsync();
         }
 
+        // Fetch tray by trayId and userId
         public async Task<Tray> GetById(int id, int userId)
         {
             return await _dbContext.Trays.Where(t => t.Id == id && t.User.Id == userId).FirstOrDefaultAsync();

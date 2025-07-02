@@ -6,15 +6,12 @@ namespace SmartTray.Domain.Services
     public class TraySensorReadingService : ITraySensorReadingService
     {
         private readonly ITraySensorReadingRepository _traySensorReadingRepository;
-        private readonly ITrayService _trayService;
-       
 
         public TraySensorReadingService(
             ITraySensorReadingRepository traySensorReadingDbAccess,
-            ITrayService trayService)
+            ITrayRepository trayRepository)
         {
             _traySensorReadingRepository = traySensorReadingDbAccess;
-            _trayService = trayService;
         }
 
         public async Task Insert(TraySensorReading reading)
@@ -24,7 +21,7 @@ namespace SmartTray.Domain.Services
 
         public async Task<List<TraySensorReading>> GetAll(int trayId)
         {
-            return await _traySensorReadingRepository.GetAll();
+            return await _traySensorReadingRepository.GetAll(trayId);
         }
     }
 }

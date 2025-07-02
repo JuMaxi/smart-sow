@@ -20,10 +20,10 @@ namespace SmartTray.Infra.DbAccess
             await _dbContext.SaveChangesAsync();
         }
         
-        // Change this method to get settings by tray Id
-        public async Task<GrowthSettings> GetById(int id)
+        // Fetch settings by tray Id
+        public async Task<GrowthSettings> GetById(int trayId)
         {
-            return await _dbContext.TraySettings.Where(s => s.Id == id).FirstOrDefaultAsync();
+            return await _dbContext.TraySettings.Where(s => s.Tray.Id == trayId).FirstOrDefaultAsync();
         }
 
         public async Task Update(GrowthSettings settings)

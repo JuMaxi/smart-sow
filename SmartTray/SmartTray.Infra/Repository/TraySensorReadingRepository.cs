@@ -19,10 +19,10 @@ namespace SmartTray.Infra.DbAccess
             await _dbContext.SaveChangesAsync();
         }
 
-        // Fetch all readings
-        public async Task<List<TraySensorReading>> GetAll()
+        // Fetch all tray readings
+        public async Task<List<TraySensorReading>> GetAll(int trayId)
         {
-            return await _dbContext.TraySensorReadings.ToListAsync();
+            return await _dbContext.TraySensorReadings.Where(t => t.Tray.Id == trayId).ToListAsync();
         }
 
         // Fetch last reading
