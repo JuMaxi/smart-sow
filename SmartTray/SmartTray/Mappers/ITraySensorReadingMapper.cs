@@ -6,8 +6,8 @@ namespace SmartTray.API.Mappers
 {
     public interface ITraySensorReadingMapper
     {
-        public TraySensorReading ConvertFromRequest(TraySensorReadingRequest request);
+        public TraySensorReading ConvertToTraySensorReading(TraySensorReadingRequest request);
         public TraySensorReadingResponse ConvertToResponse(TraySensorReading reading);
-        public List<TraySensorReadingResponse> ConvertListToResponse(List<TraySensorReading> readings);
+        public List<TraySensorReadingResponse> ConvertToResponseList(List<TraySensorReading> readings);
     }
 }

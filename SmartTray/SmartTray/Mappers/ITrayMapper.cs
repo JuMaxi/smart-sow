@@ -6,8 +6,8 @@ namespace SmartTray.API.Mappers
 {
     public interface ITrayMapper
     {
-        public Tray ConvertFromRequest(TrayRequest request);
+        public Tray ConvertToTray(TrayRequest request);
         public TrayResponse ConvertToResponse(Tray tray);
-        public List<TrayResponse> ConvertListToResponse(List<Tray> trays);
+        public List<TrayResponse> ConvertToResponseList(List<Tray> trays);
     }
 }

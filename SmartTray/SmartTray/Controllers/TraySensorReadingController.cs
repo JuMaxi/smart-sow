@@ -26,7 +26,7 @@ namespace SmartTray.API.Controllers
         [HttpPost]
         public async Task Insert(TraySensorReadingRequest readingRequest)
         {
-            await _traySensorReadingService.Insert(_traySensorReadingMapper.ConvertFromRequest(readingRequest));
+            await _traySensorReadingService.Insert(_traySensorReadingMapper.ConvertToTraySensorReading(readingRequest));
         }
 
         // This method fetch the readings by id from the database
@@ -44,7 +44,7 @@ namespace SmartTray.API.Controllers
         {
             List<TraySensorReading> readings = await _traySensorReadingService.GetAll();
 
-            return _traySensorReadingMapper.ConvertListToResponse(readings);
+            return _traySensorReadingMapper.ConvertToResponseList(readings);
         }
 
     }

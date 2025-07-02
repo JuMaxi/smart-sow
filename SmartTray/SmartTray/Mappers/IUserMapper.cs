@@ -1,4 +1,5 @@
 ﻿using SmartTray.API.Models.Requests;
+using SmartTray.API.Models.Responses;
 using SmartTray.Domain.Models;
 
 namespace SmartTray.API.Mappers
@@ -12,5 +13,13 @@ namespace SmartTray.API.Mappers
         /// <param name="request">The request model</param>
         /// <returns>User entity</returns>
         User ConvertToUser(UserRequest request);
+
+        /// <summary>
+        /// Receiving a user entity from the database (user requesting the account data for example) 
+        /// via controller (GET) and converting it to a user response before returning to the user.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>User response</returns>
+        public UserResponse ConvertToResponse(User user);
     }
 }

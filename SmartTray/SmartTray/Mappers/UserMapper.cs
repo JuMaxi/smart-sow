@@ -8,13 +8,9 @@ namespace SmartTray.API.Mappers
     {
         /*
             The controller doesn't communicate directly with the service class, it receives a request or response,
-            then these methods are below are converting it to user or user response
+            then these methods are below are converting it to user or user response. See the comments on the interfaces or controller methods.
         */
 
-        /*
-            Receiving a request from the user (Front-end -> endpoint Controller) than converting it to Entity (User model) to 
-            receive it into service and conect/work with the database (repository)
-         */
         public User ConvertToUser(UserRequest request)
         {
             User user = new()
@@ -28,10 +24,17 @@ namespace SmartTray.API.Mappers
             return user;
         }
 
-        // 
         public UserResponse ConvertToResponse(User user)
         {
+            UserResponse response = new()
+            {
+                Name = user.Name,
+                Email = user.Email,
+                Password = user.Password,
+                Postcode = user.Password
+            };
 
+            return response;
         }
     }
 }

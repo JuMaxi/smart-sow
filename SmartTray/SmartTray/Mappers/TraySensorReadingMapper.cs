@@ -6,7 +6,7 @@ namespace SmartTray.API.Mappers
 {
     public class TraySensorReadingMapper : ITraySensorReadingMapper
     {
-        public TraySensorReading ConvertFromRequest(TraySensorReadingRequest request)
+        public TraySensorReading ConvertToTraySensorReading(TraySensorReadingRequest request)
         {
             TraySensorReading reading = new()
             {
@@ -36,7 +36,7 @@ namespace SmartTray.API.Mappers
             return response;
         }
 
-        public List<TraySensorReadingResponse> ConvertListToResponse(List<TraySensorReading> readings)
+        public List<TraySensorReadingResponse> ConvertToResponseList(List<TraySensorReading> readings)
         {
             List<TraySensorReadingResponse> responses = new();
 

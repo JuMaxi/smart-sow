@@ -6,7 +6,7 @@ namespace SmartTray.API.Mappers
 {
     public class TrayMapper : ITrayMapper
     {
-        public Tray ConvertFromRequest(TrayRequest request)
+        public Tray ConvertToTray(TrayRequest request)
         {
             Tray tray = new()
             {
@@ -30,7 +30,7 @@ namespace SmartTray.API.Mappers
             return response;
         }
 
-        public List<TrayResponse> ConvertListToResponse(List<Tray> trays)
+        public List<TrayResponse> ConvertToResponseList(List<Tray> trays)
         {
             List<TrayResponse> responses = new();
 

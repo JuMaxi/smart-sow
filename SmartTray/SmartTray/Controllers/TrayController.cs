@@ -26,7 +26,7 @@ namespace SmartTray.API.Controllers
         [HttpPost]
         public async Task Insert(TrayRequest trayRequest)
         {
-            await _trayService.Insert(_trayMapper.ConvertFromRequest(trayRequest));
+            await _trayService.Insert(_trayMapper.ConvertToTray(trayRequest));
         }
 
         // This method fetch the tray by id from the database
@@ -44,7 +44,7 @@ namespace SmartTray.API.Controllers
         {
             List<Tray> trays = await _trayService.GetAll();
 
-            return _trayMapper.ConvertListToResponse(trays);
+            return _trayMapper.ConvertToResponseList(trays);
         }
     }
 }
