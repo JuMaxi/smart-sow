@@ -25,9 +25,9 @@ namespace SmartTray.Domain.Services
             await _trayRepository.Insert(tray);
         }
 
-        public async Task<Tray> GetById(int id, int userId)
+        public async Task<Tray> GetById(int trayId, int userId)
         {
-            return await _trayRepository.GetById(id, userId);
+            return await _trayRepository.GetById(trayId, userId);
             
         }
 

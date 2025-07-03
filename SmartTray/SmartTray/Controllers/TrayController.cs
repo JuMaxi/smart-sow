@@ -44,8 +44,11 @@ namespace SmartTray.API.Controllers
         public async Task<TrayResponse> GetById([FromRoute] int trayId)
         {
             Tray tray = await _trayService.GetById(trayId, GetUserId());
+            TraySettingsResponse settingsResponse = _settingsMapper.ConvertToResponse(tray.Settings);
+            TrayResponse trayResponse = _trayMapper.ConvertToResponse(tray);
+            trayResponse.settings = settingsResponse;
 
-            return _trayMapper.ConvertToResponse(tray);
+            return trayResponse;
         }
 
         // This method fetch all the trays from the database. It requires the user to be logged in
