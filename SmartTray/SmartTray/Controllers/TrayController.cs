@@ -27,9 +27,9 @@ namespace SmartTray.API.Controllers
 
         // This method saves the tray to the database
         [HttpPost]
-        public async Task Insert(TrayRequest trayRequest, TraySettingsRequest settingsRequest)
+        public async Task Insert(TrayRequest trayRequest)
         {
-            TraySettings settings = _settingsMapper.ConvertToGrowthSettings(settingsRequest);
+            TraySettings settings = _settingsMapper.ConvertToGrowthSettings(trayRequest.settings);
             await _trayService.Insert(_trayMapper.ConvertToTray(trayRequest), settings);
         }
 

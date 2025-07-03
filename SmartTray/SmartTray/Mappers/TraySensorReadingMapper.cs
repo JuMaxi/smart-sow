@@ -15,7 +15,8 @@ namespace SmartTray.API.Mappers
                 Humidity = request.Humidity,
                 UV = request.UvReading,
                 WaterAdded = request.WaterAdded,
-                UvLedsOn = request.UvLedsOn
+                UvLedsOn = request.UvLedsOn,
+                HeatingMatOn = request.HeatingMatOn
             };
 
             return reading;
@@ -30,7 +31,8 @@ namespace SmartTray.API.Mappers
                 Humidity = reading.Humidity,
                 UvReading = reading.UV,
                 WaterAdded = reading.WaterAdded,
-                UvLedsOn = reading.UvLedsOn
+                UvLedsOn = reading.UvLedsOn,
+                HeatingMatOn = reading.HeatingMatOn
             };
 
             return response;
@@ -49,7 +51,8 @@ namespace SmartTray.API.Mappers
                     Humidity = reading.Humidity,
                     UvReading = reading.UV,
                     WaterAdded = reading.WaterAdded,
-                    UvLedsOn = reading.UvLedsOn
+                    UvLedsOn = reading.UvLedsOn,
+                    HeatingMatOn = reading.HeatingMatOn
                 };
 
                 responses.Add(response);

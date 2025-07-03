@@ -8,5 +8,6 @@
         public int UvReading { get; set; }
         public bool WaterAdded { get; set; }
         public bool UvLedsOn { get; set; }
+        public bool HeatingMatOn { get; set; }
     }
 }
