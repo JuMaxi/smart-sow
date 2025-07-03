@@ -16,7 +16,8 @@ namespace SmartTray.Infra.DbAccess
 
         public async Task Insert(Tray tray)
         {
-            await _dbContext.AddAsync(tray);
+            await _dbContext.Trays.AddAsync(tray);
+            await _dbContext.TraySettings.AddAsync(tray.Settings);
             await _dbContext.SaveChangesAsync();
         }
 

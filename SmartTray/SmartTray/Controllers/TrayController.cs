@@ -35,7 +35,7 @@ namespace SmartTray.API.Controllers
         public async Task Insert(TrayRequest trayRequest)
         {
             TraySettings settings = _settingsMapper.ConvertToGrowthSettings(trayRequest.settings);
-            await _trayService.Insert(_trayMapper.ConvertToTray(trayRequest), settings);
+            await _trayService.Insert(_trayMapper.ConvertToTray(trayRequest), settings, GetUserId());
         }
 
         // This method fetch the tray by trayId from the database. It requires the user to be logged in

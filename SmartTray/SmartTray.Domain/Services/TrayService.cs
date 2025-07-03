@@ -6,15 +6,22 @@ namespace SmartTray.Domain.Services
     public class TrayService : ITrayService
     {
         private readonly ITrayRepository _trayRepository;
+        private readonly IUserRepository _userRepository;
 
-        public TrayService(ITrayRepository trayDbAccess)
+        public TrayService(
+            ITrayRepository trayDbAccess,
+            IUserRepository userRepository)
         {
             _trayRepository = trayDbAccess;
+            _userRepository = userRepository;
         }
 
-        public async Task Insert(Tray tray, TraySettings settings)
+        public async Task Insert(Tray tray, TraySettings settings, int userId)
         {
-            settings.Tray = tray;
+            User user = await _userRepository.GetById(userId);
+            tray.User = user;
+            settings.RegisterDate = DateTime.UtcNow;
+            tray.Settings = settings;
             await _trayRepository.Insert(tray);
         }
 
