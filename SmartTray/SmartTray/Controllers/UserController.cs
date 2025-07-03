@@ -8,6 +8,7 @@ using SmartTray.API.Models.Responses;
 using SmartTray.Domain.DTO;
 using SmartTray.Domain.Interfaces;
 using SmartTray.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SmartTray.API.Controllers
 {
@@ -34,20 +35,26 @@ namespace SmartTray.API.Controllers
         }
 
         // This method fetch the user data stored into the database 
-        [HttpGet("{id}")]
-        public async Task<UserResponse> GetById([FromRoute] int id)
+        [Authorize]
+        [HttpGet]
+        public async Task<UserResponse> GetById()
         {
+            int id = GetUserId();
             User user = await _userService.GetById(id);
 
             return _userMapper.ConvertToResponse(user);
         }
 
+        // This method is returning the user Id once it is authenticated. The claimtypes is a dictionary and I am using the key NameIdentifier
+        private int GetUserId() => Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
         // This method updates the user data (account)
-        [HttpPut("{id}")]
-        public async Task Update([FromRoute] int id, [FromBody] UpdateUserRequest userRequest)
+        [Authorize]
+        [HttpPut]
+        public async Task Update([FromBody] UpdateUserRequest userRequest)
         {
             UserDTO userDTO = _userMapper.ConvertToUserDTO(userRequest);
-            userDTO.Id = id;
+            userDTO.Id = GetUserId();
 
             await _userService.Update(userDTO);
         }
@@ -56,12 +63,14 @@ namespace SmartTray.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequest login)
         {
+            // If the login is ok, it will return a User and a bool success = true, If not, will return a string error message
             LoginResult result = await _userService.Login(login.Email, login.Password);
 
             if (result.Success)
             {
                 List<Claim> claim =
                 [
+                    // It is keeping the user Id in a claim dict with the key NameIdentifier
                     new (ClaimTypes.NameIdentifier, result.User.Id.ToString())
                 ];
 
@@ -74,8 +83,18 @@ namespace SmartTray.API.Controllers
             return BadRequest(result.ErrorMessage);
         }
 
-        [HttpDelete("{id}")]
-        public async Task Delete([FromRoute] int id)
+        // This method logout the user
+        [Authorize]
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpDelete]
+        public async Task Delete()
         {
             //await _userService.Delete(id);
         }
