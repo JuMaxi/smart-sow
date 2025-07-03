@@ -8,7 +8,7 @@ namespace SmartTray.Infra.Mappings
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.ToTable("Users");
+            builder.ToTable("users");
             builder.HasKey(k => k.Id);
             builder.Property(n => n.Name).IsRequired().HasMaxLength(50).HasColumnName("name");
             builder.Property(e => e.Email).IsRequired().HasMaxLength(80).HasColumnName("email");
