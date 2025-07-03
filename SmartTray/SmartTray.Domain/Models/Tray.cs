@@ -23,5 +23,7 @@
 
         // User can deactivate the tray
         public Status Status { get; set; }
+
+        public TraySettings Settings { get; set; }
     }
 }

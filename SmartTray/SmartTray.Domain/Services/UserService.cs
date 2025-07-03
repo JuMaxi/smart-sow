@@ -1,4 +1,5 @@
-﻿using SmartTray.Domain.Interfaces;
+﻿using SmartTray.Domain.DTO;
+using SmartTray.Domain.Interfaces;
 using SmartTray.Domain.Models;
 
 namespace SmartTray.Domain.Services
@@ -13,11 +14,26 @@ namespace SmartTray.Domain.Services
             _userRepository = userRepository;
         }
 
-        // TODO: Before adding the user, needs to calculate hash function and generate salt
         // Method to insert a new user
-        public async Task Insert(User user)
+        public async Task Insert(UserDTO userDTO)
         {
-            // TODO: Before adding the user, needs to calculate hash function and generate salt
+            // Calling this function that generates a randon Salt to be stored into the database for aditional safety
+            string salt = HashingHelper.GetRandomSalt();
+
+            // Calling this function that generates a hash with base in the user password. It will be stored into the database with the salt.
+            // Password is not stored into the data base
+            string hash = HashingHelper.CalculateHash(userDTO.Password + salt);
+
+            // Convert UserDTO to User
+            User user = new()
+            {
+                Name = userDTO.Name,
+                Email = userDTO.Email,
+                PasswordHash = hash,
+                Salt = salt,
+                Postcode = userDTO.Postcode
+            };
+
             await _userRepository.Insert(user);
         }
 
@@ -29,13 +45,13 @@ namespace SmartTray.Domain.Services
 
         // Method to update a user account into the data base
         // To update the password, users will have another "button" to it and a different method.
-        public async Task Update(User user)
+        public async Task Update(UserDTO userDTO)
         {
-            User toUpdate = await _userRepository.GetById(user.Id);
+            User toUpdate = await _userRepository.GetById(userDTO.Id);
 
-            toUpdate.Name = user.Name;
-            toUpdate.Email = user.Email;
-            toUpdate.Postcode = user.Postcode;
+            toUpdate.Name = userDTO.Name;
+            toUpdate.Email = userDTO.Email;
+            toUpdate.Postcode = userDTO.Postcode;
 
             await _userRepository.Update(toUpdate);
         }

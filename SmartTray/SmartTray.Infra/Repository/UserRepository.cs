@@ -41,5 +41,11 @@ namespace SmartTray.Infra.DbAccess
             _dbContext.Users.Remove(await GetById(id));
             await _dbContext.SaveChangesAsync();
         }
+
+        // Method to fetch a user by email
+        public async Task<User> GetByEmail(string email)
+        {
+            return await _dbContext.Users.Where(e => e.Email == email).FirstOrDefaultAsync();
+        }
     }
 }

@@ -2,6 +2,7 @@
 using SmartTray.API.Mappers;
 using SmartTray.API.Models.Requests;
 using SmartTray.API.Models.Responses;
+using SmartTray.Domain.DTO;
 using SmartTray.Domain.Interfaces;
 using SmartTray.Domain.Models;
 
@@ -26,7 +27,7 @@ namespace SmartTray.API.Controllers
         [HttpPost]
         public async Task Insert(UserRequest userRequest)
         {
-            await _userService.Insert(_userMapper.ConvertToUser(userRequest));
+            await _userService.Insert(_userMapper.ConvertToUserDTO(userRequest));
         }
 
         // This method fetch the user data stored into the database 
@@ -42,10 +43,10 @@ namespace SmartTray.API.Controllers
         [HttpPut("{id}")]
         public async Task Update([FromRoute] int id, [FromBody] UserRequest userRequest)
         {
-            User user = _userMapper.ConvertToUser(userRequest);
-            user.Id = id;
+            UserDTO userDTO = _userMapper.ConvertToUserDTO(userRequest);
+            userDTO.Id = id;
 
-            await _userService.Update(user);
+            await _userService.Update(userDTO);
         }
 
         [HttpDelete("{id}")]

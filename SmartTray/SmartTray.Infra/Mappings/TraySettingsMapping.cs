@@ -10,11 +10,11 @@ namespace SmartTray.Infra.Mappings
         {
             builder.ToTable("tray_settings");
             builder.HasKey(k => k.Id);
-            builder.HasOne(t => t.Tray).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(t => t.Tray).WithOne(x => x.Settings).OnDelete(DeleteBehavior.NoAction);
             builder.Property(d => d.RegisterDate).IsRequired().HasColumnName("register_date");
-            builder.Property(t => t.TemperatureCelsius).IsRequired().HasMaxLength(2).HasColumnName("temperature_celsius");
+            builder.Property(t => t.TemperatureCelsius).IsRequired().HasColumnName("temperature_celsius");
             builder.Property(h => h.Humidity).IsRequired().HasColumnName("humidity").HasDefaultValue(HumidityLevel.Disabled);
-            builder.Property(s => s.DailySolarHours).IsRequired().HasMaxLength(2).HasColumnName("daily_solar_hours");
+            builder.Property(s => s.DailySolarHours).IsRequired().HasColumnName("daily_solar_hours");
         }
     }
 }

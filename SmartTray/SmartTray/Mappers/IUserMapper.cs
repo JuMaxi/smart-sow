@@ -1,5 +1,6 @@
 ﻿using SmartTray.API.Models.Requests;
 using SmartTray.API.Models.Responses;
+using SmartTray.Domain.DTO;
 using SmartTray.Domain.Models;
 
 namespace SmartTray.API.Mappers
@@ -11,8 +12,8 @@ namespace SmartTray.API.Mappers
         /// receive it into service and conect/work with the database(repository)
         /// </summary>
         /// <param name="request">The request model</param>
-        /// <returns>User entity</returns>
-        User ConvertToUser(UserRequest request);
+        /// <returns>User dto</returns>
+        public UserDTO ConvertToUserDTO(UserRequest request);
 
         /// <summary>
         /// Receiving a user entity from the database (user requesting the account data for example) 

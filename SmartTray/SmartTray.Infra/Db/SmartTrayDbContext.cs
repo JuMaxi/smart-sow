@@ -13,5 +13,12 @@ namespace SmartTray.Infra.Db
         public DbSet<Tray> Trays { get; set; }
 
         public DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // This line scans the code for mappings and apply them
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(SmartTrayDbContext).Assembly);
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

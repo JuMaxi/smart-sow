@@ -1,5 +1,6 @@
 ﻿using SmartTray.API.Models.Requests;
 using SmartTray.API.Models.Responses;
+using SmartTray.Domain.DTO;
 using SmartTray.Domain.Models;
 
 namespace SmartTray.API.Mappers
@@ -11,13 +12,13 @@ namespace SmartTray.API.Mappers
             then these methods are below are converting it to user or user response. See the comments on the interfaces or controller methods.
         */
 
-        public User ConvertToUser(UserRequest request)
+        public UserDTO ConvertToUserDTO(UserRequest request)
         {
-            User user = new()
+            UserDTO user = new()
             {
                 Name = request.Name,
                 Email = request.Email,
-                //Password = request.Password,
+                Password = request.Password,
                 Postcode = request.Postcode
             };
 
@@ -30,7 +31,6 @@ namespace SmartTray.API.Mappers
             {
                 Name = user.Name,
                 Email = user.Email,
-                //Password = user.Password,
                 Postcode = user.Postcode
             };
 
