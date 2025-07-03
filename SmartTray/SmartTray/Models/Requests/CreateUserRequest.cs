@@ -1,6 +1,6 @@
 ﻿namespace SmartTray.API.Models.Requests
 {
-    public class UserRequest
+    public class CreateUserRequest
     {
         // User is allowed to use the name they want, no need for surname
         public string Name { get; set; }

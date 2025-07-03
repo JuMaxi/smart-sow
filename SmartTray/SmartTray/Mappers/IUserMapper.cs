@@ -13,7 +13,9 @@ namespace SmartTray.API.Mappers
         /// </summary>
         /// <param name="request">The request model</param>
         /// <returns>User dto</returns>
-        public UserDTO ConvertToUserDTO(UserRequest request);
+        public UserDTO ConvertToUserDTO(CreateUserRequest request);
+
+        public UserDTO ConvertToUserDTO(UpdateUserRequest request);
 
         /// <summary>
         /// Receiving a user entity from the database (user requesting the account data for example) 

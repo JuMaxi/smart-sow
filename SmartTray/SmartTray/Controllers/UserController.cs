@@ -25,7 +25,7 @@ namespace SmartTray.API.Controllers
 
         // This method stores the user data (creating account) to the database
         [HttpPost]
-        public async Task Insert(UserRequest userRequest)
+        public async Task Insert(CreateUserRequest userRequest)
         {
             await _userService.Insert(_userMapper.ConvertToUserDTO(userRequest));
         }
@@ -41,7 +41,7 @@ namespace SmartTray.API.Controllers
 
         // This method updates the user data (account)
         [HttpPut("{id}")]
-        public async Task Update([FromRoute] int id, [FromBody] UserRequest userRequest)
+        public async Task Update([FromRoute] int id, [FromBody] UpdateUserRequest userRequest)
         {
             UserDTO userDTO = _userMapper.ConvertToUserDTO(userRequest);
             userDTO.Id = id;
