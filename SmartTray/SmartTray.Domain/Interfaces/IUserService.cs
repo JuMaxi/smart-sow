@@ -8,5 +8,6 @@ namespace SmartTray.Domain.Interfaces
         public Task Insert(UserDTO user);
         public Task<User> GetById(int id);
         public Task Update(UserDTO userDTO);
+        public Task<LoginResult> Login(string email, string password);
     }
 }

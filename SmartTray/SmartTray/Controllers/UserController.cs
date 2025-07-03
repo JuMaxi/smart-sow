@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using SmartTray.API.Mappers;
 using SmartTray.API.Models.Requests;
 using SmartTray.API.Models.Responses;
@@ -47,6 +50,28 @@ namespace SmartTray.API.Controllers
             userDTO.Id = id;
 
             await _userService.Update(userDTO);
+        }
+
+        // This method is checking the user login (email and password).
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginRequest login)
+        {
+            LoginResult result = await _userService.Login(login.Email, login.Password);
+
+            if (result.Success)
+            {
+                List<Claim> claim =
+                [
+                    new (ClaimTypes.NameIdentifier, result.User.Id.ToString())
+                ];
+
+                var claimsId = new ClaimsIdentity(claim, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsId));
+
+                return Ok();
+            }
+            return BadRequest(result.ErrorMessage);
         }
 
         [HttpDelete("{id}")]

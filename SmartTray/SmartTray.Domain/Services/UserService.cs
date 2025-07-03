@@ -56,6 +56,26 @@ namespace SmartTray.Domain.Services
             await _userRepository.Update(toUpdate);
         }
 
+        public async Task<LoginResult> Login(string email, string password)
+        {
+            const string errorMessage = "Invalid username/password combination. Please try again.";
+
+            // Fetch user from database by email, if it is null, there is no user with this email registered
+            User user = await _userRepository.GetByEmail(email);
+
+            if (user is not null)
+            {
+                string hash = HashingHelper.CalculateHash(password + user.Salt);
+
+                if(user.PasswordHash == hash)
+                {
+                    return new LoginResult(user);
+                }
+            }
+
+            return new LoginResult(errorMessage);
+        }
+
         // TODO: Insert the updatePassword method. It must have a salt and a hash function.
 
         // TODO: Insert the delete method

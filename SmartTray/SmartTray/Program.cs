@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using SmartTray.API.Mappers;
@@ -28,6 +29,18 @@ builder.Services.AddTransient<ITrayMapper, TrayMapper>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserMapper, UserMapper>();
+
+// Enabling autentication
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(opts =>
+    {
+        opts.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        opts.SlidingExpiration = true;
+        opts.Cookie.IsEssential = true;
+        opts.Cookie.SameSite = SameSiteMode.Strict;
+    });
+
+
 
 // The connection to the database
 builder.Services.AddDbContext<SmartTrayDbContext>(options =>
