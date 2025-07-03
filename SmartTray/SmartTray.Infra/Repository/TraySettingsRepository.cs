@@ -5,28 +5,28 @@ using SmartTray.Infra.Db;
 
 namespace SmartTray.Infra.DbAccess
 {
-    public class GrowthSettingsRepository : IGrowthSettingsRepository
+    public class TraySettingsRepository : ITraySettingsRepository
     {
         private readonly SmartTrayDbContext _dbContext;
 
-        public GrowthSettingsRepository(SmartTrayDbContext dbContext)
+        public TraySettingsRepository(SmartTrayDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task Insert(GrowthSettings settings)
+        public async Task Insert(TraySettings settings)
         {
             await _dbContext.AddAsync(settings);
             await _dbContext.SaveChangesAsync();
         }
         
         // Fetch settings by tray Id
-        public async Task<GrowthSettings> GetById(int trayId)
+        public async Task<TraySettings> GetById(int trayId)
         {
             return await _dbContext.TraySettings.Where(s => s.Tray.Id == trayId).FirstOrDefaultAsync();
         }
 
-        public async Task Update(GrowthSettings settings)
+        public async Task Update(TraySettings settings)
         {
             _dbContext.TraySettings.Update(settings);
             await _dbContext.SaveChangesAsync();

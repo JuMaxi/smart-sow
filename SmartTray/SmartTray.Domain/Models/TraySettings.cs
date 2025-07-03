@@ -7,7 +7,7 @@
         MediumHumidity = 2,
         HighHumidity = 3
     }
-    public class GrowthSettings
+    public class TraySettings
     {
         public int Id { get; set; }
 

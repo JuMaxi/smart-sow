@@ -4,11 +4,11 @@ using SmartTray.Domain.Models;
 
 namespace SmartTray.API.Mappers
 {
-    public class GrowthSettingsMapper : IGrowthSettingsMapper
+    public class TraySettingsMapper : ITraySettingsMapper
     {
-        public GrowthSettings ConvertToGrowthSettings(GrowthSettingsRequest request)
+        public TraySettings ConvertToGrowthSettings(TraySettingsRequest request)
         {
-            GrowthSettings settings = new()
+            TraySettings settings = new()
             {
                 RegisterDate = DateTime.Now,
                 TemperatureCelsius = request.Temperature,
@@ -19,9 +19,9 @@ namespace SmartTray.API.Mappers
             return settings;
         }
 
-        public GrowthSettingsResponse ConvertToResponse(GrowthSettings settings)
+        public TraySettingsResponse ConvertToResponse(TraySettings settings)
         {
-            GrowthSettingsResponse response = new()
+            TraySettingsResponse response = new()
             {
                 RegisterDate = settings.RegisterDate,
                 TemperatureCelsius = settings.TemperatureCelsius,

@@ -13,12 +13,12 @@ namespace SmartTray.API.Controllers
     {
         readonly ITrayService _trayService;
         readonly ITrayMapper _trayMapper;
-        readonly IGrowthSettingsMapper _settingsMapper;
+        readonly ITraySettingsMapper _settingsMapper;
 
         public TrayController(
             ITrayService trayService,
             ITrayMapper trayMapper,
-            IGrowthSettingsMapper settingsMapper)
+            ITraySettingsMapper settingsMapper)
         {
             _trayService = trayService;
             _trayMapper = trayMapper;
@@ -27,9 +27,9 @@ namespace SmartTray.API.Controllers
 
         // This method saves the tray to the database
         [HttpPost]
-        public async Task Insert(TrayRequest trayRequest, GrowthSettingsRequest settingsRequest)
+        public async Task Insert(TrayRequest trayRequest, TraySettingsRequest settingsRequest)
         {
-            GrowthSettings settings = _settingsMapper.ConvertToGrowthSettings(settingsRequest);
+            TraySettings settings = _settingsMapper.ConvertToGrowthSettings(settingsRequest);
             await _trayService.Insert(_trayMapper.ConvertToTray(trayRequest), settings);
         }
 

@@ -1,6 +1,6 @@
 ﻿namespace SmartTray.API.Models.Responses
 {
-    public class GrowthSettingsResponse
+    public class TraySettingsResponse
     {
         public DateTime RegisterDate { get; set; }
         public int TemperatureCelsius { get; set; }

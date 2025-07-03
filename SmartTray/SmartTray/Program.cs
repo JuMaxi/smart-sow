@@ -16,9 +16,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // The Dependency Injection to the interfaces/services/repository
-builder.Services.AddTransient<IGrowthSettingsService, GrowthSettingsService>();
-builder.Services.AddTransient<IGrowthSettingsRepository, GrowthSettingsRepository>();
-builder.Services.AddTransient<IGrowthSettingsMapper, GrowthSettingsMapper>();
+builder.Services.AddTransient<ITraySettingsService, TraySettingsService>();
+builder.Services.AddTransient<ITraySettingsRepository, TraySettingsRepository>();
+builder.Services.AddTransient<ITraySettingsMapper, TraySettingsMapper>();
 builder.Services.AddTransient<ITraySensorReadingService, TraySensorReadingService>();
 builder.Services.AddTransient<ITraySensorReadingRepository, TraySensorReadingRepository>();
 builder.Services.AddTransient<ITraySensorReadingMapper, TraySensorReadingMapper>();

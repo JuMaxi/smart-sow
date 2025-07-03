@@ -3,28 +3,28 @@ using SmartTray.Domain.Models;
 
 namespace SmartTray.Domain.Services
 {
-    public class GrowthSettingsService : IGrowthSettingsService
+    public class TraySettingsService : ITraySettingsService
     {
-        private readonly IGrowthSettingsRepository _growthSettingsRepository;
+        private readonly ITraySettingsRepository _growthSettingsRepository;
 
-        public GrowthSettingsService(IGrowthSettingsRepository growthSettingsDbAccess)
+        public TraySettingsService(ITraySettingsRepository growthSettingsDbAccess)
         {
             _growthSettingsRepository = growthSettingsDbAccess;
         }
 
-        public async Task Insert(GrowthSettings settings)
+        public async Task Insert(TraySettings settings)
         {
             await _growthSettingsRepository.Insert(settings);
         }
 
-        public async Task<GrowthSettings> GetById(int id)
+        public async Task<TraySettings> GetById(int id)
         {
             return await _growthSettingsRepository.GetById(id);
         }
 
-        public async Task Update(GrowthSettings settings)
+        public async Task Update(TraySettings settings)
         {
-            GrowthSettings toUpdate = await _growthSettingsRepository.GetById(settings.Id);
+            TraySettings toUpdate = await _growthSettingsRepository.GetById(settings.Id);
 
             toUpdate.TemperatureCelsius = settings.TemperatureCelsius;
             toUpdate.Humidity = settings.Humidity;

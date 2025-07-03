@@ -8,7 +8,7 @@ namespace SmartTray.Infra.Db
         public SmartTrayDbContext(DbContextOptions<SmartTrayDbContext> options) : base(options) { }
 
         // Insert the tables to my database
-        public DbSet<GrowthSettings> TraySettings { get; set; }
+        public DbSet<TraySettings> TraySettings { get; set; }
         public DbSet<TraySensorReading> TraySensorReadings { get; set; }
         public DbSet<Tray> Trays { get; set; }
 

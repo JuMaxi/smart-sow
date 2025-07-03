@@ -4,7 +4,7 @@ namespace SmartTray.Domain.Interfaces
 {
     public interface ITrayService
     {
-        public Task Insert(Tray tray, GrowthSettings settings);
+        public Task Insert(Tray tray, TraySettings settings);
         public Task<Tray> GetById(int id, int userId);
         public Task<List<Tray>> GetAll(int userId);
     }

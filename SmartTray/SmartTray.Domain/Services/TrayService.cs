@@ -12,7 +12,7 @@ namespace SmartTray.Domain.Services
             _trayRepository = trayDbAccess;
         }
 
-        public async Task Insert(Tray tray, GrowthSettings settings)
+        public async Task Insert(Tray tray, TraySettings settings)
         {
             settings.Tray = tray;
             await _trayRepository.Insert(tray);

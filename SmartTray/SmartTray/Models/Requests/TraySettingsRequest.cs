@@ -1,6 +1,6 @@
 ﻿namespace SmartTray.API.Models.Requests
 {
-    public class GrowthSettingsRequest
+    public class TraySettingsRequest
     {
         public int Temperature { get; set; }
         public int Humidity { get; set; }
