@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SmartTray.API.Mappers;
 using SmartTray.API.Models.Requests;
 using SmartTray.API.Models.Responses;
@@ -24,8 +26,11 @@ namespace SmartTray.API.Controllers
             _trayMapper = trayMapper;
             _settingsMapper = settingsMapper;
         }
+        // This method is returning the user Id once it is authenticated. The claimtypes is a dictionary and I am using the key NameIdentifier
+        private int GetUserId() => Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
         // This method saves the tray to the database
+        [Authorize]
         [HttpPost]
         public async Task Insert(TrayRequest trayRequest)
         {
@@ -33,16 +38,18 @@ namespace SmartTray.API.Controllers
             await _trayService.Insert(_trayMapper.ConvertToTray(trayRequest), settings);
         }
 
-        // This method fetch the tray by id from the database
-        [HttpGet("{id}")]
-        public async Task<TrayResponse> GetById([FromRoute] int id)
+        // This method fetch the tray by trayId from the database. It requires the user to be logged in
+        [Authorize]
+        [HttpGet("{trayId}")]
+        public async Task<TrayResponse> GetById([FromRoute] int trayId)
         {
-            Tray tray = await _trayService.GetById(id, GetUserId());
+            Tray tray = await _trayService.GetById(trayId, GetUserId());
 
             return _trayMapper.ConvertToResponse(tray);
         }
 
-        // This method fetch all the trays from the database
+        // This method fetch all the trays from the database. It requires the user to be logged in
+        [Authorize]
         [HttpGet]
         public async Task<List<TrayResponse>> GetAll()
         {
@@ -50,7 +57,5 @@ namespace SmartTray.API.Controllers
 
             return _trayMapper.ConvertToResponseList(trays);
         }
-
-        private int GetUserId() => throw new NotImplementedException();
     }
 }
