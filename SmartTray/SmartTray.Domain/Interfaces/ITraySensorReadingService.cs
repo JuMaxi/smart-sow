@@ -4,7 +4,7 @@ namespace SmartTray.Domain.Interfaces
 {
     public interface ITraySensorReadingService
     {
-        public Task Insert(TraySensorReading reading);
-        public Task<List<TraySensorReading>> GetAll(int trayId);
+        public Task Insert(int trayId, int userId, string token, TraySensorReading reading);
+        public Task<List<TraySensorReading>> GetAll(int trayId, int userId);
     }
 }

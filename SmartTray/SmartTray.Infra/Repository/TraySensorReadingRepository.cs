@@ -20,9 +20,11 @@ namespace SmartTray.Infra.DbAccess
         }
 
         // Fetch all tray readings
-        public async Task<List<TraySensorReading>> GetAll(int trayId)
+        public async Task<List<TraySensorReading>> GetAll(int trayId, int userId)
         {
-            return await _dbContext.TraySensorReadings.Where(t => t.Tray.Id == trayId).ToListAsync();
+            return await _dbContext.TraySensorReadings
+                .Where(t => t.Tray.Id == trayId && t.Tray.User.Id == userId)
+                .ToListAsync();
         }
 
         // Fetch last reading
