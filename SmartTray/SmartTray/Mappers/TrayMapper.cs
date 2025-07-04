@@ -29,11 +29,13 @@ namespace SmartTray.API.Mappers
 
         public TrayResponse ConvertToResponse(Tray tray)
         {
+            TraySettingsResponse settingsResponse = _settingsMapper.ConvertToResponse(tray.Settings);
             TrayResponse response = new()
             {
                 Name = tray.Name,
                 CropType = tray.CropType,
-                SowingDate = tray.SowingDate
+                SowingDate = tray.SowingDate,
+                Settings = settingsResponse
             };
 
             return response;

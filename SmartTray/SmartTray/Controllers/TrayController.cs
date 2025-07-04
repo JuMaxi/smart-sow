@@ -15,17 +15,15 @@ namespace SmartTray.API.Controllers
     {
         readonly ITrayService _trayService;
         readonly ITrayMapper _trayMapper;
-        readonly ITraySettingsMapper _settingsMapper;
 
         public TrayController(
             ITrayService trayService,
-            ITrayMapper trayMapper,
-            ITraySettingsMapper settingsMapper)
+            ITrayMapper trayMapper)
         {
             _trayService = trayService;
             _trayMapper = trayMapper;
-            _settingsMapper = settingsMapper;
         }
+
         // This method is returning the user Id once it is authenticated. The claimtypes is a dictionary and I am using the key NameIdentifier
         private int GetUserId() => Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
@@ -43,9 +41,8 @@ namespace SmartTray.API.Controllers
         public async Task<TrayResponse> GetById([FromRoute] int trayId)
         {
             Tray tray = await _trayService.GetById(trayId, GetUserId());
-            TraySettingsResponse settingsResponse = _settingsMapper.ConvertToResponse(tray.Settings);
+
             TrayResponse trayResponse = _trayMapper.ConvertToResponse(tray);
-            trayResponse.settings = settingsResponse;
 
             return trayResponse;
         }
@@ -60,7 +57,7 @@ namespace SmartTray.API.Controllers
             return _trayMapper.ConvertToResponseList(trays);
         }
 
-        // This method updates the tray and its settings
+        // This method updates the tray and its settings. It requires the user to be logged in
         [Authorize]
         [HttpPut("{trayId}")]
         public async Task Update([FromRoute] int trayId, TrayRequest trayRequest)
@@ -70,7 +67,7 @@ namespace SmartTray.API.Controllers
             await _trayService.Update(tray, GetUserId());
         }
 
-        // This method update the tray status from active to inactive. 
+        // This method update the tray status from active to inactive. It requires the user to be logged in
         [Authorize]
         [HttpPut("deactivate{trayId}")]
         public async Task Deactivate([FromRoute] int trayId)
