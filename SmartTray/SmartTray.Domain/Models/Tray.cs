@@ -21,9 +21,13 @@
         // User specify the date of sowing fro having a control between sowing and time to transplant the baby plant
         public DateTime SowingDate { get; set; }
 
-        // User can deactivate the tray
+        // User can deactivate the tray. Default value it 1 active
         public Status Status { get; set; }
 
+        // The sensort settings to the tray 
         public TraySettings Settings { get; set; }
+
+        // Additional safety for inserting data to this entity
+        public string Token { get; set; }
     }
 }

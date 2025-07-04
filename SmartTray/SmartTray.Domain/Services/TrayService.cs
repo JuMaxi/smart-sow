@@ -22,6 +22,9 @@ namespace SmartTray.Domain.Services
             User user = await _userRepository.GetById(userId);
             tray.User = user;
 
+            // Generating randon Token to the tray
+            tray.Token = HashingHelper.GetRandonToken();
+
             // Needs to store the date as UTC for working properly with postgres
             tray.Settings.RegisterDate = DateTime.UtcNow;
 

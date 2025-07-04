@@ -15,6 +15,7 @@ namespace SmartTray.Infra.Mappings
             builder.Property(c => c.CropType).IsRequired().HasMaxLength(50).HasColumnName("crop_type");
             builder.Property(s => s.SowingDate).IsRequired().HasColumnName("sowing_date");
             builder.Property(st => st.Status).IsRequired().HasColumnName("status").HasDefaultValue(Status.Active);
+            builder.Property(t => t.Token).IsRequired().HasMaxLength(10).HasColumnName("token");
         }
     }
 }

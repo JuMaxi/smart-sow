@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SmartTray.API.Mappers;
 using SmartTray.API.Models.Requests;
 using SmartTray.API.Models.Responses;
@@ -14,6 +16,9 @@ namespace SmartTray.API.Controllers
         readonly ITraySensorReadingService _traySensorReadingService;
         readonly ITraySensorReadingMapper _traySensorReadingMapper;
 
+        // This method is returning the user Id once it is authenticated. The claimtypes is a dictionary and I am using the key NameIdentifier
+        private int GetUserId() => Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
         public TraySensorReadingController(
             ITraySensorReadingService traySensorReadingService,
             ITraySensorReadingMapper traySensorReadingMapper)
@@ -23,13 +28,14 @@ namespace SmartTray.API.Controllers
         }
 
         // This method saves the readings from the sensor to the database
-        [HttpPost]
-        public async Task Insert(TraySensorReadingRequest readingRequest)
+        [HttpPost("{trayId}")]
+        public async Task Insert([FromRoute] int trayId, [FromQuery] string token, TraySensorReadingRequest readingRequest)
         {
             await _traySensorReadingService.Insert(_traySensorReadingMapper.ConvertToTraySensorReading(readingRequest));
         }
 
         // This method fetch all the tray readings from the database
+        [Authorize]
         [HttpGet("{trayId}")]
         public async Task<List<TraySensorReadingResponse>> GetAll([FromRoute] int trayId)
         {
