@@ -34,8 +34,7 @@ namespace SmartTray.API.Controllers
         [HttpPost]
         public async Task Insert(TrayRequest trayRequest)
         {
-            TraySettings settings = _settingsMapper.ConvertToGrowthSettings(trayRequest.settings);
-            await _trayService.Insert(_trayMapper.ConvertToTray(trayRequest), settings, GetUserId());
+            await _trayService.Insert(_trayMapper.ConvertToTray(trayRequest), GetUserId());
         }
 
         // This method fetch the tray by trayId from the database. It requires the user to be logged in
@@ -59,6 +58,24 @@ namespace SmartTray.API.Controllers
             List<Tray> trays = await _trayService.GetAll(GetUserId());
 
             return _trayMapper.ConvertToResponseList(trays);
+        }
+
+        // This method updates the tray and its settings
+        [Authorize]
+        [HttpPut("{trayId}")]
+        public async Task Update([FromRoute] int trayId, TrayRequest trayRequest)
+        {
+            Tray tray = _trayMapper.ConvertToTray(trayRequest);
+            tray.Id = trayId;
+            await _trayService.Update(tray, GetUserId());
+        }
+
+        // This method update the tray status from active to inactive. 
+        [Authorize]
+        [HttpPut("deactivate{trayId}")]
+        public async Task Deactivate([FromRoute] int trayId)
+        {
+            await _trayService.Deactivate(trayId, GetUserId());
         }
     }
 }

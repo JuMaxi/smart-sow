@@ -34,5 +34,20 @@ namespace SmartTray.Infra.DbAccess
         {
             return await _dbContext.Trays.Where(u => u.User.Id == userId).ToListAsync();
         }
+
+        // Update tray and settings tray
+        public async Task Update(Tray tray)
+        {
+            _dbContext.Trays.Update(tray);
+            _dbContext.TraySettings.Update(tray.Settings);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        // Update tray status (deactivate)
+        public async Task UpdateStatus(Tray tray)
+        {
+            _dbContext.Trays.Update(tray);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

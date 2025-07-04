@@ -6,7 +6,7 @@ namespace SmartTray.API.Mappers
 {
     public interface ITraySettingsMapper
     {
-        public TraySettings ConvertToGrowthSettings(TraySettingsRequest request);
+        public TraySettings ConvertToTraySettings(TraySettingsRequest request);
         public TraySettingsResponse ConvertToResponse(TraySettings settings);
     }
 }

@@ -6,13 +6,22 @@ namespace SmartTray.API.Mappers
 {
     public class TrayMapper : ITrayMapper
     {
+        ITraySettingsMapper _settingsMapper;
+
+        public TrayMapper(ITraySettingsMapper settingsMapper)
+        {
+            _settingsMapper = settingsMapper;
+        }
+
         public Tray ConvertToTray(TrayRequest request)
         {
+            TraySettings settings = _settingsMapper.ConvertToTraySettings(request.settings);
             Tray tray = new()
             {
                 Name = request.Name,
                 CropType = request.CropType,
-                SowingDate = request.SowingDate
+                SowingDate = request.SowingDate,
+                Settings = settings
             };
 
             return tray;
