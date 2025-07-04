@@ -73,7 +73,8 @@
                     <legend class="float-none w-auto px-2 fs-5 fw-bold mb-3 legend-settings">Create Account
                         <i class="fa-solid fa-seedling" style="color: #012804;"></i>
                     </legend>
-                    <form>
+                    <!-- <form onsubmit="return false;"> -->
+                    <form id="registerForm">
                         <img src="assets/images/user/smile-plant.png" alt="A smiling green cute plant" class="form-account-img img-fluid">
                         <div class="mb-3">
                             <label for="registerName" class="form-label">Name</label>
@@ -91,21 +92,21 @@
                             </span>
                         </div>
                         <div class="mb-3">
-                            <label for="registerConfirmPassword" class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control" id="registerConfirmPassword" name="confirmPassword" required>
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
                         </div>
                         <div class="mb-3">
                             <label for="registerPostcode" class="form-label">Postcode</label>
                             <input type="text" class="form-control" id="registerPostcode" name="postcode" required>
                         </div>
-                        <button type="submit" class="btn btn-success">Register</button>
+                        <button type="submit" class="btn btn-success" id="submit-register">Register</button>
                     </form>
                 </fieldset>
             </section>
             
             <!-- Section to login -->
             <section>
-                <form class="my-4" autocomplete="off">
+                <form class="my-4" autocomplete="off" onsubmit="return false;">
                     <img src="assets/images/user/smile-plant.png" alt="A smiling green cute plant" class="form-login-img img-fluid">
                     <div class="mb-3">
                         <label for="loginEmail" class="form-label">Email</label>
