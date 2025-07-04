@@ -74,7 +74,7 @@
                         <i class="fa-solid fa-seedling" style="color: #012804;"></i>
                     </legend>
                     <!-- <form onsubmit="return false;"> -->
-                    <form id="registerForm">
+                    <form id="register-form">
                         <img src="assets/images/user/smile-plant.png" alt="A smiling green cute plant" class="form-account-img img-fluid">
                         <div class="mb-3">
                             <label for="registerName" class="form-label">Name</label>
@@ -106,7 +106,7 @@
             
             <!-- Section to login -->
             <section>
-                <form class="my-4" autocomplete="off" onsubmit="return false;">
+                <form class="my-4" autocomplete="off" id="login-form">
                     <img src="assets/images/user/smile-plant.png" alt="A smiling green cute plant" class="form-login-img img-fluid">
                     <div class="mb-3">
                         <label for="loginEmail" class="form-label">Email</label>
@@ -135,5 +135,17 @@
 
         <!-- JavaScript -->
         <script src="assets/js/user.js"></script>
+
+        <!-- Toast container to show the error messages to the user -->
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+            <div id="liveToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                <div class="toast-body" id="toast-body">
+                    <!-- Error message will go here -->
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
