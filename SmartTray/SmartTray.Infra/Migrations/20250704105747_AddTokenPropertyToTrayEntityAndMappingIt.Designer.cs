@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SmartTray.Infra.Db;
@@ -11,9 +12,11 @@ using SmartTray.Infra.Db;
 namespace SmartTray.Infra.Migrations
 {
     [DbContext(typeof(SmartTrayDbContext))]
-    partial class SmartTrayDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250704105747_AddTokenPropertyToTrayEntityAndMappingIt")]
+    partial class AddTokenPropertyToTrayEntityAndMappingIt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
