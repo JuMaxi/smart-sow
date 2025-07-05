@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 showToast(await response.text());
                 return;
             }
-            console.log(response);
+            
             const data = await response.json();
             // Fill the form fields with the data
             document.getElementById("registerName").value = data.name || "";
