@@ -92,6 +92,7 @@ namespace SmartTray.API.Controllers
             return Ok();
         }
 
+        // TODO - needs to delete other tables when deleting user
         [Authorize]
         [HttpDelete]
         public async Task Delete()

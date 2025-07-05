@@ -20,7 +20,7 @@ namespace SmartTray.API.Mappers
             {
                 Name = request.Name,
                 CropType = request.CropType,
-                SowingDate = request.SowingDate,
+                SowingDate = DateTime.SpecifyKind(request.SowingDate, DateTimeKind.Utc),
                 Settings = settings
             };
 
