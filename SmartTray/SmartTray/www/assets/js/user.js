@@ -53,11 +53,12 @@ document.addEventListener('DOMContentLoaded', function () {
     showLoginOnly();
     setupCreateAccountLink();
 
-    // Utility: Check if user is logged in (adjust logic as needed)
+    // Utility: Check if user is logged
     function isUserLoggedIn() {
         return !!localStorage.getItem('userLoggedIn');
     }
 
+    // Function to register a user (create account). Http post
     async function register(){
         let data = {
             name: document.getElementById("registerName").value,
@@ -90,6 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // It calls the function to register the user and prevents the form data be displayed in the query string 
     document.getElementById("register-form").addEventListener("submit", async function(event) {
         event.preventDefault();  
         await register();
@@ -125,6 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // It calls the function to user login and prevents the form data be displayed in the query string
     document.getElementById("login-form").addEventListener("submit", async function(event) {
         event.preventDefault();  
         await login();
