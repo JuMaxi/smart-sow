@@ -23,43 +23,32 @@
     </head>
     <body>
         <main class="glass-main my-4">
-            <section>
+            <!-- Section to the navbar links-->
+            <section class="container-fluid">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 p-0">
                         <nav class="navbar">
                             <div class="w-100 d-flex align-items-center justify-content-between">
                                 <!-- Brand always left -->
-                                <a href="index.html" class="navbar-brand m-1 px-3 text-white mb-sm-4">My Website Name</a>
-                                <!-- User icon always right on xs -->
-                                <div class="dropdown d-sm-none">
-                                    <a class="nav-link text-white dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa-solid fa-user fa-1x"></i>
+                                <a href="index.html" class="navbar-brand m-sm-1 px-sm-3 text-white mb-sm-4">My Website Name</a>
+                                
+                                <!-- Navbar links right -->
+                                <div class="d-flex align-items-center mb-sm-4">
+                                    <a class="nav-link text-white m-1 px-2 px-sm-3" href="index.html">
+                                        <i class="fa-solid fa-house" style="color: #ffffff;"></i>
                                     </a>
-                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                        <li><a class="dropdown-item" href="tray.html">My account</a></li>
-                                        <li><a class="dropdown-item" href="my-trays.html">My Trays</a></li>
-                                        <li><a class="dropdown-item" href="#">Logout</a></li>
-                                    </ul>
-                                </div>
-                                <!-- Navbar links right on sm+ -->
-                                <div class="d-none d-sm-flex ms-auto align-items-center mb-4">
-                                    <a class="nav-link text-white m-1 px-3" href="index.html">Home</a>
-                                    <!-- User dropdown in navbar -->
                                     <div class="dropdown">
+                                        <!-- User dropdown in navbar -->
                                         <a class="nav-link text-white dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="fa-solid fa-user fa-1x"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                             <li><a class="dropdown-item" href="my-account.html">My account</a></li>
                                             <li><a class="dropdown-item" href="my-trays.html">My Trays</a></li>
-                                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                                            <li><a class="dropdown-item" href="#" id="logout">Logout</a></li>
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- Navbar links centered below on xs -->
-                            <div class="w-100 d-flex flex-row justify-content-center align-items-center d-sm-none mt-2">
-                                <a class="nav-link text-white m-2 px-3" href="index.html">Home</a>
                             </div>
                         </nav>
                     </div>

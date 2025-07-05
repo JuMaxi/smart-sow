@@ -130,7 +130,6 @@ h1, h2, nav button {
     min-height: 400px;
     display: flex;
     align-items: center;
-   
 }
 
 /* Glassmorphism style for Bootstrap dropdown menu */
@@ -166,7 +165,7 @@ h1, h2, nav button {
 
 @media (max-width: 991.98px){
     .glass-main {
-        width: 90%;
+        width: 95%;
     }
     body {
         height: 114vh;
