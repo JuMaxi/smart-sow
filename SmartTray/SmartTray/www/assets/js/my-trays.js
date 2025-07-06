@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
         toast.show();
     }
 
-        // Function to register a tray Http post
+    // Function to update a tray Http put
     async function updateTray(id){
         let data = {
             name: document.getElementById("trayName").value,

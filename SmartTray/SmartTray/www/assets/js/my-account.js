@@ -73,4 +73,41 @@ document.addEventListener('DOMContentLoaded', async function () {
     document.getElementById("cancel").addEventListener("click", async function(event) {
         cancelEdit();
     });
+
+    // It calls the function updateUser when the user clicks the button Submit
+    document.getElementById("submit").addEventListener("click", async function(event) {
+        updateUser();
+    });
+
+    // Function to update a user Http put
+    async function updateUser(){
+        let data = {
+            name: document.getElementById("registerName").value,
+            email: document.getElementById("registerEmail").value,
+            postcode: document.getElementById("registerPostcode").value
+        };
+        
+        try {
+            const response = await fetch("/User", {
+                method: "PUT", // HTTP method
+                headers: {
+                    'Content-Type': 'application/json' // Tell the server we're sending JSON
+                },
+                body: JSON.stringify(data) // Convert JS object to JSON string
+            });
+
+            // If insert tray fail, display error message
+            if (!response.ok) {
+                showToast(await response.text());
+                return;
+            }
+
+            // If login is successful, redirect to my trays page
+            window.location.href = "my-trays.html";
+        } catch (error) {
+            //Show an error message to the user
+            showToast("Unexpected error. Please try again.");
+            console.error('Error:', error);
+        }
+    }
 });
