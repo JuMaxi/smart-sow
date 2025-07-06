@@ -71,7 +71,11 @@ document.addEventListener('DOMContentLoaded', function () {
         // Redirect to my trays page
         window.location.href = "my-trays.html";
     }
+
+    // Creating a pointer to the functions, because the HTML wasn't accessing the functions without it
+    // These functions are being called inside the fetchTrayDataList function int the buttons (actions) created via js
     document.showTrayData = showTrayData;
+    document.updateTrayStatus = updateTrayStatus;
     
     // Fetch all user trays from database and fill the view form (http GET)
     async function fetchTrayDataList() {
@@ -109,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 <a href="display-data.html?id=${data[i].id}" class="btn btn-info btn-sm me-1 text-white" data-bs-toggle="tooltip" title="View">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
-                                <a href="deactivate-tray.html?id=${data[i].id}" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Deactivate">
+                                <a href="javascript:document.updateTrayStatus(${data[i].id})" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Deactivate">
                                     <i class="fa-solid fa-ban"></i>
                                 </a>
                             </td>`;
@@ -163,6 +167,31 @@ document.addEventListener('DOMContentLoaded', function () {
                     'Content-Type': 'application/json' // Tell the server we're sending JSON
                 },
                 body: JSON.stringify(data) // Convert JS object to JSON string
+            });
+
+            // If insert tray fail, display error message
+            if (!response.ok) {
+                showToast(await response.text());
+                return;
+            }
+
+            // If login is successful, redirect to my trays page
+            window.location.href = "my-trays.html";
+        } catch (error) {
+            //Show an error message to the user
+            showToast("Unexpected error. Please try again.");
+            console.error('Error:', error);
+        }
+    }
+
+    // Function to update a tray Status Http put
+    async function updateTrayStatus(id){
+        try {
+            const response = await fetch(`/Tray/deactivate/${id}`, {
+                method: "PUT", // HTTP method
+                headers: {
+                    'Content-Type': 'application/json' // Tell the server we're sending JSON
+                },
             });
 
             // If insert tray fail, display error message

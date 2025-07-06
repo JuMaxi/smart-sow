@@ -69,7 +69,7 @@ namespace SmartTray.API.Controllers
 
         // This method update the tray status from active to inactive. It requires the user to be logged in
         [Authorize]
-        [HttpPut("deactivate{trayId}")]
+        [HttpPut("deactivate/{trayId}")]
         public async Task Deactivate([FromRoute] int trayId)
         {
             await _trayService.Deactivate(trayId, GetUserId());
