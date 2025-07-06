@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    async function showTrayData(id)
-    {
+    // This function fetchs a tray by id and enable the fields to edition by calling the function edit form
+    async function showTrayData(id){
         try {
             const response = await fetch(`/Tray/${id}`, {
                 method: "GET",
@@ -36,17 +36,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Call function to enable form edition, change legend text content, hide table trays and display form to edit
             EditForm();
+
+            // It calls the function updateTray when the user clicks the button Submit
+            document.getElementById("submit").addEventListener("click", async function(event) {
+                updateTray(id);
+            });
         }
         catch (error) {
             showToast("Unexpected error. Please try again.");
             console.error("Error", error);
         }
-        // Chamar o endpoint para pegar dados da tray
-        // Exibir a secao
-        // Popular os IDs
-        // Esconder a tabela
     }
 
+    // Function to enable form fields to edition and disable trays table container
     function EditForm(){
         // Make the section to display tray data visible
         document.getElementById("display-tray").style.display = "inline";
@@ -62,10 +64,13 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById("trayTemperature").disabled = false;
         document.getElementById("trayHumidity").disabled = false;
         document.getElementById("traySolarHours").disabled = false;
-
-
     }
 
+    // Function to return to trays table when user cancels edit
+    function cancelEdit(){
+        // Redirect to my trays page
+        window.location.href = "my-trays.html";
+    }
     document.showTrayData = showTrayData;
     
     // Fetch all user trays from database and fill the view form (http GET)
@@ -124,6 +129,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // Call the function to fetch the trays from database
     fetchTrayDataList();
 
+    // It calls the function cancel edit when the user clicks the button Cancel
+    document.getElementById("cancel").addEventListener("click", async function(event) {
+        cancelEdit();
+    });
+
     // Function to show a toast message to the user (when things doesn't work properly)
     function showToast(message) {
         const toastBody = document.getElementById('toast-body');
@@ -133,9 +143,40 @@ document.addEventListener('DOMContentLoaded', function () {
         toast.show();
     }
 
-    // Fetch user tray from data base and fill the view form http GET
-    async function fetchTrayData(id) {
+        // Function to register a tray Http post
+    async function updateTray(id){
+        let data = {
+            name: document.getElementById("trayName").value,
+            cropType: document.getElementById("cropType").value,
+            sowingDate: document.getElementById("sowingDate").value,
+            settings: {
+                temperature: document.getElementById("trayTemperature").value,
+                humidity: document.getElementById("trayHumidity").value,
+                lightTime: document.getElementById("traySolarHours").value,
+            }
+        }
         
-    }
+        try {
+            const response = await fetch(`/Tray/${id}`, {
+                method: "PUT", // HTTP method
+                headers: {
+                    'Content-Type': 'application/json' // Tell the server we're sending JSON
+                },
+                body: JSON.stringify(data) // Convert JS object to JSON string
+            });
 
+            // If insert tray fail, display error message
+            if (!response.ok) {
+                showToast(await response.text());
+                return;
+            }
+
+            // If login is successful, redirect to my trays page
+            window.location.href = "my-trays.html";
+        } catch (error) {
+            //Show an error message to the user
+            showToast("Unexpected error. Please try again.");
+            console.error('Error:', error);
+        }
+    }
 });

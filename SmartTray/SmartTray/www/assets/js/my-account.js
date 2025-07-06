@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     await fetchUserData();
 
- 
     // Function to show a toast message to the user (when things doesn't work properly)
     function showToast(message) {
         const toastBody = document.getElementById('toast-body');
