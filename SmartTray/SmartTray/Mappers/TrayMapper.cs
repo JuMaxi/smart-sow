@@ -32,6 +32,7 @@ namespace SmartTray.API.Mappers
             TraySettingsResponse settingsResponse = _settingsMapper.ConvertToResponse(tray.Settings);
             TrayResponse response = new()
             {
+                Id = tray.Id,
                 Name = tray.Name,
                 CropType = tray.CropType,
                 SowingDate = tray.SowingDate,
@@ -50,6 +51,7 @@ namespace SmartTray.API.Mappers
             {
                 TrayResponse response = new()
                 {
+                    Id = tray.Id,
                     Name = tray.Name,
                     CropType = tray.CropType,
                     SowingDate = tray.SowingDate,

@@ -6,9 +6,70 @@ document.addEventListener('DOMContentLoaded', function () {
             new bootstrap.Tooltip(tooltipTriggerEl);
         });
     }
+
+    async function showTrayData(id)
+    {
+        try {
+            const response = await fetch(`/Tray/${id}`, {
+                method: "GET",
+            });
+
+            if (!response.ok) {
+                showToast(await response.text());
+                return;
+            }
+
+            // The const data is a tray
+            const data = await response.json();
+
+            // Format the date
+            let sowingDate = new Date(data.sowingDate).toISOString().substring(0,10);
+            console.log(sowingDate);
+            
+            // Populate the section to tray edit with data
+            document.getElementById("trayName").value = data.name;
+            document.getElementById("cropType").value = data.cropType;
+            document.getElementById("sowingDate").value = sowingDate;
+            document.getElementById("trayTemperature").value = data.settings.temperatureCelsius;
+            document.getElementById("trayHumidity").value = data.settings.humidity;
+            document.getElementById("traySolarHours").value = data.settings.dailySolarHours;
+
+            // Call function to enable form edition, change legend text content, hide table trays and display form to edit
+            EditForm();
+        }
+        catch (error) {
+            showToast("Unexpected error. Please try again.");
+            console.error("Error", error);
+        }
+        // Chamar o endpoint para pegar dados da tray
+        // Exibir a secao
+        // Popular os IDs
+        // Esconder a tabela
+    }
+
+    function EditForm(){
+        // Make the section to display tray data visible
+        document.getElementById("display-tray").style.display = "inline";
+
+        // Hide the section that display all the user trays
+        document.getElementById("trays-container").style.display = "none";
+
+
+        // Enable the form fields to edit
+        document.getElementById("trayName").disabled = false;
+        document.getElementById("cropType").disabled = false;
+        document.getElementById("sowingDate").disabled = false;
+        document.getElementById("trayTemperature").disabled = false;
+        document.getElementById("trayHumidity").disabled = false;
+        document.getElementById("traySolarHours").disabled = false;
+
+
+    }
+
+    document.showTrayData = showTrayData;
     
-    // Fetch tray data and fill the form http GET
-    async function fetchTrayData() {
+    // Fetch all user trays from database and fill the view form (http GET)
+    async function fetchTrayDataList() {
         try {
             const response = await fetch("/Tray", {
                 method: "GET",
@@ -37,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             <td>${sowingDate}</td>
                             <td>${data[i].status}</td>
                             <td>
-                                <a href="edit-tray.html?id=${data[i].id}" class="btn btn-primary btn-sm me-1" data-bs-toggle="tooltip" title="Edit">
+                                <a href="javascript:document.showTrayData(${data[i].id})" class="btn btn-primary btn-sm me-1" data-bs-toggle="tooltip" title="Edit">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                                 <a href="display-data.html?id=${data[i].id}" class="btn btn-info btn-sm me-1 text-white" data-bs-toggle="tooltip" title="View">
@@ -61,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Call the function to fetch the trays from database
-    fetchTrayData();
+    fetchTrayDataList();
 
     // Function to show a toast message to the user (when things doesn't work properly)
     function showToast(message) {
@@ -72,6 +133,9 @@ document.addEventListener('DOMContentLoaded', function () {
         toast.show();
     }
 
-    
+    // Fetch user tray from data base and fill the view form http GET
+    async function fetchTrayData(id) {
+        
+    }
 
 });
