@@ -2,6 +2,7 @@
 #include <DallasTemperature.h>
 
 // Data wire is connected to GPIO4
+// The PIN 4 is used to temperature
 #define ONE_WIRE_BUS 4
 
 // Setup a oneWire instance
@@ -13,6 +14,7 @@ void setup() {
   // put your setup code here, to run once:
   pinMode(14, OUTPUT); // GPIO2 is often connected to onboard LED
   pinMode(2, OUTPUT); // This is the PIN to the UV LEDS
+  pinMode(26, OUTPUT); // This is the PIN to the Water Pump
   Serial.begin(115200);
   sensors.begin();
 }
@@ -53,6 +55,18 @@ void loop() {
   Serial.print(" | Voltage: ");
   Serial.println(" V");
 
+  // Turn on and turn off the water pump
+  if (humidityValue >= 3000) 
+  {
+    SerialPrint("Turning ON Water Pump");
+    digitalWrite(26, HIGH);
+    delay(2000);
+    SerialPrint("Turning OFF Water Pump");
+    digitalWrite(26, LOW);
+  }
+
+
+  // For reading the tempeture
   if (sensors.getDeviceCount() == 0) {
     Serial.println("No DS18B20 sensors found!");
   }
@@ -64,4 +78,5 @@ void loop() {
     float temperatureC = sensors.getTempCByIndex(0);
     Serial.println(temperatureC);
   }
+
 }
