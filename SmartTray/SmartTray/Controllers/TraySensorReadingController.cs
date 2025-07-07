@@ -28,6 +28,7 @@ namespace SmartTray.API.Controllers
         }
 
         // This method saves the readings from the sensor to the database
+        // Don't need javascript to call this endpoint, because it is the data from the sensor that goes to the database
         [HttpPost("{trayId}")]
         public async Task Insert([FromRoute] int trayId, [FromQuery] string token, TraySensorReadingRequest readingRequest)
         {
@@ -46,5 +47,13 @@ namespace SmartTray.API.Controllers
             return _traySensorReadingMapper.ConvertToResponseList(readings);
         }
 
+        [Authorize]
+        [HttpGet("{trayId}/latest")]
+        public async Task<TraySensorReadingResponse> GetLatest([FromRoute] int trayId)
+        {
+            TraySensorReading latest = await _traySensorReadingService.GetLatest(trayId, GetUserId());
+
+            return _traySensorReadingMapper.ConvertToResponse(latest);
+        }
     }
 }
