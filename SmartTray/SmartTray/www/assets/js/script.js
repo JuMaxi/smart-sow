@@ -398,10 +398,6 @@ document.addEventListener('DOMContentLoaded', function () {
         positionSunFromTime(path);
     }
 
-    renderGauge(23, "temperatureChart", temperatureGradientStops); // Call function to generate temperature chart
-    renderGauge(12, "lightChart", lightingGradientStops); // Call function to generate lighting chart
-    renderGauge(60, "moistureChart", blueGradientStops); // Call function to generate moisture chart
-
     window.onload = async () => {
         // Small delay to ensure container is properly rendered
         setTimeout(async () => {
@@ -440,4 +436,45 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 1000);
     };
 
+    // Fetch last readings data and display into chart gauges
+    async function fetchLatest() {
+        // Get id from query string
+        const params = new URLSearchParams(window.location.search);
+        const trayId = params.get('id'); // 'id' is the parameter name in the URL
+
+        if (!trayId) {
+            showToast("Tray ID not found in URL.");
+            return;
+        }
+
+        try {
+            const response = await fetch(`/TraySensorReading/${trayId}/latest`, {
+                method: "GET",
+            });
+
+            if (!response.ok) {
+                showToast(await response.text());
+                return;
+            }
+            
+            const data = await response.json();
+            // Fill the form fields with the data
+
+            renderGauge(data.temperature, "temperatureChart", temperatureGradientStops); // Call function to generate temperature chart
+            // renderGauge(12, "lightChart", lightingGradientStops); // Call function to generate lighting chart
+            // renderGauge(60, "moistureChart", blueGradientStops); // Call function to generate moisture chart
+
+
+
+            document.getElementById("registerName").value = data.name || "";
+            document.getElementById("registerEmail").value = data.email || "";
+            document.getElementById("registerPostcode").value = data.postcode || "";
+
+        } catch (error) {
+            showToast("Unexpected error. Please try again.");
+            console.error("Error", error);
+        }
+    }
+
+    fetchLatest();
 });
