@@ -1,8 +1,20 @@
+#include <OneWire.h>
+#include <DallasTemperature.h>
+
+// Data wire is connected to GPIO4
+#define ONE_WIRE_BUS 4
+
+// Setup a oneWire instance
+OneWire oneWire(ONE_WIRE_BUS);
+
+DallasTemperature sensors(&oneWire);
+
 void setup() {
   // put your setup code here, to run once:
   pinMode(14, OUTPUT); // GPIO2 is often connected to onboard LED
   pinMode(2, OUTPUT); // This is the PIN to the UV LEDS
   Serial.begin(115200);
+  sensors.begin();
 }
 
 void loop() {
@@ -17,12 +29,10 @@ void loop() {
 
   // It is reading the UV sensor
   int rawValue = analogRead(32);  // Read raw analog value
-  float voltage = rawValue * (5.0 / 1023.0);  // Convert to voltage (assuming 5V)
 
   Serial.print("UV Analog value: ");
   Serial.print(rawValue);
   Serial.print(" | Voltage: ");
-  Serial.print(voltage, 2);
   Serial.println(" V");
 
   // It is to turn on or turn off the UV light
@@ -37,13 +47,21 @@ void loop() {
   
   // It it to read the humidity
   int humidityValue = analogRead(33);
-  float voltage2 = humidityValue * (5.0 / 1023.0);
 
   Serial.print("HU analog value: ");
   Serial.print(humidityValue);
   Serial.print(" | Voltage: ");
-  Serial.print(voltage2, 2);
   Serial.println(" V");
 
-  
+  if (sensors.getDeviceCount() == 0) {
+    Serial.println("No DS18B20 sensors found!");
+  }
+  else
+  {
+    Serial.print("Temperature: ");
+    sensors.requestTemperatures(); // Send command to get temperatures
+    delay(1000);
+    float temperatureC = sensors.getTempCByIndex(0);
+    Serial.println(temperatureC);
+  }
 }
