@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SmartTray.API.Mappers;
 using SmartTray.API.Models.Requests;
 using SmartTray.API.Models.Responses;
+using SmartTray.Domain.DTO;
 using SmartTray.Domain.Interfaces;
 using SmartTray.Domain.Models;
 
@@ -47,6 +48,7 @@ namespace SmartTray.API.Controllers
             return _traySensorReadingMapper.ConvertToResponseList(readings);
         }
 
+        // This method fetch the last sensors readings from database
         [Authorize]
         [HttpGet("{trayId}/latest")]
         public async Task<TraySensorReadingResponse> GetLatest([FromRoute] int trayId)
@@ -54,6 +56,18 @@ namespace SmartTray.API.Controllers
             TraySensorReading latest = await _traySensorReadingService.GetLatest(trayId, GetUserId());
 
             return _traySensorReadingMapper.ConvertToResponse(latest);
+        }
+
+        // This method fetch daily readings from database. If the day is null, gets the current day
+        [Authorize]
+        [HttpGet("{trayId}/daily-uv-time")]
+        public async Task<TraySensorReadingDTO> GetLightHours([FromRoute] int trayId)
+        {
+            // TODO: create a method to convert a DTO to response. Return a response here, not a DTO
+            DateTime date = DateTime.Today.AddDays(-1);
+            TraySensorReadingDTO latest = await _traySensorReadingService.CalculateHoursUV(trayId, GetUserId(), date);
+
+            return latest;
         }
     }
 }

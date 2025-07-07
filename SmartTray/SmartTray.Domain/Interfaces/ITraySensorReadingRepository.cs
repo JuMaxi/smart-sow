@@ -7,5 +7,7 @@ namespace SmartTray.Domain.Interfaces
         public Task Insert(TraySensorReading reading);
         public Task<List<TraySensorReading>> GetAll(int trayId, int userId);
         public Task<TraySensorReading> GetLatest(int trayId, int userId);
+        public Task<List<TraySensorReading>> GetDayReadings(int trayId, int userId, DateTime? date);
+
     }
 }

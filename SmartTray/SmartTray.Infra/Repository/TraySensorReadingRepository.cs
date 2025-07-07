@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Npgsql.TypeMapping;
 using SmartTray.Domain.Interfaces;
 using SmartTray.Domain.Models;
 using SmartTray.Infra.Db;
@@ -27,7 +28,7 @@ namespace SmartTray.Infra.DbAccess
                 .ToListAsync();
         }
 
-        // Fetch last reading
+        // Fetch latest readings
         public async Task<TraySensorReading> GetLatest(int trayId, int userId)
         {
             return await _dbContext.TraySensorReadings.
@@ -35,8 +36,24 @@ namespace SmartTray.Infra.DbAccess
                 .OrderByDescending(d => d.Date).Take(1).FirstOrDefaultAsync();
         }
 
+        // Fetch day readings
+        public async Task<List<TraySensorReading>> GetDayReadings(int trayId, int userId, DateTime? date)
+        {
+            // Making sure it will take all day readings, regardless of the time
+            DateTime startDate = DateTime.SpecifyKind(date.Value.Date, DateTimeKind.Utc);
+            DateTime endDate = DateTime.SpecifyKind(startDate.AddDays(1), DateTimeKind.Utc);
+
+            var result = await _dbContext.TraySensorReadings
+                .Where(t => t.Tray.Id == trayId &&
+                    t.Tray.User.Id == userId &&
+                    t.Date >= startDate &&
+                    t.Date < endDate)
+                .OrderByDescending(d => d.Date)
+                .ToListAsync();
+            return result;
+        }
+
         // Future implementation
-        // Fetch readings by day?
         // Fetch reading by hour?
         // Fetch readings by month?
     }
