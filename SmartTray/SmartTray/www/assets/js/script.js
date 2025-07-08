@@ -595,4 +595,144 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Call the function to calculate light hours and generate light gauge chart
     getCalculationLightMinutes()
+
+    function renderLargeTemperatureAreaChart(domId, timestamps, temperatures) {
+        const chart = echarts.init(document.getElementById(domId));
+
+        const option = {
+            tooltip: {
+                trigger: 'axis',
+                position: function (pt) {
+                    return [pt[0], '10%'];
+                }
+            },
+            title: {
+                left: 'center',
+                text: 'Large Area Chart'
+            },
+            toolbox: {
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: timestamps
+            },
+            yAxis: {
+                type: 'value',
+                boundaryGap: [0, '100%']
+            },
+            dataZoom: [
+                {
+                    type: 'inside',
+                    start: 0,
+                    end: 10
+                },
+                {
+                    start: 0,
+                    end: 10
+                }
+            ],
+            series: [
+                {
+                    name: 'Temperature',
+                    type: 'line',
+                    symbol: 'none',
+                    sampling: 'lttb',
+                    itemStyle: {
+                        color: 'rgb(255, 70, 131)'
+                    },
+                    areaStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {
+                                offset: 0,
+                                color: 'rgb(255, 158, 68)'
+                            },
+                            {
+                                offset: 1,
+                                color: 'rgb(255, 70, 131)'
+                            }
+                        ])
+                    },
+                    data: temperatures
+                }
+            ]
+        };
+
+        chart.setOption(option);
+        window.addEventListener('resize', () => chart.resize());
+    }
+    
+    function attachChartModalEvents(config = {}) {
+        const chartIds = ['temperatureChart', 'lightChart', 'moistureChart'];
+
+        chartIds.forEach(id => {
+            const chartDiv = document.getElementById(id);
+            if (chartDiv) {
+                chartDiv.addEventListener('click', () => {
+                    // Determine modal title
+                    const labelMap = {
+                        'temperatureChart': 'Temperature Details',
+                        'lightChart': 'Light Details',
+                        'moistureChart': 'Moisture Details'
+                    };
+
+                    const modalTitle = labelMap[id] || 'Chart Details';
+                    document.getElementById('chartModalLabel').textContent = modalTitle;
+
+                    // Optional callback: dynamically update modal chart
+                    if (typeof config.onChartClick === 'function') {
+                        config.onChartClick(id);
+                    }
+
+                    // Show the modal
+                    const modal = new bootstrap.Modal(document.getElementById('chartModal'));
+                    modal.show();
+                });
+            }
+    });
+    }
+
+    // Function to testing chart 
+    const timestamps = [];
+    const temperatures = [];
+
+    let currentTime = new Date('2025-07-08T00:00:00'); // fixed start time
+    let currentTemp = 22 + Math.random() * 3;
+
+    for (let i = 0; i < 1000; i++) {
+        const hh = currentTime.getHours().toString().padStart(2, '0');
+        const mm = currentTime.getMinutes().toString().padStart(2, '0');
+        timestamps.push(`${hh}:${mm}`);
+
+        const change = (Math.random() - 0.5) * 0.8;
+        currentTemp += change;
+        temperatures.push(parseFloat(currentTemp.toFixed(2)));
+
+        currentTime = new Date(currentTime.getTime() + 5 * 60 * 1000); // advance by 5 minutes
+    }
+
+
+    // Call this once after your page loads or charts are initialized
+    attachChartModalEvents({
+        onChartClick: (chartId) => {
+            // Optional: render a chart inside the modal
+            if (chartId === 'temperatureChart') {
+                renderLargeTemperatureAreaChart('modalChartContainer', timestamps, temperatures);
+            } else if (chartId === 'lightChart') {
+                renderLargeTemperatureAreaChart('modalChartContainer', ['10:00', '10:10'], [300, 320]);
+            } else if (chartId === 'moistureChart') {
+                renderLargeTemperatureAreaChart('modalChartContainer', ['10:00', '10:10'], [40, 38]);
+            }
+        }
+    });
+
+
+    
 });
