@@ -31,8 +31,9 @@ namespace SmartTray.Infra.DbAccess
         // Fetch latest readings
         public async Task<TraySensorReading> GetLatest(int trayId, int userId)
         {
-            return await _dbContext.TraySensorReadings.
-                Where(t => t.Tray.Id == trayId && t.Tray.User.Id == userId)
+            return await _dbContext.TraySensorReadings
+                .Include(t => t.Tray)
+                .Where(t => t.Tray.Id == trayId && t.Tray.User.Id == userId)
                 .OrderByDescending(d => d.Date).Take(1).FirstOrDefaultAsync();
         }
 

@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ];
 
     // Function to generate gauge chart
-    function renderGauge(value, id, colors) {
+    function renderGauge(value, id, colors, max, unit) {
         var chartDom = document.getElementById(id);
         if (chartDom) {
             var myChart = echarts.init(chartDom);
@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         startAngle: 224,
                         endAngle: -44,
                         min: 0,
-                        max: 40,
+                        max: max,
                         splitNumber: 4,
                         axisLine: {
                             lineStyle: {
@@ -268,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         },
                         detail: {
                             valueAnimation: true,
-                            formatter: '{value} °C',
+                            formatter: `{value} ${unit}`,
                             color: '#fff',
                             fontSize: 20,
                         },
@@ -460,15 +460,9 @@ document.addEventListener('DOMContentLoaded', function () {
             const data = await response.json();
             // Fill the form fields with the data
 
-            renderGauge(data.temperature, "temperatureChart", temperatureGradientStops); // Call function to generate temperature chart
+            renderGauge(data.temperature, "temperatureChart", temperatureGradientStops, 40, "°C"); // Call function to generate temperature chart
             // renderGauge(12, "lightChart", lightingGradientStops); // Call function to generate lighting chart
             // renderGauge(60, "moistureChart", blueGradientStops); // Call function to generate moisture chart
-
-
-
-            document.getElementById("registerName").value = data.name || "";
-            document.getElementById("registerEmail").value = data.email || "";
-            document.getElementById("registerPostcode").value = data.postcode || "";
 
         } catch (error) {
             showToast("Unexpected error. Please try again.");
@@ -477,4 +471,33 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     fetchLatest();
+
+    async function getCalculationLightMinutes(){
+        const params = new URLSearchParams(window.location.search);
+        const trayId = params.get('id'); // 'id' is the parameter name in the URL
+
+        try {
+            const response = await fetch(`/TraySensorReading/${trayId}/daily-uv-time`, {
+                method: "GET",
+            });
+
+            if (!response.ok) {
+                showToast(await response.text());
+                return;
+            }
+            
+            const data = await response.json();
+            // Fill the form fields with the data
+
+            hours = Math.floor(data.dailyLightMinutes / 60) + (data.dailyLightMinutes % 60) / 100;
+            console.log(hours);
+            
+            renderGauge(hours, "lightChart", lightingGradientStops, (data.targetLightMinutes/60), "h"); // Call function to generate lighting chart
+        } catch (error) {
+            showToast("Unexpected error. Please try again.");
+            console.error("Error", error);
+        }
+    }
+
+    getCalculationLightMinutes()
 });

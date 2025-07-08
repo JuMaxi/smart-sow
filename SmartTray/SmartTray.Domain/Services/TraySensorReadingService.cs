@@ -58,10 +58,10 @@ namespace SmartTray.Domain.Services
         }
 
         // Calculate total hours light 
-        public async Task<TraySensorReadingDTO> CalculateHoursUV(int trayId, int userId, DateTime? date)
+        public async Task<TraySensorReadingDTO> CalculateLightTime(int userId, TraySensorReading latest)
         {
             // Fetch the tray and settings to find the daily solar hours target(setting)
-            Tray tray = await _trayRepository.GetById(trayId, userId);
+            Tray tray = await _trayRepository.GetById(latest.Tray.Id, userId);
 
             // The target solar daily hours from tray settings
             int targetSolarLight = tray.Settings.DailySolarHours;
@@ -70,7 +70,7 @@ namespace SmartTray.Domain.Services
             int targetSolarLightMinutes = targetSolarLight * 60;
 
             // Get the daily readings
-            List<TraySensorReading> dailyReadings = await GetDayReadings(trayId, userId, date);
+            List<TraySensorReading> dailyReadings = await GetDayReadings(latest.Tray.Id, userId, latest.Date);
 
             // Calculate the span time minutes between readings
             int spanTimeMinutes = dailyReadings[0].Date.Minute - dailyReadings[1].Date.Minute;

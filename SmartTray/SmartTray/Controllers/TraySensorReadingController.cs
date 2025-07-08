@@ -61,13 +61,13 @@ namespace SmartTray.API.Controllers
         // This method fetch daily readings from database. If the day is null, gets the current day
         [Authorize]
         [HttpGet("{trayId}/daily-uv-time")]
-        public async Task<TraySensorReadingDTOResponse> GetLightHours([FromRoute] int trayId)
+        public async Task<TraySensorReadingDTOResponse> GetDailyLightTime([FromRoute] int trayId)
         {
-            DateTime date = DateTime.Today.AddDays(-1);
+            TraySensorReading latest = await _traySensorReadingService.GetLatest(trayId, GetUserId());
 
-            TraySensorReadingDTO latest = await _traySensorReadingService.CalculateHoursUV(trayId, GetUserId(), date);
+            TraySensorReadingDTO lightTime = await _traySensorReadingService.CalculateLightTime(GetUserId(), latest);
 
-            return _traySensorReadingMapper.ConvertToDTOResponse(latest);
+            return _traySensorReadingMapper.ConvertToDTOResponse(lightTime);
 
         }
     }
