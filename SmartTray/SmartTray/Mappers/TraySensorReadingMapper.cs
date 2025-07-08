@@ -1,5 +1,6 @@
 ﻿using SmartTray.API.Models.Requests;
 using SmartTray.API.Models.Responses;
+using SmartTray.Domain.DTO;
 using SmartTray.Domain.Models;
 
 namespace SmartTray.API.Mappers
@@ -58,6 +59,20 @@ namespace SmartTray.API.Mappers
                 responses.Add(response);
             }
             return responses;
+        }
+
+        public TraySensorReadingDTOResponse ConvertToDTOResponse(TraySensorReadingDTO readings)
+        {
+            TraySensorReadingDTOResponse response = new()
+            {
+                TargetLightMinutes = readings.TargetLightMinutes,
+                DailyLightMinutes = readings.DailyLightMinutes,
+                ArtificialLightMinutes = readings.ArtificialLightMinutes,
+                SolarLightMinutes = readings.SolarLightMinutes,
+                RemainingLightMinutes = readings.RemainingLightMinutes,
+            };
+
+            return response;
         }
     }
 }

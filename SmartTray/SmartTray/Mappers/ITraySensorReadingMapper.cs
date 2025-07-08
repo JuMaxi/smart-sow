@@ -1,5 +1,6 @@
 ﻿using SmartTray.API.Models.Requests;
 using SmartTray.API.Models.Responses;
+using SmartTray.Domain.DTO;
 using SmartTray.Domain.Models;
 
 namespace SmartTray.API.Mappers
@@ -9,5 +10,6 @@ namespace SmartTray.API.Mappers
         public TraySensorReading ConvertToTraySensorReading(TraySensorReadingRequest request);
         public TraySensorReadingResponse ConvertToResponse(TraySensorReading reading);
         public List<TraySensorReadingResponse> ConvertToResponseList(List<TraySensorReading> readings);
+        public TraySensorReadingDTOResponse ConvertToDTOResponse(TraySensorReadingDTO readings);
     }
 }
