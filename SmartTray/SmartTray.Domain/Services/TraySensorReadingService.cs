@@ -106,7 +106,7 @@ namespace SmartTray.Domain.Services
             }
 
             // Find how many light min is missing to the tray complet the target min
-            double remainingMin = targetSolarLightMinutes - minutes;
+            int remainingMinutes = targetSolarLightMinutes - minutes;
 
             // Populating the DTO with the relevant information to call the end point to the chart in the front end via js
             TraySensorReadingDTO ligthData = new()
@@ -115,10 +115,11 @@ namespace SmartTray.Domain.Services
                 DailyLightMinutes = minutes,
                 ArtificialLightMinutes = artificialLightMinutes,
                 SolarLightMinutes = solarLightMinutes,
-                RemainingLightMinutes = remainingMin
+                RemainingLightMinutes = remainingMinutes
             };
   
             return ligthData;
         }
+
     }
 }

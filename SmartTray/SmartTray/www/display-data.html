@@ -60,22 +60,23 @@
                     <div class="col-12 col-xl-6 d-flex flex-column justify-content-center">
                         <div class="row my-4">
                             <div class="col-12 mx-3">
-                                <h1>Plant Name</h1>
-                                <p>Last reading</p>
+                                <h1 id="trayName" class="my-3"></h1>
+                                <h2 id="cropType" class="my-3"></h2>
+                                <p id="lastReading" class="my-1"></p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-sm-4 d-flex flex-column justify-content-center align-items-center chart-parent">
                                 <div id="temperatureChart" class="gauge-charts"></div>
-                                <p>Expected</p>
+                                <p id="targetTemperature"></p>
                             </div>
                             <div class="col-12 col-sm-4 d-flex flex-column justify-content-center align-items-center chart-parent">
                                 <div id="lightChart" class="gauge-charts"></div>
-                                <p>Expected</p>
+                                <p id="targetLight"></p>
                             </div>
                             <div class="col-12 col-sm-4 d-flex flex-column justify-content-center align-items-center chart-parent">
                                 <div id="moistureChart" class="gauge-charts"></div>
-                                <p>Expected</p>
+                                <p id="targetHumidity"></p>
                             </div>
                         </div>
                     </div>

@@ -436,6 +436,82 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 1000);
     };
 
+    async function fetchTray(trayId){
+        try {
+            // Using the path (query string) to my endpoint get
+            const response = await fetch(`/Tray/${trayId}`, {
+                method: "GET",
+            });
+
+            if (!response.ok) {
+                showToast(await response.text());
+                return;
+            }
+
+            // The tray fecthed from database
+            const data = await response.json();
+
+            // Insert name tray and crop type to the frontend (above the charts)    
+            document.getElementById("trayName").textContent = `${data.name}`;
+            document.getElementById("cropType").innerHTML = 
+                `<i class="fa-brands fa-pagelines" style="color: #1a2e05;"></i>
+                ${data.cropType}`;
+
+            // Display temperature target in the front end (below the chart)
+            document.getElementById("targetTemperature").innerHTML = 
+                `<i class="fa-solid fa-temperature-three-quarters" style="color: #e70d0d;"></i>
+                Target: ${data.settings.temperatureCelsius}°C`;
+            
+            // Display light target in the front end (below the chart)
+            document.getElementById("targetLight").innerHTML =
+                `<i class="fa-solid fa-sun" style="color: #FFD43B;"></i>
+                Target: ${data.settings.dailySolarHours}h`;
+
+            // Display humidity target in the front end (below the chart)
+
+            let humidity = interpretHumiditySettingsToUser(data.settings.humidity);
+            document.getElementById("targetHumidity").innerHTML = 
+                `<i class="fa-solid fa-droplet" style="color: #74C0FC;"></i>
+                Target: ${humidity}`;
+
+        } catch (error) {
+            showToast("Unexpected error. Please try again.");
+            console.error("Error", error);
+        }
+    }
+
+    // Function to return a compreensivel target humidity to the user in the front end
+    function interpretHumiditySettingsToUser(humidity){
+        if (humidity === 0){
+            return "Inactive";
+        }
+        if (humidity === 1) {
+            return "Low 25% to 50%";
+        }
+        if (humidity === 2){
+            return "Medium 50% to 75%";
+        }
+        if (humidity === 3){
+            return "High 75% to 100%";
+        }
+    }
+
+    // Formate date to dd/mm/yyyy hh:mm:ss
+    function formatDate(date){
+        const dateObj = new Date(date);
+        const formattedDate = dateObj.toLocaleString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+
+        return formattedDate;
+    }
+
     // Fetch last readings data and display into chart gauges
     async function fetchLatest() {
         // Get id from query string
@@ -447,7 +523,10 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
+        fetchTray(trayId);
+
         try {
+            // Using the path (query string) to my endpoint get
             const response = await fetch(`/TraySensorReading/${trayId}/latest`, {
                 method: "GET",
             });
@@ -457,12 +536,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
             
+            // The latest sensor readings fecthed from database
             const data = await response.json();
-            // Fill the form fields with the data
 
-            renderGauge(data.temperature, "temperatureChart", temperatureGradientStops, 40, "°C"); // Call function to generate temperature chart
-            // renderGauge(12, "lightChart", lightingGradientStops); // Call function to generate lighting chart
-            // renderGauge(60, "moistureChart", blueGradientStops); // Call function to generate moisture chart
+            // Call function to format data to dd/mm/yyyy hh:mm:ss
+            let date = formatDate(data.date);
+
+            // Insert date last reading to the frontend (above charts)
+            document.getElementById("lastReading").innerHTML = 
+                `<i class="fa-solid fa-clock" style="color: #301b03;"></i>
+                Last reading: ${date}`;
+
+            // Call function to generate temperature chart
+            renderGauge(data.temperature, "temperatureChart", temperatureGradientStops, 40, "°C"); 
+
+            // 3100 is the max reading the sensor reads - it means dry, no humidity
+            let percentage = (3100 - data.humidity) / 10
+
+            // Call function to generate moisture chart
+            renderGauge(percentage, "moistureChart", blueGradientStops, 100, "%"); 
 
         } catch (error) {
             showToast("Unexpected error. Please try again.");
@@ -472,6 +564,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     fetchLatest();
 
+    // Function to get calculation hours light and call the function to generate light gauge chart
     async function getCalculationLightMinutes(){
         const params = new URLSearchParams(window.location.search);
         const trayId = params.get('id'); // 'id' is the parameter name in the URL
@@ -489,15 +582,17 @@ document.addEventListener('DOMContentLoaded', function () {
             const data = await response.json();
             // Fill the form fields with the data
 
+            // Converting minutes to hours
             hours = Math.floor(data.dailyLightMinutes / 60) + (data.dailyLightMinutes % 60) / 100;
-            console.log(hours);
             
-            renderGauge(hours, "lightChart", lightingGradientStops, (data.targetLightMinutes/60), "h"); // Call function to generate lighting chart
+            // Generate light gauge chart
+            renderGauge(hours, "lightChart", lightingGradientStops, (data.targetLightMinutes/60), "h");
         } catch (error) {
             showToast("Unexpected error. Please try again.");
             console.error("Error", error);
         }
     }
 
+    // Call the function to calculate light hours and generate light gauge chart
     getCalculationLightMinutes()
 });

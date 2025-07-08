@@ -58,7 +58,10 @@ namespace SmartTray.API.Controllers
             return _traySensorReadingMapper.ConvertToResponse(latest);
         }
 
-        // This method fetch daily readings from database. If the day is null, gets the current day
+        /*
+         * This method receives the latest sensors readings from database then call a function into the
+         * service to calculate the light time the tray received over the day
+         */
         [Authorize]
         [HttpGet("{trayId}/daily-uv-time")]
         public async Task<TraySensorReadingDTOResponse> GetDailyLightTime([FromRoute] int trayId)
