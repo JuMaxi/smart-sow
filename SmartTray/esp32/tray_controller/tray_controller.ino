@@ -20,15 +20,20 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  Serial.println("Turning ON");
-  digitalWrite(14, HIGH); // Turn LED on
-  delay(500);
-  Serial.println("Turning OFF");
-  digitalWrite(14, LOW);  // Turn LED off
-  delay(500);
 
+  // Call the function that is conected to the sensor to reading the UV light
+  readUV();
 
+  // Call the function that is conected to the sensor to reading the humidity
+  readHumidity();
+  
+  // Call the function that is conected to the sensor to reading the temperature
+  readTemperature();
+}
+
+// Function to the UV light sensor
+void readUV() 
+{
   // It is reading the UV sensor
   int rawValue = analogRead(32);  // Read raw analog value
 
@@ -46,7 +51,11 @@ void loop() {
     Serial.println("Turning OFF UV Leds");
     digitalWrite(2, LOW);
   }
-  
+}
+
+// Function to the humidity sensor
+void readHumidity() 
+{
   // It it to read the humidity
   int humidityValue = analogRead(33);
 
@@ -58,16 +67,19 @@ void loop() {
   // Turn on and turn off the water pump
   if (humidityValue >= 3000) 
   {
-    SerialPrint("Turning ON Water Pump");
+    Serial.println("Turning ON Water Pump");
     digitalWrite(26, HIGH);
     delay(2000);
-    SerialPrint("Turning OFF Water Pump");
+    Serial.println("Turning OFF Water Pump");
     digitalWrite(26, LOW);
   }
+}
 
-
-  // For reading the tempeture
-  if (sensors.getDeviceCount() == 0) {
+// Function to the temperature sensor
+void readTemperature()
+{
+  if (sensors.getDeviceCount() == 0) 
+  {
     Serial.println("No DS18B20 sensors found!");
   }
   else
@@ -78,5 +90,4 @@ void loop() {
     float temperatureC = sensors.getTempCByIndex(0);
     Serial.println(temperatureC);
   }
-
 }
