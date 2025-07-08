@@ -1,5 +1,10 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include "secrets.h"
+#define API_HOST "http://192.168.10.26:5126" // The IP changes with the connection and the port is the one that visual studio display in the console when running the code
+#define READS_FREQUENCY 60000 // 1 min = 60000 miliseconds
+#define TRAY_ID "3"
+#define TOKEN "HYGERR"
 
 // Data wire is connected to GPIO4
 // The PIN 4 is used to temperature
