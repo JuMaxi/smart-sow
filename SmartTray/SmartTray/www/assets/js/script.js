@@ -699,40 +699,56 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     }
 
-    // Function to testing chart 
-    const timestamps = [];
-    const temperatures = [];
+    // This function is calling the endpoint from the backend to fetch all sensor readings to the tray selected
+    async function fetchTraySensorReadings(){
+        // Get id from query string
+        const params = new URLSearchParams(window.location.search);
+        const trayId = params.get('id'); // 'id' is the parameter name in the URL
 
-    let currentTime = new Date('2025-07-08T00:00:00'); // fixed start time
-    let currentTemp = 22 + Math.random() * 3;
+        try {
+            // Using the path (query string) to my endpoint get
+            const response = await fetch(`/TraySensorReading/${trayId}`, {
+                method: "GET",
+            });
 
-    for (let i = 0; i < 1000; i++) {
-        const hh = currentTime.getHours().toString().padStart(2, '0');
-        const mm = currentTime.getMinutes().toString().padStart(2, '0');
-        timestamps.push(`${hh}:${mm}`);
-
-        const change = (Math.random() - 0.5) * 0.8;
-        currentTemp += change;
-        temperatures.push(parseFloat(currentTemp.toFixed(2)));
-
-        currentTime = new Date(currentTime.getTime() + 5 * 60 * 1000); // advance by 5 minutes
-    }
-
-
-    // Call this once after your page loads or charts are initialized
-    attachChartModalEvents({
-        onChartClick: (chartId) => {
-            // Optional: render a chart inside the modal
-            if (chartId === 'temperatureChart') {
-                renderLargeTemperatureAreaChart('modalChartContainer', timestamps, temperatures);
-            } else if (chartId === 'lightChart') {
-                renderLargeTemperatureAreaChart('modalChartContainer', ['10:00', '10:10'], [300, 320]);
-            } else if (chartId === 'moistureChart') {
-                renderLargeTemperatureAreaChart('modalChartContainer', ['10:00', '10:10'], [40, 38]);
+            if (!response.ok) {
+                showToast(await response.text());
+                return;
             }
+
+            // The tray fecthed from database
+            const data = await response.json();
+
+            const timestamps = [];
+            const temperatures = [];
+            const humidity = [];
+            const uvLight = [];
+
+            for(let i = 0; i < data.length; i++){
+                timestamps.push(data[i].date);
+                temperatures.push(data[i].temperature);
+                humidity.push(data[i].humidity);
+                uvLight.push(data[i].uvReading);
+            }
+
+             // Call this once after your page loads or charts are initialized
+            attachChartModalEvents({
+                onChartClick: (chartId) => {
+                    // Optional: render a chart inside the modal
+                    if (chartId === 'temperatureChart') {
+                        renderLargeTemperatureAreaChart('modalChartContainer', timestamps, temperatures);
+                    } else if (chartId === 'lightChart') {
+                        renderLargeTemperatureAreaChart('modalChartContainer', timestamps, humidity);
+                    } else if (chartId === 'moistureChart') {
+                        renderLargeTemperatureAreaChart('modalChartContainer', timestamps, uvLight);
+                    }
+                }
+            });
+
+        } catch (error) {
+            showToast("Unexpected error. Please try again.");
+            console.error("Error", error);
         }
-    });
-
-
-    
+    }
+    fetchTraySensorReadings();
 });

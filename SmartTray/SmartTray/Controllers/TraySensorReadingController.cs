@@ -38,7 +38,7 @@ namespace SmartTray.API.Controllers
             await _traySensorReadingService.Insert(trayId, GetUserId(), token, readings);
         }
 
-        // This method fetch all the tray readings from the database
+        // This method fetch all the tray sensor readings from the database
         [Authorize]
         [HttpGet("{trayId}")]
         public async Task<List<TraySensorReadingResponse>> GetAll([FromRoute] int trayId)
