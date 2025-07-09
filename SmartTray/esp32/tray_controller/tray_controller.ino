@@ -6,10 +6,10 @@
 #include <ArduinoJson.h>
 
 // Configuration
-#define API_HOST "http://192.168.10.26:5216" // The IP changes with the connection and the port is the one that visual studio display in the console when running the code
+#define API_HOST "http://192.168.10.26:5000" // The IP changes with the connection and the port is the one that visual studio display in the console when running the code
 #define READS_FREQUENCY 60000 // 1 min = 60000 miliseconds
 #define TRAY_ID "4"
-#define TOKEN "Psd83uk58e"
+
 
 // URL
 String getUrl = String(API_HOST) + "/Tray/" + TRAY_ID + "/arduino" + "?token=" + TOKEN;
@@ -66,7 +66,7 @@ void setup() {
       Serial.println(response);
 
       // Parse JSON
-      StaticJsonDocument<256> doc;
+      StaticJsonDocument<512> doc;
       DeserializationError error = deserializeJson(doc, response);
 
       // If the data was fetched, we have here a dict 

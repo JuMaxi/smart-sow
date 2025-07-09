@@ -496,7 +496,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Formate date to dd/mm/yyyy hh:mm:ss
+    // Format date to dd/mm/yyyy hh:mm:ss
     function formatDate(date){
         const dateObj = new Date(date);
         const formattedDate = dateObj.toLocaleString('en-GB', {
@@ -719,22 +719,26 @@ document.addEventListener('DOMContentLoaded', function () {
             // The tray fecthed from database
             const data = await response.json();
 
+            // These arrays are used to store to date/time and readinds to temperatute, humidity and uvLight
             const timestamps = [];
             const temperatures = [];
             const humidity = [];
             const uvLight = [];
 
+            // Itirating the data variable to get the data and readings and then store these in the variables above
             for(let i = 0; i < data.length; i++){
-                timestamps.push(data[i].date);
+
+                // Format date to dd/mm/yyyy hh:mm:ss
+                timestamps.push(formatDate(data[i].date));
                 temperatures.push(data[i].temperature);
                 humidity.push(data[i].humidity);
                 uvLight.push(data[i].uvReading);
             }
 
-             // Call this once after your page loads or charts are initialized
+            // Call this once after your page loads or charts are initialized
             attachChartModalEvents({
                 onChartClick: (chartId) => {
-                    // Optional: render a chart inside the modal
+                    // Render a chart inside the modal
                     if (chartId === 'temperatureChart') {
                         renderLargeTemperatureAreaChart('modalChartContainer', timestamps, temperatures);
                     } else if (chartId === 'lightChart') {
