@@ -47,6 +47,17 @@ namespace SmartTray.API.Controllers
             return trayResponse;
         }
 
+        // This method fetch the tray by trayId from the database. It requires the user to be logged in
+        [HttpGet("{trayId}/arduino")]
+        public async Task<TrayResponse> GetByIdToArduino([FromRoute] int trayId, string token)
+        {
+            Tray tray = await _trayService.GetByIdToArduino(trayId, token);
+
+            TrayResponse trayResponse = _trayMapper.ConvertToResponse(tray);
+
+            return trayResponse;
+        }
+
         // This method fetch all the trays from the database. It requires the user to be logged in
         [Authorize]
         [HttpGet]
