@@ -742,9 +742,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (chartId === 'temperatureChart') {
                         renderLargeTemperatureAreaChart('modalChartContainer', timestamps, temperatures);
                     } else if (chartId === 'lightChart') {
-                        renderLargeTemperatureAreaChart('modalChartContainer', timestamps, humidity);
+                        renderLargeTemperatureAreaChart('modalChartContainer', timestamps,uvLight);
                     } else if (chartId === 'moistureChart') {
-                        renderLargeTemperatureAreaChart('modalChartContainer', timestamps, uvLight);
+                        renderLargeTemperatureAreaChart('modalChartContainer', timestamps, humidity);
                     }
                 }
             });
