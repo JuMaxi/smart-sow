@@ -6,13 +6,13 @@
 #include <ArduinoJson.h>
 
 // Configuration
-#define API_HOST "http://192.168.10.26:5126" // The IP changes with the connection and the port is the one that visual studio display in the console when running the code
+#define API_HOST "http://192.168.10.26:5216" // The IP changes with the connection and the port is the one that visual studio display in the console when running the code
 #define READS_FREQUENCY 60000 // 1 min = 60000 miliseconds
 #define TRAY_ID "4"
-#define TOKEN "HYGERR"
+#define TOKEN "Psd83uk58e"
 
 // URL
-String getUrl = String(API_HOST) + "/Tray/" + TRAY_ID;
+String getUrl = String(API_HOST) + "/Tray/" + TRAY_ID + "/arduino" + "?token=" + TOKEN;
 
 // Variables to store fetched data
 int value1 = 0;
@@ -45,47 +45,51 @@ void setup() {
     delay(500);
     Serial.print(".");
   }
-  Serial.println("\Connected to WiFi");
+  Serial.println("\nConnected to WiFi");
+  Serial.println(WiFi.status()); // Should print 3 (WL_CONNECTED)
 
   // Send GET Request
-if (WiFi.status() == WL_CONNECTED)
-{
-  HTTPClient http;
-  http.begin(getUrl);
-  int httpResponseCode = http.GET();
-
-  // Check if http response is not empty
-  if (httpResponseCode > 0)
+  if (WiFi.status() == WL_CONNECTED)
   {
-    String response = http.getString();
-    Serial.println("GET Response:");
-    Serial.println(response);
+    Serial.println("✅ WiFi is connected, proceeding with HTTP GET");
+    HTTPClient http;
+    Serial.println("My url: ");
+    Serial.println(getUrl);
+    http.begin(getUrl);
+    int httpResponseCode = http.GET();
 
-    // Parse JSON
-    StaticJsonDocument<256> doc;
-    DeserializationError error = deserializeJson(doc, response);
-
-    // If the data was fetched, we have here a dict 
-    if (!error) 
+    // Check if http response is not empty
+    if (httpResponseCode > 0)
     {
-      value1 = doc["value1"] | 0;
-      value2 = doc["value2"] | 0;
-      value3 = doc["value3"] | 0;
+      String response = http.getString();
+      Serial.println("GET Response:");
+      Serial.println(response);
 
-      Serial.printf("value1 = %d, value2 = %d, value3 = %d\n", value1, value2, value3);
+      // Parse JSON
+      StaticJsonDocument<256> doc;
+      DeserializationError error = deserializeJson(doc, response);
+
+      // If the data was fetched, we have here a dict 
+      if (!error) 
+      {
+        value1 = doc["value1"] | 0;
+        value2 = doc["value2"] | 0;
+        value3 = doc["value3"] | 0;
+
+        Serial.printf("value1 = %d, value2 = %d, value3 = %d\n", value1, value2, value3);
+      }
+      else 
+      {
+        Serial.println("Failed to parse GET JSON");
+      }
     }
     else 
     {
-      Serial.println("Failed to parse GET JSON");
+      Serial.printf("GET Request failed, code: %d\n", httpResponseCode);
     }
-  }
-  else 
-  {
-    Serial.printf("GET Request failed, code: %d\n", httpResponseCode);
-  }
 
-  http.end();
-  
+    http.end();
+    
   }
 }
 
@@ -99,15 +103,14 @@ if (WiFi.status() == WL_CONNECTED)
 
 void loop() {
 
+  // Call the function that is conected to the sensor to reading the UV light
+  readUV();
 
-  // // Call the function that is conected to the sensor to reading the UV light
-  // readUV();
-
-  // // Call the function that is conected to the sensor to reading the humidity
-  // readHumidity();
+  // Call the function that is conected to the sensor to reading the humidity
+  readHumidity();
   
-  // // Call the function that is conected to the sensor to reading the temperature
-  // readTemperature();
+  // Call the function that is conected to the sensor to reading the temperature
+  readTemperature();
 }
 
 // Function to the UV light sensor
