@@ -14,10 +14,10 @@
 // URL
 String getUrl = String(API_HOST) + "/Tray/" + TRAY_ID + "/arduino" + "?token=" + TOKEN;
 
-// Variables to store fetched data
-int value1 = 0;
-int value2 = 0;
-int value3 = 0;
+// Creating variables to store the tray settings data retrieved from database
+int temperature = 0;
+int humidity = 0;
+int uvLight = 0;
 
 // Data wire is connected to GPIO4
 // The PIN 4 is used to temperature
@@ -27,6 +27,55 @@ int value3 = 0;
 OneWire oneWire(ONE_WIRE_BUS);
 
 DallasTemperature sensors(&oneWire);
+
+// This function call the endpoint from the backend to fecth the tray settings from database
+void fetchTraySettings() {
+  // Send GET Request
+  if (WiFi.status() == WL_CONNECTED) {
+    Serial.println("✅ WiFi is connected, proceeding with HTTP GET");
+
+    HTTPClient http;
+    
+    Serial.println("My url: ");
+    Serial.println(getUrl);
+
+    http.begin(getUrl);
+
+    int httpResponseCode = http.GET();
+
+    // Check if http response is not empty or with error
+    if (httpResponseCode > 0) {
+      String response = http.getString();
+      Serial.println("GET Response:");
+      Serial.println(response);
+
+      // Parse JSON - 512 is the size to the dictionary
+      StaticJsonDocument<512> doc;
+      DeserializationError error = deserializeJson(doc, response);
+
+
+      // If the data was fetched, we have here a dict 
+      if (!error) {
+        temperature = doc["temperatureCelsius"] | 0;
+        humidity = doc["humidity"] | 0;
+        uvLight = doc["dailySolarHours"] | 0;
+
+        Serial.printf("Temperature: %d\n", temperature);
+        Serial.printf("Humidity: %d\n", humidity);
+        Serial.printf("Uv Light: %d\n", uvLight);
+      }
+      else {
+        Serial.println("Failed to parse GET JSON");
+      }
+    }
+    else {
+      Serial.printf("GET Request failed, code: %d\n", httpResponseCode);
+    }
+
+    http.end();
+  }
+}
+
 
 void setup() {
   // put your setup code here, to run once:
@@ -40,65 +89,15 @@ void setup() {
   // Connect to WIFI
   WiFi.begin(WIFI_NAME, WIFI_PASSWORD);
   Serial.print("Connecting to WiFi");
-  while (WiFi.status() != WL_CONNECTED)
-  {
+  while (WiFi.status() != WL_CONNECTED){
     delay(500);
     Serial.print(".");
   }
   Serial.println("\nConnected to WiFi");
   Serial.println(WiFi.status()); // Should print 3 (WL_CONNECTED)
 
-  // Send GET Request
-  if (WiFi.status() == WL_CONNECTED)
-  {
-    Serial.println("✅ WiFi is connected, proceeding with HTTP GET");
-    HTTPClient http;
-    Serial.println("My url: ");
-    Serial.println(getUrl);
-    http.begin(getUrl);
-    int httpResponseCode = http.GET();
-
-    // Check if http response is not empty
-    if (httpResponseCode > 0)
-    {
-      String response = http.getString();
-      Serial.println("GET Response:");
-      Serial.println(response);
-
-      // Parse JSON
-      StaticJsonDocument<512> doc;
-      DeserializationError error = deserializeJson(doc, response);
-
-      // If the data was fetched, we have here a dict 
-      if (!error) 
-      {
-        value1 = doc["value1"] | 0;
-        value2 = doc["value2"] | 0;
-        value3 = doc["value3"] | 0;
-
-        Serial.printf("value1 = %d, value2 = %d, value3 = %d\n", value1, value2, value3);
-      }
-      else 
-      {
-        Serial.println("Failed to parse GET JSON");
-      }
-    }
-    else 
-    {
-      Serial.printf("GET Request failed, code: %d\n", httpResponseCode);
-    }
-
-    http.end();
-    
-  }
+  fetchTraySettings();
 }
-
-
-
-
-
-
-
 
 
 void loop() {
@@ -113,9 +112,24 @@ void loop() {
   readTemperature();
 }
 
+int interpretHumiditySetting() {
+  if (humidity == 1) {
+    return 2700;
+  }
+    
+  if (humidity == 2) {
+    return 2500;
+  }
+  
+  if (humidity == 3) {
+    return 2100;
+  }
+
+  return humidity;
+}
+
 // Function to the UV light sensor
-void readUV() 
-{
+void readUV() {
   // It is reading the UV sensor
   int rawValue = analogRead(32);  // Read raw analog value
 
@@ -125,7 +139,7 @@ void readUV()
   Serial.println(" V");
 
   // It is to turn on or turn off the UV light
-  if (rawValue == 0){
+  if (rawValue == 0) {
     Serial.println("Turning ON UV Leds");
     digitalWrite(2, HIGH);
   }
@@ -135,9 +149,9 @@ void readUV()
   }
 }
 
+
 // Function to the humidity sensor
-void readHumidity() 
-{
+void readHumidity() {
   // It it to read the humidity
   int humidityValue = analogRead(33);
 
@@ -146,9 +160,12 @@ void readHumidity()
   Serial.print(" | Voltage: ");
   Serial.println(" V");
 
+  // Call the function to return the setting to humidity
+  int humiditySetting = interpretHumiditySetting();
+
   // Turn on and turn off the water pump
-  if (humidityValue >= 3000) 
-  {
+  // Check if the current humidity reading is less than the setting humidity, if so, turn on the water pumps
+  if (humidityValue < humiditySetting) {
     Serial.println("Turning ON Water Pump");
     digitalWrite(26, HIGH);
     delay(2000);
@@ -158,14 +175,11 @@ void readHumidity()
 }
 
 // Function to the temperature sensor
-void readTemperature()
-{
-  if (sensors.getDeviceCount() == 0) 
-  {
+void readTemperature() {
+  if (sensors.getDeviceCount() == 0) {
     Serial.println("No DS18B20 sensors found!");
   }
-  else
-  {
+  else {
     Serial.print("Temperature: ");
     sensors.requestTemperatures(); // Send command to get temperatures
     delay(1000);
@@ -173,3 +187,4 @@ void readTemperature()
     Serial.println(temperatureC);
   }
 }
+
