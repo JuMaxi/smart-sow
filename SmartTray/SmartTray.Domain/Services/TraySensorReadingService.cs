@@ -57,14 +57,9 @@ namespace SmartTray.Domain.Services
             return await _traySensorReadingRepository.GetDayReadings(trayId, userId, date);
         }
 
-        // Calculate total hours light 
-        public async Task<TraySensorReadingDTO> CalculateLightTime(int trayId, int userId)
+        // Calculate total daily minutes uv light 
+        public async Task<TraySensorReadingDTO> CalculateLightTime(Tray tray, TraySensorReading latest)
         {
-            // Fetch the tray and settings to find the daily solar hours target(setting)
-            Tray tray = await _trayRepository.GetById(trayId, userId);
-
-            TraySensorReading latest = await GetLatest(trayId, userId);
-
             // The target solar daily hours from tray settings
             int targetSolarLight = tray.Settings.DailySolarHours;
 
@@ -72,7 +67,7 @@ namespace SmartTray.Domain.Services
             int targetSolarLightMinutes = targetSolarLight * 60;
 
             // Get the daily readings
-            List<TraySensorReading> dailyReadings = await GetDayReadings(latest.Tray.Id, userId, latest.Date);
+            List<TraySensorReading> dailyReadings = await GetDayReadings(latest.Tray.Id, tray.User.Id, latest.Date);
 
             // Calculate the span time minutes between readings
             int spanTimeMinutes = dailyReadings[0].Date.Minute - dailyReadings[1].Date.Minute;
@@ -122,5 +117,38 @@ namespace SmartTray.Domain.Services
             return ligthData;
         }
 
+        // Convert the humidity setting to a number that the humidity sensor works with
+        private int InterpretHumiditySetting(int humidity)
+        {
+            if (humidity == 1)
+            {
+                return 2700;
+            }
+
+            if (humidity == 2)
+            {
+                return 2500;
+            }
+
+            if (humidity == 3)
+            {
+                return 2100;
+            }
+
+            return humidity;
+        }
+
+        // This function is calling the functions to calculate time of uv light and interpret humidity setting
+        public async Task<TraySensorReadingDTO> ReturnSensorReadingsCalculations(Tray tray)
+        {
+            // Fetch the latest sensor readings from the database
+            TraySensorReading latest = await GetLatest(tray.Id, tray.User.Id);
+
+            TraySensorReadingDTO readingsData = await CalculateLightTime(tray, latest);
+
+            readingsData.Humidity = InterpretHumiditySetting((int)tray.Settings.Humidity);
+
+            return readingsData;
+        }
     }
 }

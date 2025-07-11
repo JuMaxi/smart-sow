@@ -59,7 +59,7 @@ namespace SmartTray.API.Controllers
         public async Task<TrayInitialConfigurationResponse> GetByIdToArduino([FromRoute] int trayId, string token)
         {
             Tray tray = await _trayService.GetByIdAndToken(trayId, token);
-            TraySensorReadingDTO readingsDTO = await _sensorReadingService.CalculateLightTime(trayId, tray.User.Id);
+            TraySensorReadingDTO readingsDTO = await _sensorReadingService.ReturnSensorReadingsCalculations(tray);
 
             TrayInitialConfigurationResponse settingsResponse = _traySettings.ConvertToResponse(tray.Settings, readingsDTO);
             return settingsResponse;

@@ -2,9 +2,11 @@
 {
     public class TraySensorReadingDTOResponse
     {
-        public double DailyLightMinutes { get; set; }
+        public int DailyLightMinutes { get; set; }
         public int ArtificialLightMinutes { get; set; }
         public int SolarLightMinutes { get; set; }
-        public double RemainingLightMinutes { get; set; }
+        public int RemainingLightMinutes { get; set; }
+
+        public int Humidity { get; set; }
     }
 }

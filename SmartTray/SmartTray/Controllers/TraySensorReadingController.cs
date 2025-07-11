@@ -16,16 +16,19 @@ namespace SmartTray.API.Controllers
     {
         readonly ITraySensorReadingService _traySensorReadingService;
         readonly ITraySensorReadingMapper _traySensorReadingMapper;
+        readonly ITrayService _trayService;
 
         // This method is returning the user Id once it is authenticated. The claimtypes is a dictionary and I am using the key NameIdentifier
         private int GetUserId() => Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
         public TraySensorReadingController(
             ITraySensorReadingService traySensorReadingService,
-            ITraySensorReadingMapper traySensorReadingMapper)
+            ITraySensorReadingMapper traySensorReadingMapper,
+            ITrayService trayService)
         {
             _traySensorReadingService = traySensorReadingService;
             _traySensorReadingMapper = traySensorReadingMapper;
+            _trayService = trayService;
         }
 
         // This method saves the readings from the sensor to the database
@@ -66,7 +69,10 @@ namespace SmartTray.API.Controllers
         [HttpGet("{trayId}/daily-uv-time")]
         public async Task<TraySensorReadingDTOResponse> GetDailyLightTime([FromRoute] int trayId)
         {
-            TraySensorReadingDTO lightTime = await _traySensorReadingService.CalculateLightTime(trayId, GetUserId());
+            Tray tray = await _trayService.GetById(trayId, GetUserId());
+            TraySensorReading latest = await _traySensorReadingService.GetLatest(tray.Id, tray.User.Id);
+
+            TraySensorReadingDTO lightTime = await _traySensorReadingService.CalculateLightTime(tray, latest);
 
             return _traySensorReadingMapper.ConvertToDTOResponse(lightTime);
 

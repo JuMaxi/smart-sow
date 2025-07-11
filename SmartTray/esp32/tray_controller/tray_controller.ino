@@ -18,6 +18,7 @@ String getUrl = String(API_HOST) + "/Tray/" + TRAY_ID + "/arduino" + "?token=" +
 int temperature = 0;
 int humidity = 0;
 int uvLight = 0;
+int remainingUvLight = 0;
 
 // Data wire is connected to GPIO4
 // The PIN 4 is used to temperature
@@ -112,22 +113,6 @@ void loop() {
   readTemperature();
 }
 
-int interpretHumiditySetting() {
-  if (humidity == 1) {
-    return 2700;
-  }
-    
-  if (humidity == 2) {
-    return 2500;
-  }
-  
-  if (humidity == 3) {
-    return 2100;
-  }
-
-  return humidity;
-}
-
 // Function to the UV light sensor
 void readUV() {
   // It is reading the UV sensor
@@ -139,7 +124,7 @@ void readUV() {
   Serial.println(" V");
 
   // It is to turn on or turn off the UV light
-  if (rawValue == 0) {
+  if (rawValue == 0 && remainingUvLight > 0) {
     Serial.println("Turning ON UV Leds");
     digitalWrite(2, HIGH);
   }
@@ -160,12 +145,9 @@ void readHumidity() {
   Serial.print(" | Voltage: ");
   Serial.println(" V");
 
-  // Call the function to return the setting to humidity
-  int humiditySetting = interpretHumiditySetting();
-
   // Turn on and turn off the water pump
   // Check if the current humidity reading is less than the setting humidity, if so, turn on the water pumps
-  if (humidityValue < humiditySetting) {
+  if (humidityValue < humidity) {
     Serial.println("Turning ON Water Pump");
     digitalWrite(26, HIGH);
     delay(2000);

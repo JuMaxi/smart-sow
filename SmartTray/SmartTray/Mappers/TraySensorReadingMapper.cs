@@ -69,6 +69,7 @@ namespace SmartTray.API.Mappers
                 ArtificialLightMinutes = readings.ArtificialLightMinutes,
                 SolarLightMinutes = readings.SolarLightMinutes,
                 RemainingLightMinutes = readings.RemainingLightMinutes,
+                Humidity = readings.Humidity
             };
 
             return response;

@@ -37,11 +37,9 @@ namespace SmartTray.API.Mappers
         {
             TrayInitialConfigurationResponse response = new()
             {
-                RegisterDate = settings.RegisterDate,
                 TemperatureCelsius = settings.TemperatureCelsius,
-                Humidity = (int)settings.Humidity,
+                Humidity = readingsDTO.Humidity,
                 DailySolarHours = settings.DailySolarHours,
-                TargetLightMinutes = settings.DailySolarHours * 60,
                 DailyLightMinutes = readingsDTO.DailyLightMinutes,
                 RemainingLightMinutes = readingsDTO.RemainingLightMinutes
             };
