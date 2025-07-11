@@ -168,5 +168,14 @@ void readTemperature() {
     float temperatureC = sensors.getTempCByIndex(0);
     Serial.println(temperatureC);
   }
+
+  // Check if the current temperature read is less than the target temperature. If so, turn on the heating mat
+  if (temperatureC < temperature){
+    Serial.println("Turning ON Heating Mat");
+    digitalWrite(17, HIGH);
+  } else {
+    Serial.println("Turning OFF Heating Mat");
+    digitalWrite(17, LOW);
+  }
 }
 
