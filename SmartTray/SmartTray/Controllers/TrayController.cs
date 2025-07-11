@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SmartTray.API.Mappers;
 using SmartTray.API.Models.Requests;
 using SmartTray.API.Models.Responses;
+using SmartTray.Domain.DTO;
 using SmartTray.Domain.Interfaces;
 using SmartTray.Domain.Models;
 
@@ -16,15 +17,18 @@ namespace SmartTray.API.Controllers
         readonly ITrayService _trayService;
         readonly ITrayMapper _trayMapper;
         readonly ITraySettingsMapper _traySettings;
+        readonly ITraySensorReadingService _sensorReadingService;
 
         public TrayController(
             ITrayService trayService,
             ITrayMapper trayMapper,
-            ITraySettingsMapper traySettings)
+            ITraySettingsMapper traySettings,
+            ITraySensorReadingService sensorReadingService)
         {
             _trayService = trayService;
             _trayMapper = trayMapper;
             _traySettings = traySettings;
+            _sensorReadingService = sensorReadingService;
         }
 
         // This method is returning the user Id once it is authenticated. The claimtypes is a dictionary and I am using the key NameIdentifier
@@ -52,12 +56,12 @@ namespace SmartTray.API.Controllers
 
         // This method fetch the tray by trayId from the database. It requires the user to be logged in
         [HttpGet("{trayId}/arduino")]
-        public async Task<TraySettingsResponse> GetByIdToArduino([FromRoute] int trayId, string token)
+        public async Task<TrayInitialConfigurationResponse> GetByIdToArduino([FromRoute] int trayId, string token)
         {
             Tray tray = await _trayService.GetByIdAndToken(trayId, token);
+            TraySensorReadingDTO readingsDTO = await _sensorReadingService.CalculateLightTime(trayId, tray.User.Id);
 
-            TraySettingsResponse settingsResponse = _traySettings.ConvertToResponse(tray.Settings);
-
+            TrayInitialConfigurationResponse settingsResponse = _traySettings.ConvertToResponse(tray.Settings, readingsDTO);
             return settingsResponse;
         }
 

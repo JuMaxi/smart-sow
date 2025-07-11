@@ -65,7 +65,6 @@ namespace SmartTray.API.Mappers
         {
             TraySensorReadingDTOResponse response = new()
             {
-                TargetLightMinutes = readings.TargetLightMinutes,
                 DailyLightMinutes = readings.DailyLightMinutes,
                 ArtificialLightMinutes = readings.ArtificialLightMinutes,
                 SolarLightMinutes = readings.SolarLightMinutes,

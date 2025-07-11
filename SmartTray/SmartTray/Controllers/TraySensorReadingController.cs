@@ -66,9 +66,7 @@ namespace SmartTray.API.Controllers
         [HttpGet("{trayId}/daily-uv-time")]
         public async Task<TraySensorReadingDTOResponse> GetDailyLightTime([FromRoute] int trayId)
         {
-            TraySensorReading latest = await _traySensorReadingService.GetLatest(trayId, GetUserId());
-
-            TraySensorReadingDTO lightTime = await _traySensorReadingService.CalculateLightTime(GetUserId(), latest);
+            TraySensorReadingDTO lightTime = await _traySensorReadingService.CalculateLightTime(trayId, GetUserId());
 
             return _traySensorReadingMapper.ConvertToDTOResponse(lightTime);
 

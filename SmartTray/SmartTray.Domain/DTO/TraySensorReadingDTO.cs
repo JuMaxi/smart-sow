@@ -2,7 +2,6 @@
 {
     public class TraySensorReadingDTO
     {
-        public int TargetLightMinutes { get; set; }
         public int DailyLightMinutes { get; set; }
         public int ArtificialLightMinutes { get; set; }
         public int SolarLightMinutes { get; set; }

@@ -58,10 +58,12 @@ namespace SmartTray.Domain.Services
         }
 
         // Calculate total hours light 
-        public async Task<TraySensorReadingDTO> CalculateLightTime(int userId, TraySensorReading latest)
+        public async Task<TraySensorReadingDTO> CalculateLightTime(int trayId, int userId)
         {
             // Fetch the tray and settings to find the daily solar hours target(setting)
-            Tray tray = await _trayRepository.GetById(latest.Tray.Id, userId);
+            Tray tray = await _trayRepository.GetById(trayId, userId);
+
+            TraySensorReading latest = await GetLatest(trayId, userId);
 
             // The target solar daily hours from tray settings
             int targetSolarLight = tray.Settings.DailySolarHours;
@@ -111,7 +113,6 @@ namespace SmartTray.Domain.Services
             // Populating the DTO with the relevant information to call the end point to the chart in the front end via js
             TraySensorReadingDTO ligthData = new()
             {
-                TargetLightMinutes = targetSolarLightMinutes,
                 DailyLightMinutes = minutes,
                 ArtificialLightMinutes = artificialLightMinutes,
                 SolarLightMinutes = solarLightMinutes,
