@@ -31,9 +31,9 @@ namespace SmartTray.Domain.Services
             await _trayRepository.Insert(tray);
         }
 
-        public async Task<Tray> GetByIdToArduino(int trayId, string token)
+        public async Task<Tray> GetByIdAndToken(int trayId, string token)
         {
-            return await _trayRepository.GetByIdToArduino(trayId, token);
+            return await _trayRepository.GetByIdAndToken(trayId, token);
         }
 
         public async Task<Tray> GetById(int trayId, int userId)

@@ -15,13 +15,16 @@ namespace SmartTray.API.Controllers
     {
         readonly ITrayService _trayService;
         readonly ITrayMapper _trayMapper;
+        readonly ITraySettingsMapper _traySettings;
 
         public TrayController(
             ITrayService trayService,
-            ITrayMapper trayMapper)
+            ITrayMapper trayMapper,
+            ITraySettingsMapper traySettings)
         {
             _trayService = trayService;
             _trayMapper = trayMapper;
+            _traySettings = traySettings;
         }
 
         // This method is returning the user Id once it is authenticated. The claimtypes is a dictionary and I am using the key NameIdentifier
@@ -49,13 +52,13 @@ namespace SmartTray.API.Controllers
 
         // This method fetch the tray by trayId from the database. It requires the user to be logged in
         [HttpGet("{trayId}/arduino")]
-        public async Task<TrayResponse> GetByIdToArduino([FromRoute] int trayId, string token)
+        public async Task<TraySettingsResponse> GetByIdToArduino([FromRoute] int trayId, string token)
         {
-            Tray tray = await _trayService.GetByIdToArduino(trayId, token);
+            Tray tray = await _trayService.GetByIdAndToken(trayId, token);
 
-            TrayResponse trayResponse = _trayMapper.ConvertToResponse(tray);
+            TraySettingsResponse settingsResponse = _traySettings.ConvertToResponse(tray.Settings);
 
-            return trayResponse;
+            return settingsResponse;
         }
 
         // This method fetch all the trays from the database. It requires the user to be logged in

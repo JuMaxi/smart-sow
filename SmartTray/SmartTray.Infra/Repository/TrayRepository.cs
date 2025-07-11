@@ -30,7 +30,7 @@ namespace SmartTray.Infra.DbAccess
         }
 
         // Fetch tray by trayId and token and join with settings table. This method is used to fetch the data that arduino requires to have the tray settings from database
-        public async Task<Tray> GetByIdToArduino(int trayId, string token)
+        public async Task<Tray> GetByIdAndToken(int trayId, string token)
         {
             return await _dbContext.Trays.Include(s => s.Settings)
                 .Where(t => t.Id == trayId && t.Token == token)
