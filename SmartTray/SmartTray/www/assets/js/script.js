@@ -268,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         },
                         detail: {
                             valueAnimation: true,
-                            formatter: `{value} ${unit}`,
+                            formatter: `{value}${unit}`,
                             color: '#fff',
                             fontSize: 20,
                         },
@@ -549,6 +549,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // 3100 is the max reading the sensor reads - it means dry, no humidity
             let percentage = (3100 - data.humidity) / 10
+            if (percentage < 0) {
+                percentage = 0;
+            }
 
             // Call function to generate moisture chart
             renderGauge(percentage, "moistureChart", blueGradientStops, 100, "%"); 
@@ -581,9 +584,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Converting minutes to hours
             hours = Math.floor(data.dailyLightMinutes / 60) + (data.dailyLightMinutes % 60) / 100;
+            unit = "h"
+            max = ((data.dailyLightMinutes + data.remainingLightMinutes) / 60);
+            
+            if (hours < 1){
+                hours *= 100;
+                unit = "m";
+                max = (data.dailyLightMinutes + data.remainingLightMinutes);
+            }
             
             // Generate light gauge chart
-            renderGauge(hours, "lightChart", lightingGradientStops, ((data.dailyLightMinutes + data.remainingLightMinutes) / 60), "h");
+            renderGauge(hours, "lightChart", lightingGradientStops, max, unit);
         } catch (error) {
             showToast("Unexpected error. Please try again.");
             console.error("Error", error);
