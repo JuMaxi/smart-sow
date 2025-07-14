@@ -13,12 +13,21 @@
 
 // URL
 String getUrl = String(API_HOST) + "/Tray/" + TRAY_ID + "/arduino" + "?token=" + TOKEN;
+String postUrl = String(API_HOST) + "/TraySensorReading/" + TRAY_ID + "/arduino" + "?token=" + TOKEN;
 
 // Creating variables to store the tray settings data retrieved from database
 int temperature = 0;
 int humidity = 0;
 int uvLight = 0;
 int remainingUvLight = 0;
+
+// Variables to sensor readings (http post)
+float temperatureReading = 0;
+bool heatingMatOn = false;
+int humidityReading = 0;
+bool waterAdded = false;
+int uvReading = 0;
+bool uvLedsOn = false;
 
 // Data wire is connected to GPIO4
 // The PIN 4 is used to temperature
@@ -77,6 +86,39 @@ void fetchTraySettings() {
   }
 }
 
+// This function call the endpoint from the backend to store tray sensor readings to the database
+void storeSensorReadingsToDataBase() {
+  if (WiFi.status() == WL_CONNECTED) {
+    HTTPClient http;
+    http.begin(postUrl);
+    http.addHeader("Content-Type", "application/json");
+
+    // Build JSON Payload
+    StaticJsonDocument<512> postDoc;
+    postDoc["temperature"] = temperatureReading;
+    postDoc["humidity"] = humidityReading;
+    postDoc["uvReading"] = uvReading;
+    postDoc["waterAdded"] = waterAdded;
+    postDoc["uvLedsOn"] = uvLedsOn;
+    postDoc["heatingMatOn"] = heatingMatOn;
+
+    String jsonString;
+    serializeJson(postDoc, jsonString);
+
+    int httpResponseCode = http.POST(jsonString);
+    if (httpResponseCode > 0) {
+      String response = http.getString();
+      Serial.println("POST Response:");
+      Serial.println(response);
+    } else {
+      Serial.printf("POST Request failed, code: %d\n", httpResponseCode);
+    }
+
+    http.end();
+  }
+}
+
+//storeSensorReadingsToDataBase();
 
 void setup() {
   // put your setup code here, to run once:
@@ -111,26 +153,33 @@ void loop() {
   
   // Call the function that is conected to the sensor to reading the temperature
   readTemperature();
+
+  // Call the function to store the sensors readings into the database
+  storeSensorReadingsToDataBase();
+
+  delay(READS_FREQUENCY);
 }
 
 // Function to the UV light sensor
 void readUV() {
   // It is reading the UV sensor
-  int rawValue = analogRead(32);  // Read raw analog value
+  uvReading = analogRead(32);  // Read raw analog value
 
   Serial.print("UV Analog value: ");
-  Serial.print(rawValue);
+  Serial.print(uvReading);
   Serial.print(" | Voltage: ");
   Serial.println(" V");
 
   // It is to turn on or turn off the UV light
-  if (rawValue == 0 && remainingUvLight > 0) {
+  if (uvReading == 0 && remainingUvLight > 0) {
     Serial.println("Turning ON UV Leds");
     digitalWrite(2, HIGH);
+    uvLedsOn = true;
   }
   else {
     Serial.println("Turning OFF UV Leds");
     digitalWrite(2, LOW);
+    uvLedsOn = false;
   }
 }
 
@@ -138,21 +187,24 @@ void readUV() {
 // Function to the humidity sensor
 void readHumidity() {
   // It it to read the humidity
-  int humidityValue = analogRead(33);
+  humidityReading = analogRead(33);
 
   Serial.print("HU analog value: ");
-  Serial.print(humidityValue);
+  Serial.print(humidityReading);
   Serial.print(" | Voltage: ");
   Serial.println(" V");
 
   // Turn on and turn off the water pump
   // Check if the current humidity reading is less than the setting humidity, if so, turn on the water pumps
-  if (humidityValue < humidity) {
+  if (humidityReading < humidity) {
     Serial.println("Turning ON Water Pump");
     digitalWrite(26, HIGH);
     delay(2000);
     Serial.println("Turning OFF Water Pump");
     digitalWrite(26, LOW);
+    waterAdded = true;
+  } else {
+    waterAdded = false;
   }
 }
 
@@ -165,17 +217,21 @@ void readTemperature() {
     Serial.print("Temperature: ");
     sensors.requestTemperatures(); // Send command to get temperatures
     delay(1000);
-    float temperatureC = sensors.getTempCByIndex(0);
-    Serial.println(temperatureC);
+    temperatureReading = sensors.getTempCByIndex(0);
+    Serial.println(temperatureReading);
+
+    // Check if the current temperature read is less than the target temperature. If so, turn on the heating mat
+    if (temperatureReading < temperature){
+      Serial.println("Turning ON Heating Mat");
+      digitalWrite(17, HIGH);
+      heatingMatOn = true;
+    } else {
+      Serial.println("Turning OFF Heating Mat");
+      digitalWrite(17, LOW);
+      heatingMatOn = false;
+    }
   }
 
-  // Check if the current temperature read is less than the target temperature. If so, turn on the heating mat
-  if (temperatureC < temperature){
-    Serial.println("Turning ON Heating Mat");
-    digitalWrite(17, HIGH);
-  } else {
-    Serial.println("Turning OFF Heating Mat");
-    digitalWrite(17, LOW);
-  }
+  
 }
 
