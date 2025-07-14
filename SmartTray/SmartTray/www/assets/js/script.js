@@ -362,7 +362,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const pathLength = path.getTotalLength();
             
             // Position sun exactly on the orbit path
-            const sunPoint = path.getPointAtLength(progress * pathLength);
+            const sunPoint = path.getPointAtLength((1 - progress) * pathLength);
             sun.style.left = sunPoint.x + 'px';
             sun.style.top = sunPoint.y + 'px';
             sun.style.transform = 'translate(-50%, -50%)';
