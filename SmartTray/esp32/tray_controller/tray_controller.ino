@@ -65,7 +65,7 @@ void setup() {
 void fetchTraySettings() {
   // Send GET Request
   if (WiFi.status() == WL_CONNECTED) {
-    Serial.println("✅ WiFi is connected, proceeding with HTTP GET");
+    Serial.println("WiFi is connected, proceeding with HTTP GET");
 
     HTTPClient http;
     
@@ -93,6 +93,7 @@ void fetchTraySettings() {
         humidity = doc["humidity"] | 0;
         uvLight = doc["dailySolarHours"] | 0;
 
+        Serial.printf("My settings: ");
         Serial.printf("Temperature: %d\n", temperature);
         Serial.printf("Humidity: %d\n", humidity);
         Serial.printf("Uv Light: %d\n", uvLight);
@@ -142,6 +143,9 @@ void storeSensorReadingsToDataBase() {
   }
 }
 
+// In this loop the functions to read sensors are called and it is compared with the user tray settings to turn on or off water, leds, heatings
+// A function to fetch tray settings (http get) is called
+// A function to store sensor readings (http post) is called
 void loop() {
   // Call the function to get user tray settings from database (http get)
   fetchTraySettings();
@@ -149,7 +153,7 @@ void loop() {
   // Check if it is equal or more than 7am. If so, start checking the Uv light.
   if (currentHour >= 7) {
     // Call the function that is conected to the sensor to reading the UV light
-    readUV();
+      readUV();
   }
 
   // Call the function that is conected to the sensor to reading the humidity
@@ -171,8 +175,6 @@ void readUV() {
 
   Serial.print("UV Analog value: ");
   Serial.print(uvReading);
-  Serial.print(" | Voltage: ");
-  Serial.println(" V");
 
   // It is to turn on or turn off the UV light
   if (uvReading == 0 && remainingUvLight > 0) {
@@ -187,16 +189,13 @@ void readUV() {
   }
 }
 
-
 // Function to the humidity sensor
 void readHumidity() {
   // It it to read the humidity
   humidityReading = analogRead(33);
 
-  Serial.print("HU analog value: ");
-  Serial.print(humidityReading);
-  Serial.print(" | Voltage: ");
-  Serial.println(" V");
+  Serial.println("Humidity analog value: ");
+  Serial.println(humidityReading);
 
   // Turn on and turn off the water pump
   // Check if the current humidity reading is less than the setting humidity, if so, turn on the water pumps
