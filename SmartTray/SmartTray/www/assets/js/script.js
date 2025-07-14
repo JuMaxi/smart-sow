@@ -447,8 +447,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // The tray fecthed from database
             const data = await response.json();
+            return data;
+        } catch (error) {
+            showToast("Unexpected error. Please try again.");
+            console.error("Error", error);
+        }
+    }
 
-            // Insert name tray and crop type to the frontend (above the charts)    
+    async function writeLastReadingAndSettingsHeaders(){
+        const params = new URLSearchParams(window.location.search);
+        const trayId = params.get('id'); // 'id' is the parameter name in the URL
+
+        // Fetch the tray data to use it below
+        const data = await fetchTray(trayId);
+
+        // Insert name tray and crop type to the frontend (above the charts)    
             document.getElementById("trayName").textContent = `${data.name}`;
             document.getElementById("cropType").innerHTML = 
                 `<i class="fa-brands fa-pagelines" style="color: #1a2e05;"></i>
@@ -470,12 +483,10 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById("targetHumidity").innerHTML = 
                 `<i class="fa-solid fa-droplet" style="color: #74C0FC;"></i>
                 Target: ${humidity}`;
-
-        } catch (error) {
-            showToast("Unexpected error. Please try again.");
-            console.error("Error", error);
-        }
     }
+
+    // Call the function to display tray headers and settings
+    writeLastReadingAndSettingsHeaders();
 
     // Function to return a compreensivel target humidity to the user in the front end
     function interpretHumiditySettingsToUser(humidity){
@@ -520,8 +531,6 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        fetchTray(trayId);
-
         try {
             // Using the path (query string) to my endpoint get
             const response = await fetch(`/TraySensorReading/${trayId}/latest`, {
@@ -549,7 +558,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // 3100 is the max reading the sensor reads - it means dry, no humidity
             let percentage = (3100 - data.humidity) / 10
-            if (percentage < 0) {
+            if (percentage <= 0 || data.humidity === 0) {
                 percentage = 0;
             }
 
@@ -585,12 +594,23 @@ document.addEventListener('DOMContentLoaded', function () {
             // Converting minutes to hours
             hours = Math.floor(data.dailyLightMinutes / 60) + (data.dailyLightMinutes % 60) / 100;
             unit = "h"
-            max = ((data.dailyLightMinutes + data.remainingLightMinutes) / 60);
-            
-            if (hours < 1){
+
+            // Calling the function to fetch tray data to use the settings to the daily solar hours
+            const dataTray = await fetchTray(trayId);
+
+            max = dataTray.settings.dailySolarHours;
+
+            // In case daily uv light still be less than one hour, display it in minutes
+            if (hours < 1 && hours !== 0){
                 hours *= 100;
                 unit = "m";
                 max = (data.dailyLightMinutes + data.remainingLightMinutes);
+            }
+            else {
+                // In case it is a new tray, without readings, display only the target setting to the gauge
+                if (hours === 0){
+                    max = dataTray.settings.dailySolarHours;
+                }
             }
             
             // Generate light gauge chart

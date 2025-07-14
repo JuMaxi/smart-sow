@@ -59,61 +59,65 @@ namespace SmartTray.Domain.Services
         // Calculate total daily minutes uv light 
         public async Task<TraySensorReadingDTO> CalculateLightTime(Tray tray, TraySensorReading latest)
         {
-            // The target solar daily hours from tray settings
-            int targetSolarLight = tray.Settings.DailySolarHours;
-
-            // The target solar daily hours converted to minutes
-            int targetSolarLightMinutes = targetSolarLight * 60;
-
-            // Get the daily readings
-            List<TraySensorReading> dailyReadings = await GetDayReadings(latest.Tray.Id, tray.User.Id, latest.Date);
-
-            // Calculate the span time minutes between readings
-            int spanTimeMinutes = dailyReadings[0].Date.Minute - dailyReadings[1].Date.Minute;
-
-            // Artificial light means the UV leds were turned on and there are no sun light. It is the artificial light time in minutes
-            int artificialLightMinutes = 0;
-
-            // Sun light, means natural light, no Uv leds turned on. Represented by a integer great than 0. It is the solar light time in minutes
-            int solarLightMinutes = 0;
-
-            // This variable will store the total of uv light the tray had till the last reading. Each time the conditions below are true add spanTime to it
-            int minutes = 0;
-
-            // For each Uv sensor reading on the day readings
-            foreach (TraySensorReading reading in dailyReadings)
+            if (latest != null)
             {
-                // If UV > 0 it means there are sun light
-                if (reading.UV > 0)
+                // The target solar daily hours from tray settings
+                int targetSolarLight = tray.Settings.DailySolarHours;
+
+                // The target solar daily hours converted to minutes
+                int targetSolarLightMinutes = targetSolarLight * 60;
+
+                // Get the daily readings
+                List<TraySensorReading> dailyReadings = await GetDayReadings(latest.Tray.Id, tray.User.Id, latest.Date);
+
+                // Calculate the span time minutes between readings
+                int spanTimeMinutes = dailyReadings[0].Date.Minute - dailyReadings[1].Date.Minute;
+
+                // Artificial light means the UV leds were turned on and there are no sun light. It is the artificial light time in minutes
+                int artificialLightMinutes = 0;
+
+                // Sun light, means natural light, no Uv leds turned on. Represented by a integer great than 0. It is the solar light time in minutes
+                int solarLightMinutes = 0;
+
+                // This variable will store the total of uv light the tray had till the last reading. Each time the conditions below are true add spanTime to it
+                int minutes = 0;
+
+                // For each Uv sensor reading on the day readings
+                foreach (TraySensorReading reading in dailyReadings)
                 {
-                    solarLightMinutes += spanTimeMinutes;
-                    minutes += spanTimeMinutes;
-                }
-                else
-                {
-                    // If the Uv leds are on, it means there are no sun light, so the tray is suplied with artificial light
-                    if (reading.UvLedsOn == true)
+                    // If UV > 0 it means there are sun light
+                    if (reading.UV > 0)
                     {
-                        artificialLightMinutes += spanTimeMinutes;
+                        solarLightMinutes += spanTimeMinutes;
                         minutes += spanTimeMinutes;
                     }
+                    else
+                    {
+                        // If the Uv leds are on, it means there are no sun light, so the tray is suplied with artificial light
+                        if (reading.UvLedsOn == true)
+                        {
+                            artificialLightMinutes += spanTimeMinutes;
+                            minutes += spanTimeMinutes;
+                        }
+                    }
+
                 }
 
+                // Find how many light min is missing to the tray complet the target min
+                int remainingMinutes = targetSolarLightMinutes - minutes;
+
+                // Populating the DTO with the relevant information to call the end point to the chart in the front end via js
+                TraySensorReadingDTO ligthData = new()
+                {
+                    DailyLightMinutes = minutes,
+                    ArtificialLightMinutes = artificialLightMinutes,
+                    SolarLightMinutes = solarLightMinutes,
+                    RemainingLightMinutes = remainingMinutes
+                };
             }
-
-            // Find how many light min is missing to the tray complet the target min
-            int remainingMinutes = targetSolarLightMinutes - minutes;
-
-            // Populating the DTO with the relevant information to call the end point to the chart in the front end via js
-            TraySensorReadingDTO ligthData = new()
-            {
-                DailyLightMinutes = minutes,
-                ArtificialLightMinutes = artificialLightMinutes,
-                SolarLightMinutes = solarLightMinutes,
-                RemainingLightMinutes = remainingMinutes
-            };
+            
   
-            return ligthData;
+            return null;
         }
 
         // Convert the humidity setting to a number that the humidity sensor works with
