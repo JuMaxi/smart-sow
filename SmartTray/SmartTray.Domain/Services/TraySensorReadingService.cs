@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using SmartTray.Domain.DTO;
+﻿using SmartTray.Domain.DTO;
 using SmartTray.Domain.Interfaces;
 using SmartTray.Domain.Models;
 
@@ -19,9 +18,9 @@ namespace SmartTray.Domain.Services
         }
 
         // Insert new sensor readings (arduino) from the sensors to the database
-        public async Task Insert(int trayId, int userId, string token, TraySensorReading reading)
+        public async Task Insert(int trayId, string token, TraySensorReading reading)
         {
-            Tray tray = await _trayRepository.GetById(trayId, userId);
+            Tray tray = await _trayRepository.GetByIdAndToken(trayId, token);
 
             // Check if token corresponds to the tray token, if so, insert into database.
             if (tray.Token == token)
@@ -33,7 +32,7 @@ namespace SmartTray.Domain.Services
             }
         }
 
-        // Fetching all sensors readinds to the user/tray
+        // Fetching all sensors readings to the user/tray
         public async Task<List<TraySensorReading>> GetAll(int trayId, int userId)
         {
             return await _traySensorReadingRepository.GetAll(trayId, userId);

@@ -33,12 +33,12 @@ namespace SmartTray.API.Controllers
 
         // This method saves the readings from the sensor to the database
         // Don't need javascript to call this endpoint, because it is the data from the sensor that goes to the database
-        [HttpPost("{trayId}")]
+        [HttpPost("{trayId}/arduino")]
         public async Task Insert([FromRoute] int trayId, [FromQuery] string token, TraySensorReadingRequest readingRequest)
         {
             TraySensorReading readings = _traySensorReadingMapper.ConvertToTraySensorReading(readingRequest);
 
-            await _traySensorReadingService.Insert(trayId, GetUserId(), token, readings);
+            await _traySensorReadingService.Insert(trayId, token, readings);
         }
 
         // This method fetch all the tray sensor readings from the database

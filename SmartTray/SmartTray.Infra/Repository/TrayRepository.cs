@@ -24,7 +24,9 @@ namespace SmartTray.Infra.DbAccess
         // Fetch tray by trayId and userId and join with settings table
         public async Task<Tray> GetById(int id, int userId)
         {
-            return await _dbContext.Trays.Include(s => s.Settings)
+            return await _dbContext.Trays
+                .Include(s => s.Settings)
+                .Include(u => u.User)
                 .Where(t => t.Id == id && t.User.Id == userId)
                 .FirstOrDefaultAsync();
         }

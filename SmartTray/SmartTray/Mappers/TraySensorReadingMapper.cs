@@ -11,8 +11,8 @@ namespace SmartTray.API.Mappers
         {
             TraySensorReading reading = new()
             {
-                Date = request.Date,
-                Temperature = request.Temperature,
+                Date = DateTime.UtcNow,
+                Temperature = Convert.ToInt32(request.Temperature),
                 Humidity = request.Humidity,
                 UV = request.UvReading,
                 WaterAdded = request.WaterAdded,
