@@ -312,6 +312,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const ry = containerSize * 0.3; // Adjusted for visual balance
 
 
+
         
         // Create the path with a more natural curve
         const d = `M ${arcStartX} ${arcStartY} A ${rx} ${ry} 0 0 0 ${arcEndX} ${arcEndY}`;
@@ -366,25 +367,21 @@ document.addEventListener('DOMContentLoaded', function () {
             sun.style.top = sunPoint.y + 'px';
             sun.style.transform = 'translate(-50%, -50%)';
 
-            // Position sunrise icon and label
-            const sunrisePoint = path.getPointAtLength(0.05 * pathLength);
-            // Position the icon exactly on the orbit
+            // Position sunrise icon and label (bottom left of arc)
+            const sunrisePoint = path.getPointAtLength(path.getTotalLength());
             sunriseIcon.style.left = sunrisePoint.x + 'px';
             sunriseIcon.style.top = sunrisePoint.y + 'px';
-            // Position the label outside the orbit
-            sunriseMarker.style.left = (sunrisePoint.x + 30) + 'px';
+            sunriseMarker.style.left = (sunrisePoint.x - 30) + 'px'; 
             sunriseMarker.style.top = sunrisePoint.y + 'px';
-            sunriseMarker.style.transform = 'translate(0, -50%)';
+            sunriseMarker.style.transform = 'translate(-100%, -50%)';
 
-            // Position sunset icon and label
-            const sunsetPoint = path.getPointAtLength(0.95 * pathLength);
-            // Position the icon exactly on the orbit
+            // Position sunset icon and label (top right of arc)
+            const sunsetPoint = path.getPointAtLength(0);
             sunsetIcon.style.left = sunsetPoint.x + 'px';
             sunsetIcon.style.top = sunsetPoint.y + 'px';
-            // Position the label outside the orbit
-            sunsetMarker.style.left = (sunsetPoint.x - 30) + 'px';
+            sunsetMarker.style.left = (sunsetPoint.x + 30) + 'px';
             sunsetMarker.style.top = sunsetPoint.y + 'px';
-            sunsetMarker.style.transform = 'translate(-100%, -50%)';
+            sunsetMarker.style.transform = 'translate(0, -50%)';
 
         } catch (error) {
             console.error('Failed to get sun position:', error);
@@ -586,7 +583,7 @@ document.addEventListener('DOMContentLoaded', function () {
             hours = Math.floor(data.dailyLightMinutes / 60) + (data.dailyLightMinutes % 60) / 100;
             
             // Generate light gauge chart
-            renderGauge(hours, "lightChart", lightingGradientStops, (data.targetLightMinutes/60), "h");
+            renderGauge(hours, "lightChart", lightingGradientStops, ((data.dailyLightMinutes + data.remainingLightMinutes) / 60), "h");
         } catch (error) {
             showToast("Unexpected error. Please try again.");
             console.error("Error", error);
@@ -742,7 +739,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (chartId === 'temperatureChart') {
                         renderLargeTemperatureAreaChart('modalChartContainer', timestamps, temperatures);
                     } else if (chartId === 'lightChart') {
-                        renderLargeTemperatureAreaChart('modalChartContainer', timestamps,uvLight);
+                        renderLargeTemperatureAreaChart('modalChartContainer', timestamps, uvLight);
                     } else if (chartId === 'moistureChart') {
                         renderLargeTemperatureAreaChart('modalChartContainer', timestamps, humidity);
                     }
