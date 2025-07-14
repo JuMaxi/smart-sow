@@ -20,6 +20,7 @@ int temperature = 0;
 int humidity = 0;
 int uvLight = 0;
 int remainingUvLight = 0;
+int currentHour = 0; // This variable is used to verify if it is time to start checking UV light. 
 
 // Variables to sensor readings (http post)
 float temperatureReading = 0;
@@ -37,6 +38,28 @@ bool uvLedsOn = false;
 OneWire oneWire(ONE_WIRE_BUS);
 
 DallasTemperature sensors(&oneWire);
+
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(14, OUTPUT); // GPIO2 is often connected to onboard LED
+  pinMode(2, OUTPUT); // This is the PIN to the UV LEDS
+  pinMode(26, OUTPUT); // This is the PIN to the Water Pump
+  Serial.begin(115200);
+  delay(1000);
+  sensors.begin();
+
+  // Connect to WIFI
+  WiFi.begin(WIFI_NAME, WIFI_PASSWORD);
+  Serial.print("Connecting to WiFi");
+  while (WiFi.status() != WL_CONNECTED){
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("\nConnected to WiFi");
+  Serial.println(WiFi.status()); // Should print 3 (WL_CONNECTED)
+}
+
 
 // This function call the endpoint from the backend to fecth the tray settings from database
 void fetchTraySettings() {
@@ -104,6 +127,7 @@ void storeSensorReadingsToDataBase() {
 
     String jsonString;
     serializeJson(postDoc, jsonString);
+    Serial.println(jsonString);
 
     int httpResponseCode = http.POST(jsonString);
     if (httpResponseCode > 0) {
@@ -118,39 +142,19 @@ void storeSensorReadingsToDataBase() {
   }
 }
 
-//storeSensorReadingsToDataBase();
-
-void setup() {
-  // put your setup code here, to run once:
-  pinMode(14, OUTPUT); // GPIO2 is often connected to onboard LED
-  pinMode(2, OUTPUT); // This is the PIN to the UV LEDS
-  pinMode(26, OUTPUT); // This is the PIN to the Water Pump
-  Serial.begin(115200);
-  delay(1000);
-  sensors.begin();
-
-  // Connect to WIFI
-  WiFi.begin(WIFI_NAME, WIFI_PASSWORD);
-  Serial.print("Connecting to WiFi");
-  while (WiFi.status() != WL_CONNECTED){
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("\nConnected to WiFi");
-  Serial.println(WiFi.status()); // Should print 3 (WL_CONNECTED)
-
-  fetchTraySettings();
-}
-
-
 void loop() {
+  // Call the function to get user tray settings from database (http get)
+  fetchTraySettings();
 
-  // Call the function that is conected to the sensor to reading the UV light
-  readUV();
+  // Check if it is equal or more than 7am. If so, start checking the Uv light.
+  if (currentHour >= 7) {
+    // Call the function that is conected to the sensor to reading the UV light
+    readUV();
+  }
 
   // Call the function that is conected to the sensor to reading the humidity
   readHumidity();
-  
+
   // Call the function that is conected to the sensor to reading the temperature
   readTemperature();
 

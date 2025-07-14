@@ -41,7 +41,8 @@ namespace SmartTray.API.Mappers
                 Humidity = readingsDTO.Humidity,
                 DailySolarHours = settings.DailySolarHours,
                 DailyLightMinutes = readingsDTO.DailyLightMinutes,
-                RemainingLightMinutes = readingsDTO.RemainingLightMinutes
+                RemainingLightMinutes = readingsDTO.RemainingLightMinutes,
+                CurrentHour = DateTime.UtcNow.Hour
             };
 
             return response;

@@ -10,5 +10,8 @@
         public int DailyLightMinutes { get; set; }
         // This is the remaining daily uv minutos that the trat still needs. Target setting in minutes less daily light in minutes
         public int RemainingLightMinutes { get; set; }
+
+        // The current our to be interpreted inside the arduino code to initialize or not the tray
+        public int CurrentHour { get; set; }
     }
 }
