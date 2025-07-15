@@ -114,9 +114,10 @@ namespace SmartTray.Domain.Services
                     SolarLightMinutes = solarLightMinutes,
                     RemainingLightMinutes = remainingMinutes
                 };
+
+                return ligthData;
             }
             
-  
             return null;
         }
 
