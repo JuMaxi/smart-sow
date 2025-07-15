@@ -101,13 +101,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Format the date
                 let sowingDate = new Date(data[i].sowingDate).toLocaleDateString('en-GB'); // DD/MM/YYYY
-
                 let html = `<td>${data[i].name}</td>
                             <td>${data[i].cropType}</td>
                             <td>${sowingDate}</td>
-                            <td>${data[i].token}</td>
-                            <td>
-                                <a href="javascript:document.showTrayData(${data[i].id})" class="btn btn-warning btn-sm me-1 text-white" data-bs-toggle="tooltip" title="Edit">
+                            <td class="text-center">
+                                <a class="token" href="#" data-token="${data[i].token}">
+                                    <i class="fa-solid fa-lock" style="color: #082b03;"></i>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a id="token" href="javascript:document.showTrayData(${data[i].id})" class="btn btn-warning btn-sm me-1 text-white" data-bs-toggle="tooltip" title="Edit">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                                 <a href="display-data.html?id=${data[i].id}" class="btn btn-info btn-sm me-1 text-white" data-bs-toggle="tooltip" title="View">
@@ -118,6 +121,13 @@ document.addEventListener('DOMContentLoaded', function () {
                                 </a>
                             </td>`;
                 line.innerHTML = html;
+
+                let tokenLink = line.querySelector('.token');
+                tokenLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    setupTokenToggle(tokenLink);
+                });
+
                 table.appendChild(line)
             }
 
@@ -130,8 +140,33 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+
     // Call the function to fetch the trays from database
     fetchTrayDataList();
+
+    function setupTokenToggle(link) {
+        alert("Heeee");
+        const cell = link.parentElement;
+        // If token is visible, hide it and show icon
+        if (cell.querySelector('span')) {
+            cell.innerHTML = '';
+            cell.appendChild(link);
+        } else {
+            // Show token value
+            cell.innerHTML = `<span>${link.getAttribute('data-token')}</span>`;
+            // Add back the icon for toggling
+            let iconLink = document.createElement('a');
+            iconLink.className = 'token';
+            iconLink.href = '#';
+            iconLink.setAttribute('data-token', link.getAttribute('data-token'));
+            iconLink.innerHTML = `<i class="fa-solid fa-lock" style="color: #082b03;"></i>`;
+            iconLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                setupTokenToggle(iconLink);
+            });
+            cell.appendChild(iconLink);
+        }
+    }
 
     // It calls the function cancel edit when the user clicks the button Cancel
     document.getElementById("cancel").addEventListener("click", async function(event) {

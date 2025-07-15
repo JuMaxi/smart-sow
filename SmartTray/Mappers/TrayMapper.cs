@@ -37,6 +37,7 @@ namespace SmartTray.API.Mappers
                 CropType = tray.CropType,
                 SowingDate = tray.SowingDate,
                 Settings = settingsResponse,
+                Token = tray.Token
             };
 
             return response;

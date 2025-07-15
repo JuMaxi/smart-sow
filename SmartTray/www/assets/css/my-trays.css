@@ -138,7 +138,7 @@ h1, h2, nav button {
 /* Add hover effect only to table body rows, not the header */
 #trays tr:hover {
     background: rgba(211, 214, 218, 0.719);
-    cursor: pointer;
+    cursor: default;
     transition: background 0.2s;
 }
 
