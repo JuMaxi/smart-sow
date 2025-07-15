@@ -1,11 +1,25 @@
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Options;
 using SmartTray.API.Mappers;
 using SmartTray.Domain.Interfaces;
 using SmartTray.Domain.Services;
 using SmartTray.Infra.Db;
 using SmartTray.Infra.DbAccess;
+
+string GetConnectionString(IConfiguration config)
+{
+    var connectionStringFromEnvironmentVariable = Environment.GetEnvironmentVariable("DATABASE_URL");
+
+    if (string.IsNullOrEmpty(connectionStringFromEnvironmentVariable))
+        return config.GetConnectionString("SmartTray")!;
+
+    var match = Regex.Match(connectionStringFromEnvironmentVariable, @"postgres://(.*):(.*)@(.*):(.*)/(.*)");
+    return $"Server={match.Groups[3]};Port={match.Groups[4]};User Id={match.Groups[1]};Password={match.Groups[2]};Database={match.Groups[5]};sslmode=Prefer;Trust Server Certificate=true";
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,8 +66,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 
 // The connection to the database
-builder.Services.AddDbContext<SmartTrayDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("SmartTray")));
+builder.Services.AddDbContext<SmartTrayDbContext>(options => options.UseNpgsql(GetConnectionString(builder.Configuration)));
 
 var app = builder.Build();
 
