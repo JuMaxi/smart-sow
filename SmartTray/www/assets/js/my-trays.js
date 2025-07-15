@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             <td>${sowingDate}</td>
                             <td>${data[i].status}</td>
                             <td>
-                                <a href="javascript:document.showTrayData(${data[i].id})" class="btn btn-primary btn-sm me-1" data-bs-toggle="tooltip" title="Edit">
+                                <a href="javascript:document.showTrayData(${data[i].id})" class="btn btn-warning btn-sm me-1 text-white" data-bs-toggle="tooltip" title="Edit">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                                 <a href="display-data.html?id=${data[i].id}" class="btn btn-info btn-sm me-1 text-white" data-bs-toggle="tooltip" title="View">
