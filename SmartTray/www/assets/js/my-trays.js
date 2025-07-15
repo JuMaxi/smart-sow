@@ -129,6 +129,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
 
                 table.appendChild(line)
+                
+                // Call function checks the tray status. If inactive, it disables the buttons Edit and Deactivate
                 setDeactivateButtonState(line, data[i].status);
             }
 
@@ -241,25 +243,34 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // This function checks the tray status. If inactive, it disables the buttons Edit and Deactivate
     function setDeactivateButtonState(row, status) {
         // Find the deactivate button in the row
         const deactivateBtn = row.querySelector('.btn-danger');
+        const deactivateBtnEdit = row.querySelector('.btn-warning');
+
+        const buttons = [deactivateBtn, deactivateBtnEdit];
+        
         if (!deactivateBtn) return;
 
-        // Disable and style the button if not active
-        if (status !== "Active") {
-            deactivateBtn.classList.add('disabled');
-            deactivateBtn.setAttribute('tabindex', '-1');
-            deactivateBtn.setAttribute('aria-disabled', 'true');
-            deactivateBtn.setAttribute('title', 'Inactive');
-        } else {
-            deactivateBtn.classList.remove('disabled');
-            deactivateBtn.removeAttribute('tabindex');
-            deactivateBtn.removeAttribute('aria-disabled');
-            deactivateBtn.setAttribute('title', 'Deactivate');
+        for (let i = 0; i < buttons.length; i++){
+            // Disable and style the button if not active
+            if (status !== "Active") {
+                buttons[i].classList.add('disabled');
+                buttons[i].setAttribute('tabindex', '-1');
+                buttons[i].setAttribute('aria-disabled', 'true');
+                buttons[i].setAttribute('title', 'Inactive');
+            } else {
+                buttons[i].classList.remove('disabled');
+                buttons[i].removeAttribute('tabindex');
+                buttons[i].removeAttribute('aria-disabled');
+                buttons[i].setAttribute('title', 'Deactivate');
+            }
         }
 
+        //TO DO:
         // Set tooltip to show tray status
+        // It is not working, because bootstrap doesn't shows tooptip to disabled items. Fix it.
         deactivateBtn.setAttribute('data-bs-toggle', 'tooltip');
     }
 });
