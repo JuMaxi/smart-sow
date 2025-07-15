@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 let html = `<td>${data[i].name}</td>
                             <td>${data[i].cropType}</td>
                             <td>${sowingDate}</td>
-                            <td>${data[i].status}</td>
+                            <td>${data[i].token}</td>
                             <td>
                                 <a href="javascript:document.showTrayData(${data[i].id})" class="btn btn-warning btn-sm me-1 text-white" data-bs-toggle="tooltip" title="Edit">
                                     <i class="fa-solid fa-pen-to-square"></i>
