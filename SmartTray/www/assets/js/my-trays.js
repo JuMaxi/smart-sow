@@ -144,27 +144,23 @@ document.addEventListener('DOMContentLoaded', function () {
     // Call the function to fetch the trays from database
     fetchTrayDataList();
 
+    // This function when the icon is clicked, show the token and hides the icon.
+    //  And then if clicked again, hides the token and displays the icon.
     function setupTokenToggle(link) {
-        alert("Heeee");
         const cell = link.parentElement;
-        // If token is visible, hide it and show icon
+        // If currently showing the token (span), switch to icon
         if (cell.querySelector('span')) {
             cell.innerHTML = '';
             cell.appendChild(link);
         } else {
-            // Show token value
-            cell.innerHTML = `<span>${link.getAttribute('data-token')}</span>`;
-            // Add back the icon for toggling
-            let iconLink = document.createElement('a');
-            iconLink.className = 'token';
-            iconLink.href = '#';
-            iconLink.setAttribute('data-token', link.getAttribute('data-token'));
-            iconLink.innerHTML = `<i class="fa-solid fa-lock" style="color: #082b03;"></i>`;
-            iconLink.addEventListener('click', function(e) {
+            // Show only the token value, and clicking it restores the icon
+            cell.innerHTML = `<span style="cursor:pointer;">${link.getAttribute('data-token')}</span>`;
+            const tokenSpan = cell.querySelector('span');
+            tokenSpan.addEventListener('click', function(e) {
                 e.preventDefault();
-                setupTokenToggle(iconLink);
+                cell.innerHTML = '';
+                cell.appendChild(link);
             });
-            cell.appendChild(iconLink);
         }
     }
 
