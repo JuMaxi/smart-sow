@@ -133,13 +133,17 @@ h1, h2, nav button {
     color: #fff;
     background: transparent;
     vertical-align: middle;
+} 
+
+/* Add hover effect only to table body rows, not the header */
+#trays tr:hover {
+    background: rgba(211, 214, 218, 0.719);
+    cursor: pointer;
+    transition: background 0.2s;
 }
 
-.tbody tr:hover {
-    background: rgba(81, 255, 0, 0.1);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    transition: background 0.2s;
+#trays tr:hover td {
+    color: #012506;
 }
 
 .table .btn {
