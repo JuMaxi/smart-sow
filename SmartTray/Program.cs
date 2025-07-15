@@ -61,6 +61,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         opts.SlidingExpiration = true;
         opts.Cookie.IsEssential = true;
         opts.Cookie.SameSite = SameSiteMode.Strict;
+        opts.LoginPath = "/user.html";
     });
 
 
@@ -91,7 +92,7 @@ app.UseStaticFiles(new StaticFileOptions
         Path.Combine(builder.Environment.ContentRootPath, "www"))
 });
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 //app.UseCors();
 
