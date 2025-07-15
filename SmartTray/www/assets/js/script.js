@@ -560,9 +560,6 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             toolbox: {
                 feature: {
-                    dataZoom: {
-                        yAxisIndex: 'none'
-                    },
                     restore: {},
                     saveAsImage: {}
                 }
