@@ -263,6 +263,9 @@ h1, h2, nav button {
     border-right-color: #198754 !important;
 }
 
+#footer {
+    color: rgb(4, 44, 4);
+}
 
 @media (max-width: 1200px){
 

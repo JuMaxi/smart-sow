@@ -199,6 +199,10 @@ svg {
     align-items: center;
 }
 
+#footer {
+    color: rgb(4, 44, 4);
+}
+
 @media (max-width: 991.98px){
     /* Remove the transparency from the dropdown menu to make it more visible in screens with less than 992px */
     .dropdown-menu {

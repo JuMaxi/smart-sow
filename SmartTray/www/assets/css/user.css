@@ -204,6 +204,10 @@ fieldset {
     color: #fff;
 }
 
+#footer {
+    color: rgb(4, 44, 4);
+}
+
 @media (max-width: 991.98px){
     .glass-main {
         width: 90%;
