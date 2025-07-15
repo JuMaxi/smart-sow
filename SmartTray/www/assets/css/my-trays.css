@@ -104,7 +104,7 @@ h1, h2, nav button {
 
 /* Glassmorphism effect for the table */
 .table {
-    background: rgba(255, 255, 255, 0.13);
+    background: rgba(255, 255, 255, 0);
     border-radius: 18px;
     box-shadow: 0 4px 24px 0 rgba(31, 38, 135, 0.10);
     backdrop-filter: blur(8px);
