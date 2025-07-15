@@ -57,107 +57,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Lighting chart gradient 100 colors
     const lightingGradientStops = [
-    [0.00, "#000000"],
-    [0.01, "#020202"],
-    [0.02, "#050505"],
-    [0.03, "#070707"],
-    [0.04, "#0a0a0a"],
-    [0.05, "#0c0c0c"],
-    [0.06, "#0f0f0f"],
-    [0.07, "#111111"],
-    [0.08, "#141414"],
-    [0.09, "#161616"],
-    [0.10, "#191919"],
-    [0.11, "#1b1b1b"],
-    [0.12, "#1e1e1e"],
-    [0.13, "#202020"],
-    [0.14, "#232323"],
-    [0.15, "#252525"],
-    [0.16, "#282828"],
-    [0.17, "#2a2a2a"],
-    [0.18, "#2d2d2d"],
-    [0.19, "#2f2f2f"],
-    [0.20, "#323232"],
-    [0.21, "#343434"],
-    [0.22, "#373737"],
-    [0.23, "#393939"],
-    [0.24, "#3c3c3c"],
-    [0.25, "#3e3e3e"],
-    [0.26, "#414141"],
-    [0.27, "#434343"],
-    [0.28, "#464646"],
-    [0.29, "#484848"],
-    [0.30, "#4b4b4b"],
-    [0.31, "#4d4d4d"],
-    [0.32, "#505050"],
-    [0.33, "#525252"],
-    [0.34, "#555555"],
-    [0.35, "#575757"],
-    [0.36, "#5a5a5a"],
-    [0.37, "#5c5c5c"],
-    [0.38, "#5f5f5f"],
-    [0.39, "#616161"],
-    [0.40, "#646464"],
-    [0.41, "#666666"],
-    [0.42, "#696969"],
-    [0.43, "#6b6b6b"],
-    [0.44, "#6e6e6e"],
-    [0.45, "#707070"],
-    [0.46, "#737373"],
-    [0.47, "#757575"],
-    [0.48, "#787878"],
-    [0.49, "#7a7a7a"],
-    [0.50, "#7d7d7d"],
-    [0.51, "#808080"],
-    [0.52, "#828282"],
-    [0.53, "#858585"],
-    [0.54, "#878787"],
-    [0.55, "#8a8a8a"],
-    [0.56, "#8c8c8c"],
-    [0.57, "#8f8f8f"],
-    [0.58, "#919191"],
-    [0.59, "#949494"],
-    [0.60, "#969696"],
-    [0.61, "#999999"],
-    [0.62, "#9b9b9b"],
-    [0.63, "#9e9e9e"],
-    [0.64, "#a0a0a0"],
-    [0.65, "#a3a3a3"],
-    [0.66, "#a5a5a5"],
-    [0.67, "#a8a8a8"],
-    [0.68, "#aaaaaa"],
-    [0.69, "#adadad"],
-    [0.70, "#afafaf"],
-    [0.71, "#b2b2b2"],
-    [0.72, "#b4b4b4"],
-    [0.73, "#b7b7b7"],
-    [0.74, "#b9b9b9"],
-    [0.75, "#bcbcbc"],
-    [0.76, "#bebebe"],
-    [0.77, "#c1c1c1"],
-    [0.78, "#c3c3c3"],
-    [0.79, "#c6c6c6"],
-    [0.80, "#c8c8c8"],
-    [0.81, "#cbcbcb"],
-    [0.82, "#cdcdcd"],
-    [0.83, "#d0d0d0"],
-    [0.84, "#d2d2d2"],
-    [0.85, "#d5d5d5"],
-    [0.86, "#d7d7d7"],
-    [0.87, "#dadada"],
-    [0.88, "#dcdcdc"],
-    [0.89, "#dfdfdf"],
-    [0.90, "#e1e1e1"],
-    [0.91, "#e4e4e4"],
-    [0.92, "#e6e6e6"],
-    [0.93, "#e9e9e9"],
-    [0.94, "#ebebeb"],
-    [0.95, "#eeeeee"],
-    [0.96, "#f0f0f0"],
-    [0.97, "#f3f3f3"],
-    [0.98, "#f5f5f5"],
-    [0.99, "#f8f8f8"],
-    [1.00, "#ffffff"]
+        [0.00, "#ffccff"], [0.01, "#ffcafe"], [0.02, "#ffc6fc"], [0.03, "#ffc4fb"], [0.04, "#ffc0f9"],
+        [0.05, "#ffbef8"], [0.06, "#ffbaf6"], [0.07, "#ffb6f4"], [0.08, "#ffb4f3"], [0.09, "#ffb0f1"],
+        [0.10, "#ffaef0"], [0.11, "#ffaaee"], [0.12, "#ffa7ec"], [0.13, "#ffa4eb"], [0.14, "#ffa1e9"],
+        [0.15, "#ff9ee8"], [0.16, "#ff9be6"], [0.17, "#ff98e5"], [0.18, "#ff95e3"], [0.19, "#ff91e2"],
+        [0.20, "#ff8fe0"], [0.21, "#ff8bdf"], [0.22, "#ff89dd"], [0.23, "#ff85dc"], [0.24, "#ff82da"],
+        [0.25, "#ff7fd9"], [0.26, "#ff7cd7"], [0.27, "#ff79d6"], [0.28, "#ff76d4"], [0.29, "#ff73d3"],
+        [0.30, "#ff70d1"], [0.31, "#ff6ccf"], [0.32, "#ff6ace"], [0.33, "#ff66cc"], [0.34, "#fc64cd"],
+        [0.35, "#f860cf"], [0.36, "#f35cd1"], [0.37, "#f05ad2"], [0.38, "#ec56d4"], [0.39, "#e854d5"],
+        [0.40, "#e450d7"], [0.41, "#e04dd9"], [0.42, "#dc4ada"], [0.43, "#d847dc"], [0.44, "#d544dd"],
+        [0.45, "#d041df"], [0.46, "#ce3ee0"], [0.47, "#c93be2"], [0.48, "#c437e3"], [0.49, "#c235e5"],
+        [0.51, "#bd31e6"], [0.52, "#ba2fe8"], [0.53, "#b62be9"], [0.54, "#b128eb"], [0.55, "#ae25ec"],
+        [0.56, "#aa22ee"], [0.57, "#a61fef"], [0.58, "#a21cf1"], [0.59, "#9f19f2"], [0.60, "#9b16f4"],
+        [0.61, "#9612f6"], [0.62, "#9310f7"], [0.63, "#8e0cf9"], [0.64, "#8c0afa"], [0.65, "#8706fc"],
+        [0.66, "#8202fe"], [0.67, "#8000ff"], [0.68, "#7d00fa"], [0.69, "#7b00f7"], [0.70, "#7900f2"],
+        [0.71, "#7700ee"], [0.72, "#7500ea"], [0.73, "#7300e6"], [0.74, "#7100e2"], [0.75, "#6e00de"],
+        [0.76, "#6d00da"], [0.77, "#6a00d6"], [0.78, "#6800d1"], [0.79, "#6600ce"], [0.80, "#6400c9"],
+        [0.81, "#6200c6"], [0.82, "#6000c1"], [0.83, "#5d00bc"], [0.84, "#5c00b9"], [0.85, "#5900b4"],
+        [0.86, "#5800b1"], [0.87, "#5500ac"], [0.88, "#5400a9"], [0.89, "#5100a4"], [0.90, "#4f00a0"],
+        [0.91, "#4d009c"], [0.92, "#4b0098"], [0.93, "#490094"], [0.94, "#470090"], [0.95, "#44008b"],
+        [0.96, "#430088"], [0.97, "#400083"], [0.98, "#3f0080"], [0.99, "#3c007b"], [1.00, "#3b0078"]
     ];
 
     // Moisture chart gradient 50 colors
@@ -494,13 +413,13 @@ document.addEventListener('DOMContentLoaded', function () {
             return "Inactive";
         }
         if (humidity === 1) {
-            return "Low 25% to 50%";
+            return "Low 25%";
         }
         if (humidity === 2){
-            return "Medium 50% to 75%";
+            return "Medium 50%";
         }
         if (humidity === 3){
-            return "High 75% to 100%";
+            return "High 75%";
         }
     }
 
@@ -624,7 +543,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Call the function to calculate light hours and generate light gauge chart
     getCalculationLightMinutes()
 
-    function renderLargeTemperatureAreaChart(domId, timestamps, temperatures) {
+    
+    function renderLargeTemperatureAreaChart(domId, chartName, timestamps, values, colors) {
         const chart = echarts.init(document.getElementById(domId));
 
         const option = {
@@ -669,26 +589,26 @@ document.addEventListener('DOMContentLoaded', function () {
             ],
             series: [
                 {
-                    name: 'Temperature',
+                    name: chartName,
                     type: 'line',
                     symbol: 'none',
                     sampling: 'lttb',
                     itemStyle: {
-                        color: 'rgb(255, 70, 131)'
+                        color: colors[0]
                     },
                     areaStyle: {
                         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                             {
                                 offset: 0,
-                                color: 'rgb(255, 158, 68)'
+                                color: colors[1]
                             },
                             {
                                 offset: 1,
-                                color: 'rgb(255, 70, 131)'
+                                color: colors[2]
                             }
                         ])
                     },
-                    data: temperatures
+                    data: values
                 }
             ]
         };
@@ -763,16 +683,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 uvLight.push(data[i].uvReading);
             }
 
+            const colorsTemperature = ["#ff4683ff", "#ff9e44ff", "#ff4683ff"];
+            const colorsLight = ["#7F00FF", "#B026FF", "#FF66CC"];
+            const colorsHumidity = ["#a8e9f0", "#3fc3dd", "#0077be"];
+
             // Call this once after your page loads or charts are initialized
             attachChartModalEvents({
                 onChartClick: (chartId) => {
                     // Render a chart inside the modal
                     if (chartId === 'temperatureChart') {
-                        renderLargeTemperatureAreaChart('modalChartContainer', timestamps, temperatures);
+                        renderLargeTemperatureAreaChart('modalChartContainer', "Temperature", timestamps, temperatures, colorsTemperature);
                     } else if (chartId === 'lightChart') {
-                        renderLargeTemperatureAreaChart('modalChartContainer', timestamps, uvLight);
+                        renderLargeTemperatureAreaChart('modalChartContainer', "Uv Light", timestamps, uvLight, colorsLight);
                     } else if (chartId === 'moistureChart') {
-                        renderLargeTemperatureAreaChart('modalChartContainer', timestamps, humidity);
+                        renderLargeTemperatureAreaChart('modalChartContainer', "Humidity", timestamps, humidity, colorsHumidity);
                     }
                 }
             });
@@ -783,4 +707,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
     fetchTraySensorReadings();
+
+    
 });
