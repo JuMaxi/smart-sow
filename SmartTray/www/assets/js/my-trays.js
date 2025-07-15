@@ -129,6 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
 
                 table.appendChild(line)
+                setDeactivateButtonState(line, data[i].status);
             }
 
             // Calling the function to display tool tips above the action button when hovered
@@ -238,5 +239,27 @@ document.addEventListener('DOMContentLoaded', function () {
             showToast("Unexpected error. Please try again.");
             console.error('Error:', error);
         }
+    }
+
+    function setDeactivateButtonState(row, status) {
+        // Find the deactivate button in the row
+        const deactivateBtn = row.querySelector('.btn-danger');
+        if (!deactivateBtn) return;
+
+        // Disable and style the button if not active
+        if (status !== "Active") {
+            deactivateBtn.classList.add('disabled');
+            deactivateBtn.setAttribute('tabindex', '-1');
+            deactivateBtn.setAttribute('aria-disabled', 'true');
+            deactivateBtn.setAttribute('title', 'Inactive');
+        } else {
+            deactivateBtn.classList.remove('disabled');
+            deactivateBtn.removeAttribute('tabindex');
+            deactivateBtn.removeAttribute('aria-disabled');
+            deactivateBtn.setAttribute('title', 'Deactivate');
+        }
+
+        // Set tooltip to show tray status
+        deactivateBtn.setAttribute('data-bs-toggle', 'tooltip');
     }
 });
