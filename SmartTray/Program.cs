@@ -7,7 +7,6 @@ using SmartTray.Domain.Interfaces;
 using SmartTray.Domain.Services;
 using SmartTray.Infra.Db;
 using SmartTray.Infra.DbAccess;
-using Microsoft.AspNetCore.StaticFiles;
 
 string GetConnectionString(IConfiguration config)
 {
@@ -77,16 +76,12 @@ app.UseDefaultFiles(new DefaultFilesOptions
 });
 
 
-var provider = new FileExtensionContentTypeProvider();
-provider.Mappings[".webp"] = "image/webp";
-
 // Server static files (folder with HTML, JS files)
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
         Path.Combine(builder.Environment.ContentRootPath, "www")),
 
-    ContentTypeProvider = provider
 });
 
 app.UseHttpsRedirection();
