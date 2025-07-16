@@ -1,14 +1,13 @@
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Options;
 using SmartTray.API.Mappers;
 using SmartTray.Domain.Interfaces;
 using SmartTray.Domain.Services;
 using SmartTray.Infra.Db;
 using SmartTray.Infra.DbAccess;
+using Microsoft.AspNetCore.StaticFiles;
 
 string GetConnectionString(IConfiguration config)
 {
@@ -26,15 +25,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-//builder.Services.AddCors(options =>
-//{
-//    options.AddDefaultPolicy(policy =>
-//    {
-//        policy.AllowAnyOrigin()
-//              .AllowAnyMethod()
-//              .AllowAnyHeader();
-//    });
-//});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -85,16 +76,20 @@ app.UseDefaultFiles(new DefaultFilesOptions
         Path.Combine(builder.Environment.ContentRootPath, "www"))
 });
 
+
+var provider = new FileExtensionContentTypeProvider();
+provider.Mappings[".webp"] = "image/webp";
+
 // Server static files (folder with HTML, JS files)
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
-        Path.Combine(builder.Environment.ContentRootPath, "www"))
+        Path.Combine(builder.Environment.ContentRootPath, "www")),
+
+    ContentTypeProvider = provider
 });
 
 app.UseHttpsRedirection();
-
-//app.UseCors();
 
 app.UseAuthorization();
 
