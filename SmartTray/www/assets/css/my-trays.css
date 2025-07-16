@@ -191,7 +191,7 @@ h1, h2, nav button {
 
 #table-trays,
 .table-responsive {
-    max-width: 75%;
+    max-width: 90%;
     width: 1000px;
     height: auto;
     margin-left: auto;

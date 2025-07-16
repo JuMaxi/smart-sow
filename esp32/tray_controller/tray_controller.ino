@@ -6,9 +6,9 @@
 #include <ArduinoJson.h>
 
 // Configuration
-#define API_HOST "http://192.168.10.26:5000" // The IP changes with the connection and the port is the one that visual studio display in the console when running the code
+#define API_HOST "https://smartsow-d54bd7aaa207.herokuapp.com/" // This is the heroku deployed link
 #define READS_FREQUENCY 60000 // 1 min = 60000 miliseconds
-#define TRAY_ID "4"
+#define TRAY_ID "1"
 
 
 // URL
