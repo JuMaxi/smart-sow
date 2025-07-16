@@ -101,6 +101,9 @@
     <None Update="www\assets\images\user\smile-plant.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="www\assets\images\user\smile-plant.webp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="www\assets\js\my-account.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
