@@ -542,7 +542,7 @@ document.addEventListener('DOMContentLoaded', function () {
     getCalculationLightMinutes()
 
     
-    function renderLargeTemperatureAreaChart(domId, chartName, timestamps, values, colors) {
+    function renderLargeTemperatureAreaChart(domId, chartName, timestamps, values, colors, max) {
         const chart = echarts.init(document.getElementById(domId));
 
         const option = {
@@ -569,7 +569,8 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             yAxis: {
                 type: 'value',
-                boundaryGap: [0, '100%']
+                boundaryGap: [0, '100%'],
+                max: max
             },
             dataZoom: [
                 {
@@ -675,14 +676,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 timestamps.push(formatDate(data[i].date));
                 temperatures.push(data[i].temperature);
 
-                // TODO:
-                // // 3100 is the max reading the sensor reads - it means dry, no humidity
-                // let percentage = (3100 - data[i].humidity) / 10;
-                // if (percentage <= 0 || data[i].humidity === 0) {
-                //     percentage = 0;
-                // }
+                //TODO:
+                // 3100 is the max reading the sensor reads - it means dry, no humidity
+                let percentage = (3100 - data[i].humidity) / 10;
+                if (percentage <= 0 || data[i].humidity === 0) {
+                    percentage = 0;
+                }
 
-                humidity.push(data[i].humidity);
+                humidity.push(percentage);
                 uvLight.push(data[i].uvReading);
             }
 
@@ -695,11 +696,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 onChartClick: (chartId) => {
                     // Render a chart inside the modal
                     if (chartId === 'temperatureChart') {
-                        renderLargeTemperatureAreaChart('modalChartContainer', "Temperature", timestamps, temperatures, colorsTemperature);
+                        renderLargeTemperatureAreaChart('modalChartContainer', "Temperature", timestamps, temperatures, colorsTemperature, 40);
                     } else if (chartId === 'lightChart') {
-                        renderLargeTemperatureAreaChart('modalChartContainer', "Uv Light", timestamps, uvLight, colorsLight);
+                        renderLargeTemperatureAreaChart('modalChartContainer', "Uv Light", timestamps, uvLight, colorsLight, 1);
                     } else if (chartId === 'moistureChart') {
-                        renderLargeTemperatureAreaChart('modalChartContainer', "Humidity", timestamps, humidity, colorsHumidity);
+                        renderLargeTemperatureAreaChart('modalChartContainer', "Humidity", timestamps, humidity, colorsHumidity, 100);
                     }
                 }
             });
