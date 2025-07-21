@@ -6,7 +6,7 @@
 #include <ArduinoJson.h>
 
 // Configuration
-#define API_HOST "https://smartsow-d54bd7aaa207.herokuapp.com/" // This is the heroku deployed link
+#define API_HOST "https://smartsow-d54bd7aaa207.herokuapp.com" // This is the heroku deployed link
 #define READS_FREQUENCY 60000 // 1 min = 60000 miliseconds
 #define TRAY_ID "1"
 

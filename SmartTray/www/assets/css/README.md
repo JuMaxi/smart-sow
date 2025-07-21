@@ -1,5 +1,0 @@
-![tray1](/assets/images/readme/seedling-tray.jpg)
-![tray2](/assets/images/readme/seedling-tray-2.jpg)
-![tray3](/assets/images/readme/seedling-tray-3.jpg)
-![arduino](/assets/images/readme/bread-board-arduino.jpg)
-![database](/assets/images/readme/database-schema.png)

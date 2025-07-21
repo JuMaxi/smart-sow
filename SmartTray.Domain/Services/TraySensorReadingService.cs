@@ -148,9 +148,22 @@ namespace SmartTray.Domain.Services
             // Fetch the latest sensor readings from the database
             TraySensorReading latest = await GetLatest(tray.Id, tray.User.Id);
 
-            TraySensorReadingDTO readingsData = await CalculateLightTime(tray, latest);
+            TraySensorReadingDTO readingsData = new();
+
+            // If it is not the first reading, so calculate the light time
+            if (latest != null)
+            {
+                readingsData = await CalculateLightTime(tray, latest);
+            } 
+            else
+            {
+                // If it is the first readings, just set daily light to 0 and remaining light to total hours target in minutes
+                readingsData.DailyLightMinutes = 0;
+                readingsData.RemainingLightMinutes = tray.Settings.DailySolarHours * 60;
+            }
 
             readingsData.Humidity = InterpretHumiditySetting((int)tray.Settings.Humidity);
+
 
             return readingsData;
         }

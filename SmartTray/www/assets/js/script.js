@@ -230,8 +230,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const rx = containerSize * 0.3; // Adjusted for tighter curve
         const ry = containerSize * 0.3; // Adjusted for visual balance
 
-
-
         
         // Create the path with a more natural curve
         const d = `M ${arcStartX} ${arcStartY} A ${rx} ${ry} 0 0 0 ${arcEndX} ${arcEndY}`;
@@ -676,6 +674,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Format date to dd/mm/yyyy hh:mm:ss
                 timestamps.push(formatDate(data[i].date));
                 temperatures.push(data[i].temperature);
+
+                // TODO:
+                // // 3100 is the max reading the sensor reads - it means dry, no humidity
+                // let percentage = (3100 - data[i].humidity) / 10;
+                // if (percentage <= 0 || data[i].humidity === 0) {
+                //     percentage = 0;
+                // }
+
                 humidity.push(data[i].humidity);
                 uvLight.push(data[i].uvReading);
             }
