@@ -219,11 +219,16 @@ void fetchTraySettings() {
         temperature = doc["temperatureCelsius"] | 0;
         humidity = doc["humidity"] | 0;
         uvLight = doc["dailySolarHours"] | 0;
+        currentHour = doc["currentHour"] | 0;
+        remainingUvLight = doc["remainingLightMinutes"] | 0;
 
-        Serial.printf("My settings: ");
+        Serial.printf("My settings: %d\n");
         Serial.printf("Temperature: %d\n", temperature);
         Serial.printf("Humidity: %d\n", humidity);
         Serial.printf("Uv Light: %d\n", uvLight);
+        Serial.printf("Current Hour: %d\n", currentHour);
+        Serial.printf("Remaining UV light minutes: %d\n", remainingUvLight);
+
       }
       else {
         Serial.println("Failed to parse GET JSON");
@@ -370,7 +375,7 @@ void readHumidity() {
 
   // Turn on and turn off the water pump
   // Check if the current humidity reading is less than the setting humidity, if so, turn on the water pumps
-  if (humidityReading < humidity) {
+  if (humidityReading > humidity) {
     Serial.println("Turning ON Water Pump");
     digitalWrite(26, HIGH);
     delay(2000);
