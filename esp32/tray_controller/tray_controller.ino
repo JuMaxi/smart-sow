@@ -4,6 +4,7 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
+#include <WiFiClientSecure.h>
 
 // Configuration
 #define API_HOST "https://smartsow-d54bd7aaa207.herokuapp.com" // This is the heroku deployed link
@@ -49,6 +50,13 @@ void setup() {
   delay(1000);
   sensors.begin();
 
+  IPAddress thisIP(192, 168, 10, 245); 
+  IPAddress gateway(192, 168, 10, 1); 
+  IPAddress netmask(255, 255, 255, 0); 
+  IPAddress primaryDNS(8, 8, 8, 8);      // Google DNS
+  IPAddress secondaryDNS(1, 1, 1, 1);    // Cloudflare DNS secondary
+  WiFi.config(thisIP, gateway, netmask, primaryDNS, secondaryDNS);
+
   // Connect to WIFI
   WiFi.begin(WIFI_NAME, WIFI_PASSWORD);
   Serial.print("Connecting to WiFi");
@@ -57,7 +65,107 @@ void setup() {
     Serial.print(".");
   }
   Serial.println("\nConnected to WiFi");
-  Serial.println(WiFi.status()); // Should print 3 (WL_CONNECTED)
+
+  Serial.println();
+  Serial.println("WiFi connected!");
+  Serial.println("--- Network Configuration ---");
+  Serial.println("IP address: " + WiFi.localIP().toString());
+  Serial.println("Gateway: " + WiFi.gatewayIP().toString());
+  Serial.println("Subnet: " + WiFi.subnetMask().toString());
+  Serial.println("DNS 1: " + WiFi.dnsIP(0).toString());
+  Serial.println("DNS 2: " + WiFi.dnsIP(1).toString());
+  Serial.println("RSSI: " + String(WiFi.RSSI()) + " dBm");
+  Serial.println("MAC: " + WiFi.macAddress());
+
+  // Test basic connectivity
+  testBasicConnectivity();
+  testRawConnection();
+}
+
+void testBasicConnectivity() {
+  Serial.println("\n--- Basic Connectivity Tests ---");
+  
+  // Test 1: Ping Google DNS
+  Serial.println("1. Testing connection to Google DNS (8.8.8.8:53)");
+  WiFiClient testClient;
+  testClient.setTimeout(5000);
+  if (testClient.connect("8.8.8.8", 53)) {
+    Serial.println("   ✓ Google DNS connection successful");
+    testClient.stop();
+  } else {
+    Serial.println("   ✗ Google DNS connection failed");
+  }
+  
+  // Test 2: DNS Resolution
+  Serial.println("2. Testing DNS resolution");
+  IPAddress ip;
+  if (WiFi.hostByName("google.com", ip)) {
+    Serial.println("   ✓ DNS resolution works: google.com -> " + ip.toString());
+  } else {
+    Serial.println("   ✗ DNS resolution failed for google.com");
+  }
+  
+  // Test 3: Resolve target host
+  Serial.println("3. Testing DNS resolution for target host");
+  if (WiFi.hostByName("smartsow-d54bd7aaa207.herokuapp.com", ip)) {
+    Serial.println("   ✓ Target host resolved: " + ip.toString());
+  } else {
+    Serial.println("   ✗ Target host DNS resolution failed");
+    return; // No point continuing if DNS fails
+  }
+  
+  // Test 4: HTTP connection (port 80)
+  Serial.println("4. Testing HTTP connection (port 80)");
+  WiFiClient httpClient;
+  httpClient.setTimeout(10000);
+  if (httpClient.connect(ip, 80)) {
+    Serial.println("   ✓ HTTP port 80 connection successful");
+    httpClient.stop();
+  } else {
+    Serial.println("   ✗ HTTP port 80 connection failed");
+  }
+  
+  // Test 5: HTTPS connection (port 443)
+  Serial.println("5. Testing HTTPS connection (port 443)");
+  WiFiClient httpsClient;
+  httpsClient.setTimeout(10000);
+  if (httpsClient.connect(ip, 443)) {
+    Serial.println("   ✓ HTTPS port 443 connection successful (non-SSL)");
+    httpsClient.stop();
+  } else {
+    Serial.println("   ✗ HTTPS port 443 connection failed");
+  }
+  
+  Serial.println("--- End Basic Connectivity Tests ---\n");
+}
+
+void testRawConnection() {
+  Serial.println("\n--- Testing Raw HTTPS Connection ---");
+  
+  // First resolve the hostname
+  IPAddress serverIP;
+  if (!WiFi.hostByName("smartsow-d54bd7aaa207.herokuapp.com", serverIP)) {
+    Serial.println("DNS resolution failed!");
+    return;
+  }
+  
+  Serial.println("Resolved IP: " + serverIP.toString());
+  
+  WiFiClientSecure client;
+  client.setInsecure();
+  client.setTimeout(15000);
+  
+  const char* host = "smartsow-d54bd7aaa207.herokuapp.com";
+  const int port = 443;
+  
+  Serial.println("Attempting SSL connection to: " + String(host) + ":" + String(port));
+  Serial.println("Using IP: " + serverIP.toString());
+  
+  // Try connecting by IP first
+  if (client.connect(serverIP, port)) 
+    Serial.println("SSL connection established!");
+  else
+  Serial.println("Connection by IP failed, could be expected!");
 }
 
 
@@ -66,13 +174,32 @@ void fetchTraySettings() {
   // Send GET Request
   if (WiFi.status() == WL_CONNECTED) {
     Serial.println("WiFi is connected, proceeding with HTTP GET");
-
+    
+    WiFiClientSecure client;
     HTTPClient http;
+
+    // Skip SSL certificate verification (for testing purposes)
+    client.setInsecure();
+
+    client.setTimeout(10000);  // 10 second timeout
+    http.setTimeout(10000);
+
     
     Serial.println("My url: ");
     Serial.println(getUrl);
 
-    http.begin(getUrl);
+    if(http.begin(client, getUrl))
+      Serial.println("HTTP Client Initialized ");
+    else
+        Serial.println("Failed to initialize client");
+    
+    http.addHeader("Host", "smartsow-d54bd7aaa207.herokuapp.com");
+    http.addHeader("User-Agent", "ESP32-Arduino/1.0");
+    http.addHeader("Connection", "close");
+
+    // Set HTTP version (try HTTP/1.1 explicitly)
+    http.useHTTP10(false);
+
 
     int httpResponseCode = http.GET();
 
@@ -104,6 +231,50 @@ void fetchTraySettings() {
     }
     else {
       Serial.printf("GET Request failed, code: %d\n", httpResponseCode);
+
+      // Decode error codes
+        switch(httpResponseCode) {
+          case HTTPC_ERROR_CONNECTION_REFUSED:
+            Serial.println("Error: Connection refused");
+            break;
+          case HTTPC_ERROR_SEND_HEADER_FAILED:
+            Serial.println("Error: Send header failed");
+            break;
+          case HTTPC_ERROR_SEND_PAYLOAD_FAILED:
+            Serial.println("Error: Send payload failed");
+            break;
+          case HTTPC_ERROR_NOT_CONNECTED:
+            Serial.println("Error: Not connected");
+            break;
+          case HTTPC_ERROR_CONNECTION_LOST:
+            Serial.println("Error: Connection lost");
+            break;
+          case HTTPC_ERROR_NO_STREAM:
+            Serial.println("Error: No stream");
+            break;
+          case HTTPC_ERROR_NO_HTTP_SERVER:
+            Serial.println("Error: No HTTP server");
+            break;
+          case HTTPC_ERROR_TOO_LESS_RAM:
+            Serial.println("Error: Too less RAM");
+            break;
+          case HTTPC_ERROR_ENCODING:
+            Serial.println("Error: Encoding");
+            break;
+          case HTTPC_ERROR_STREAM_WRITE:
+            Serial.println("Error: Stream write");
+            break;
+          case HTTPC_ERROR_READ_TIMEOUT:
+            Serial.println("Error: Read timeout");
+            break;
+          default:
+            Serial.println("Error: Unknown error code: " + String(httpResponseCode));
+        }
+
+        String error = http.errorToString(httpResponseCode);
+        if (error.length() > 0) {
+          Serial.println("Error string: " + error);
+        }
     }
 
     http.end();
