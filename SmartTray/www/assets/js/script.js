@@ -474,10 +474,9 @@ document.addEventListener('DOMContentLoaded', function () {
             renderGauge(data.temperature, "temperatureChart", temperatureGradientStops, 40, "°C"); 
 
             // 3100 is the max reading the sensor reads - it means dry, no humidity
-            let percentage = (3100 - data.humidity) / 10
-            if (percentage <= 0 || data.humidity === 0) {
-                percentage = 0;
-            }
+            let percentage = (3100 - data.humidity) / 10;
+            percentage = percentage > 100 ? 100 : percentage; // Clamp to 100 if it exceeds 100
+            percentage = (percentage <= 0 || data.humidity === 0) ? 0 : percentage;
 
             // Call function to generate moisture chart
             renderGauge(percentage, "moistureChart", blueGradientStops, 100, "%"); 
