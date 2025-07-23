@@ -62,9 +62,9 @@
                     <div class="col-12 col-xl-6 d-flex flex-column justify-content-center">
                        <div class="row my-4 px-4">
                             <div class="col-12 glass-table-section">
-                                <h1 id="trayName" class="my-3"></h1>
-                                <h2 id="cropType" class="my-3"></h2>
-                                <p id="lastReading" class="my-3"></p>
+                                <h1 id="trayName" class="my-4"></h1>
+                                <h2 id="cropType" class="my-4"></h2>
+                                <p id="lastReading" class="my-4"></p>
                             </div>
                         </div>
                         <div class="row">
@@ -136,8 +136,12 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <!-- You can inject dynamic content here -->
-                        <div id="modalChartContainer"  class="bar-chart"></div>
+                        <div class="row">
+                            <!-- The bar chart goes here -->
+                            <div class="col-12">
+                                <div id="modalChartContainer"  class="charts"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

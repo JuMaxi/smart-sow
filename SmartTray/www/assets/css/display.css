@@ -182,13 +182,10 @@ svg {
     border-top: 1px solid rgba(255,255,255,0.22);
 }
 
-.bar-chart {
+.charts {
     width: 700px;
     height: 300px; 
     max-width: 100%;
-}
-
-.bar-chart {
     height: clamp(250px, 40vw, 400px); /* min 250px, scales with screen */
 }
 
@@ -202,7 +199,7 @@ svg {
 
 /* Glasmorphism effect to the modal */
 .glass-modal {
-    background: #ffffffe3;
+    background: #ffffffbb;
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(12px);
     border-radius: 18px;

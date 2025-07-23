@@ -541,78 +541,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Call the function to calculate light hours and generate light gauge chart
     getCalculationLightMinutes()
 
-    
-    function renderLargeTemperatureAreaChart(domId, chartName, timestamps, values, colors, max) {
-        const chart = echarts.init(document.getElementById(domId));
-
-        const option = {
-            tooltip: {
-                trigger: 'axis',
-                position: function (pt) {
-                    return [pt[0], '10%'];
-                }
-            },
-            title: {
-                left: 'center',
-                text: 'Large Area Chart'
-            },
-            toolbox: {
-                feature: {
-                    restore: {},
-                    saveAsImage: {}
-                }
-            },
-            xAxis: {
-                type: 'category',
-                boundaryGap: false,
-                data: timestamps
-            },
-            yAxis: {
-                type: 'value',
-                boundaryGap: [0, '100%'],
-                max: max
-            },
-            dataZoom: [
-                {
-                    type: 'inside',
-                    start: 0,
-                    end: 10
-                },
-                {
-                    start: 0,
-                    end: 10
-                }
-            ],
-            series: [
-                {
-                    name: chartName,
-                    type: 'line',
-                    symbol: 'none',
-                    sampling: 'lttb',
-                    itemStyle: {
-                        color: colors[0]
-                    },
-                    areaStyle: {
-                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                            {
-                                offset: 0,
-                                color: colors[1]
-                            },
-                            {
-                                offset: 1,
-                                color: colors[2]
-                            }
-                        ])
-                    },
-                    data: values
-                }
-            ]
-        };
-
-        chart.setOption(option);
-        window.addEventListener('resize', () => chart.resize());
-    }
-    
+    // This function sets up click events for your three gauge charts (temperatureChart, lightChart, moistureChart).
     function attachChartModalEvents(config = {}) {
         const chartIds = ['temperatureChart', 'lightChart', 'moistureChart'];
 
@@ -640,7 +569,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     modal.show();
                 });
             }
-    });
+        });
     }
 
     // This function is calling the endpoint from the backend to fetch all sensor readings to the tray selected
@@ -663,44 +592,36 @@ document.addEventListener('DOMContentLoaded', function () {
             // The tray fecthed from database
             const data = await response.json();
 
-            // These arrays are used to store to date/time and readinds to temperatute, humidity and uvLight
-            const timestamps = [];
-            const temperatures = [];
-            const humidity = [];
-            const uvLight = [];
-
-            // Itirating the data variable to get the data and readings and then store these in the variables above
-            for(let i = 0; i < data.length; i++){
-
-                // Format date to dd/mm/yyyy hh:mm:ss
-                timestamps.push(formatDate(data[i].date));
-                temperatures.push(data[i].temperature);
-
-                //TODO:
-                // 3100 is the max reading the sensor reads - it means dry, no humidity
-                let percentage = (3100 - data[i].humidity) / 10;
-                if (percentage <= 0 || data[i].humidity === 0) {
-                    percentage = 0;
+            const timestamps = data.map(d => formatDate(d.date));
+            const readings = {
+                temperature: {
+                    heatingMatOn: data.map(d => d.heatingMatOn ? 10 : 0),
+                    celsiusReading: data.map(d => d.temperature)
+                },
+                humidity: {
+                    watterAdded: data.map(d => d.waterAdded ? 10 : 0),
+                    humidityReading: data.map(d => {
+                        let p = (3100 - d.humidity) / 10;
+                        p = p > 100 ? 100 : p; // Clamp p to 100 if it exceeds 100
+                        return (p <= 0 || d.humidity === 0) ? 0 : p;
+                    })                 
+                },
+                uv: {
+                    uVLedsOn: data.map(d => d.uVLedsOn ? 10 : 0),
+                    uvReading: data.map(d => d.uvReading)
                 }
-
-                humidity.push(percentage);
-                uvLight.push(data[i].uvReading);
-            }
-
-            const colorsTemperature = ["#ff4683ff", "#ff9e44ff", "#ff4683ff"];
-            const colorsLight = ["#7F00FF", "#B026FF", "#FF66CC"];
-            const colorsHumidity = ["#a8e9f0", "#3fc3dd", "#0077be"];
+            };
 
             // Call this once after your page loads or charts are initialized
             attachChartModalEvents({
                 onChartClick: (chartId) => {
                     // Render a chart inside the modal
                     if (chartId === 'temperatureChart') {
-                        renderLargeTemperatureAreaChart('modalChartContainer', "Temperature", timestamps, temperatures, colorsTemperature, 40);
+                        generateChartOptionsFromSensorData(readings, "temperature", timestamps);
                     } else if (chartId === 'lightChart') {
-                        renderLargeTemperatureAreaChart('modalChartContainer', "Uv Light", timestamps, uvLight, colorsLight, 1);
+                        generateChartOptionsFromSensorData(readings, "uv", timestamps);
                     } else if (chartId === 'moistureChart') {
-                        renderLargeTemperatureAreaChart('modalChartContainer', "Humidity", timestamps, humidity, colorsHumidity, 100);
+                        generateChartOptionsFromSensorData(readings, "humidity", timestamps);
                     }
                 }
             });
@@ -712,5 +633,98 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     fetchTraySensorReadings();
 
-    
+    // Function to generate charts that will be displayed in the modal
+    function generateChartOptionsFromSensorData(data, sensorType, timeStamps) {
+
+        const chartDom = document.getElementById("modalChartContainer");
+        if (!chartDom) return;
+
+        // Dispose previous chart instance if exists
+        if (echarts.getInstanceByDom(chartDom)) {
+            echarts.getInstanceByDom(chartDom).dispose();
+        }
+        const chart = echarts.init(chartDom);
+
+        // Get the sensor data for the selected type
+        const sensorData = data[sensorType];
+        const legends = Object.keys(sensorData); // e.g., ['celsiusReading', 'heatingMatOn']
+
+        // The custom colors to the charts
+        const colorMap = {
+            celsiusReading: "#ff4683ff",
+            heatingMatOn: "#ff9e44ff",
+            humidityReading: "#3fc3dd",
+            watterAdded: "#a8e9f0",
+            uvReading: "#7F00FF",
+            uVLedsOn: "#B026FF"
+        };
+        // Build the series array as required by ECharts
+        const series = legends.map(key => ({
+            name: key,
+            type: 'line',
+            stack: 'Total',
+            areaStyle: {},
+            emphasis: { focus: 'series' },
+            data: sensorData[key],
+            itemStyle: { color: colorMap[key] }
+        }));
+
+        const option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            legend: {
+                data: legends
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: 70,
+                containLabel: true
+            },
+            dataZoom: [
+                {
+                    type: 'slider',
+                    show: true,
+                    xAxisIndex: 0,
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: 'inside',
+                    xAxisIndex: 0,
+                    start: 0,
+                    end: 100
+                }
+            ],
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: timeStamps
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series
+        };
+
+        chart.setOption(option);
+        window.addEventListener('resize', () => chart.resize());
+    }
+
 });
