@@ -266,7 +266,9 @@ document.addEventListener('DOMContentLoaded', function () {
             // Convert to local time
             const toLocalTime = (utcDate) => {
                 const local = new Date(utcDate);
+                // Get time in "hh:mm AM/PM" format
                 return local.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+
             };
 
             sunriseLabel.textContent = toLocalTime(sunrise);
@@ -288,7 +290,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const sunrisePoint = path.getPointAtLength(path.getTotalLength());
             sunriseIcon.style.left = sunrisePoint.x + 'px';
             sunriseIcon.style.top = sunrisePoint.y + 'px';
-            sunriseMarker.style.left = (sunrisePoint.x - 30) + 'px'; 
+            sunriseMarker.style.left = (sunrisePoint.x - 16) + 'px'; 
             sunriseMarker.style.top = sunrisePoint.y + 'px';
             sunriseMarker.style.transform = 'translate(-100%, -50%)';
 
@@ -296,8 +298,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const sunsetPoint = path.getPointAtLength(0);
             sunsetIcon.style.left = sunsetPoint.x + 'px';
             sunsetIcon.style.top = sunsetPoint.y + 'px';
-            sunsetMarker.style.left = (sunsetPoint.x + 30) + 'px';
-            sunsetMarker.style.top = sunsetPoint.y + 'px';
+            sunsetMarker.style.left = (sunsetPoint.x -5) + 'px';
+            sunsetMarker.style.top = (sunsetPoint.y + 30)+ 'px';
             sunsetMarker.style.transform = 'translate(0, -50%)';
 
         } catch (error) {
@@ -411,13 +413,13 @@ document.addEventListener('DOMContentLoaded', function () {
             return "Inactive";
         }
         if (humidity === 1) {
-            return "Low 25%";
+            return "Low";
         }
         if (humidity === 2){
-            return "Medium 50%";
+            return "Medium";
         }
         if (humidity === 3){
-            return "High 75%";
+            return "High";
         }
     }
 

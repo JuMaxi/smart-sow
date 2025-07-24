@@ -59,9 +59,9 @@
             <section>
                 <div class="row">
                     <!-- Column to the plant last reading, and charts -->
-                    <div class="col-12 col-xl-6 d-flex flex-column justify-content-center">
+                    <div class="col-12 col-xxl-6 d-flex flex-column justify-content-center">
                        <div class="row my-4 px-4">
-                            <div class="col-12 glass-table-section">
+                            <div class="col-12">
                                 <h1 id="trayName" class="my-4"></h1>
                                 <h2 id="cropType" class="my-4"></h2>
                                 <p id="lastReading" class="my-4"></p>
@@ -84,7 +84,7 @@
                     </div>
 
                     <!-- Column with the tray image and orbit -->
-                    <div id="container" class="col-12 col-xl-6 justify-content-center">
+                    <div id="container" class="col-12 col-xxl-6 justify-content-center">
                         <img id="tray" src="assets/images/display-data/tray.webp" alt="A white seedling tray with young green plants." class="img-fluid" loading="lazy">
                         <svg id="orbitSVG">
                             <path id="orbitPath" stroke="orange" stroke-width="3" fill="none" />
@@ -95,14 +95,14 @@
                             <i class="fa-regular fa-moon"></i>
                         </div>
                         <div id="sunsetMarker" class="time-marker">
-                            <span id="sunsetTime" class="time-label">--:-- PM</span>
+                            <span id="sunsetTime" class="time-label"></span>
                         </div>
                         <!-- Sunrise marker -->
                         <div id="sunriseIcon" class="orbit-icon">
                             <i class="fa-solid fa-sun"></i>
                         </div>
                         <div id="sunriseMarker" class="time-marker">
-                            <span id="sunriseTime" class="time-label">--:-- AM</span>
+                            <span id="sunriseTime" class="time-label"></span>
                         </div>
                     </div>
 
