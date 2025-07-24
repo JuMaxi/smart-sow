@@ -141,4 +141,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const toast = new bootstrap.Toast(toastEl);
         toast.show();
     }
+
+     // Function to handle cancel button click
+    function handleCancelCreateAccount() {
+        window.location.href = "index.html";
+    }
+
+    // Add event listener to the cancel button
+    document.getElementById("cancel-create-account").addEventListener("click", handleCancelCreateAccount);
 });

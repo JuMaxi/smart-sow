@@ -252,25 +252,24 @@ document.addEventListener('DOMContentLoaded', function () {
         const buttons = [deactivateBtn, deactivateBtnEdit];
         
         if (!deactivateBtn) return;
-
-for (let i = 0; i < buttons.length; i++){
-    if (!buttons[i]) continue; // skip if button not found
-    if (status !== "Active") {
-        buttons[i].classList.add('disabled');
-        buttons[i].setAttribute('tabindex', '-1');
-        buttons[i].setAttribute('aria-disabled', 'true');
-        buttons[i].setAttribute('title', 'Inactive');
-    } else {
-        buttons[i].classList.remove('disabled');
-        buttons[i].removeAttribute('tabindex');
-        buttons[i].removeAttribute('aria-disabled');
-        // Set correct tooltip for each button
-        if (buttons[i].classList.contains('btn-warning')) {
-            buttons[i].setAttribute('title', 'Edit');
-        } else if (buttons[i].classList.contains('btn-danger')) {
-            buttons[i].setAttribute('title', 'Deactivate');
+        for (let i = 0; i < buttons.length; i++){
+            if (!buttons[i]) continue; // skip if button not found
+            if (status !== "Active") {
+                buttons[i].classList.add('disabled');
+                buttons[i].setAttribute('tabindex', '-1');
+                buttons[i].setAttribute('aria-disabled', 'true');
+                buttons[i].setAttribute('title', 'Inactive');
+            } else {
+                buttons[i].classList.remove('disabled');
+                buttons[i].removeAttribute('tabindex');
+                buttons[i].removeAttribute('aria-disabled');
+                // Set correct tooltip for each button
+                if (buttons[i].classList.contains('btn-warning')) {
+                    buttons[i].setAttribute('title', 'Edit');
+                } else if (buttons[i].classList.contains('btn-danger')) {
+                    buttons[i].setAttribute('title', 'Deactivate');
+                }
+            }
         }
-    }
-}
     }
 });

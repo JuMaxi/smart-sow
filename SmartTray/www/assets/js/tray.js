@@ -37,11 +37,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // It calls the function to register the user and prevents the form data be displayed in the query string 
+    // It calls the function to register the tray and prevents the form data be displayed in the query string 
     document.getElementById("register-tray").addEventListener("submit", async function(event) {
         event.preventDefault();  
         await registerTray();
     });
 
+    // Function to handle cancel button click
+    function handleCancelTray() {
+        window.location.href = "my-trays.html";
+    }
+
+    // Add event listener to the cancel button
+    document.getElementById("cancel-tray").addEventListener("click", handleCancelTray);
    
 });
