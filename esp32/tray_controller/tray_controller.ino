@@ -363,6 +363,7 @@ void readUV() {
     digitalWrite(2, LOW);
     uvLedsOn = false;
   }
+  Serial.println(uvLedsOn);
 }
 
 // Function to the humidity sensor

@@ -606,7 +606,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     })                 
                 },
                 uv: {
-                    uVLedsOn: data.map(d => d.uVLedsOn ? 10 : 0),
+                    uVLedsOn: data.map(d => d.uvLedsOn ? 1000 : 0),
                     uvReading: data.map(d => d.uvReading)
                 }
             };
