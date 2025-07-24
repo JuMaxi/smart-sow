@@ -43,7 +43,7 @@ DallasTemperature sensors(&oneWire);
 
 void setup() {
   // put your setup code here, to run once:
-  pinMode(14, OUTPUT); // GPIO2 is often connected to onboard LED
+  pinMode(17, OUTPUT) // This is the PIN to the Heating Mat
   pinMode(2, OUTPUT); // This is the PIN to the UV LEDS
   pinMode(26, OUTPUT); // This is the PIN to the Water Pump
   Serial.begin(115200);
