@@ -606,8 +606,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     })                 
                 },
                 uv: {
-                    uVLedsOn: data.map(d => d.uvLedsOn ? 1000 : 0),
-                    uvReading: data.map(d => d.uvReading)
+                    uVLedsOn: data.map(d => d.uvLedsOn ? 10 : 0),
+                        uvReading: data.map(d => {
+                        let p = (d.uvReading / 4096) * 100;
+                        p = p > 100 ? 100 : p; // Clamp p to 100 if it exceeds 100
+                        return (p <= 0 || d.uvReading === 0) ? 0 : p;
+                    })
                 }
             };
 
