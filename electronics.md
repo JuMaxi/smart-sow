@@ -1,4 +1,4 @@
-![wiring-diagram](./assets/images/readme/wiring-diagram.jpg)
+![wiring-diagram](./SmartTray/www/assets/images/readme/wiring-diagram.jpg)
 *Figure 1: Wiring diagram for the Smart Tray electronics setup.*
 
 ### Microcontroller (ESP32) Setup
@@ -57,7 +57,7 @@ With arduino IDE opened, and the settings above ready, follow the steps below:
     #define WIFI_PASSWORD "Your WiFi Password"
     #define TOKEN "Your Tray Token"
 
-![my-trays](./assets/images/readme/my-trays.png)
+![my-trays](./SmartTray/www/assets/images/readme/my-trays.png)
 *Figure 2: My trays web page.*
 
 4. Add secrets.h to your .gitignore file to ensure sensitive data is not pushed to version control.
