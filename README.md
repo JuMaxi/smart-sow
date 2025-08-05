@@ -6,12 +6,13 @@ Smart Sow is an indoor seed germination assistant that uses IoT and web technolo
 
 > This project is ideal for tech-savvy gardening enthusiasts who want to combine sustainability, electronics, and automation.
 
----
+## Electronics Overview
 Please see the [electronics](./electronics.md) for detailed specs and wiring diagrams.
 
 ![Seedling tray](./SmartTray/www/assets/images/readme/seedling-tray.png) 
 *Figure 1 - Built seedling tray - electronics, sensors, arduino, water-pump, heating mat, uv leds* 
 
+## Screenshots
 Please see the [screenshots](./screenshots.md) of the front end here.
 
 ![Home page](./SmartTray/www/assets/images/readme/home-page2.png)
@@ -22,14 +23,14 @@ Please see the [screenshots](./screenshots.md) of the front end here.
 
 ## Table of Contents
 
-- [Live Site](#smart-sow)
+- [🔗Live Site](#smart-sow)
+- [Electronics Overview](#electronics-overview)
+- [Screenshots](#screenshots)
 - [Demo Video](#demo-video)
-- [Electronics Overview](#please-see-the-electronicsmd-for-detailed-specs-and-wiring-diagrams)
-- [Screenshots](#please-see-the-screenshotsmd-of-the-front-end-here)
 - [Tech Stack](#tech-stack)
 - [Key Features](#key-features)
-- [Login Required](#login-required)
-- [Modal Charts](#modal-charts)
+  - [Login Required](#login-required)
+  - [Modal Charts](#modal-charts)
   - [Chart Scales and Data Normalization](#chart-scales-and-data-normalization)
   - [Gauge Charts](#gauge-charts)
   - [Stacked Bar Charts](#stacked-bar-charts)
@@ -39,16 +40,15 @@ Please see the [screenshots](./screenshots.md) of the front end here.
 - [Setup & Installation Guide](#setup--installation-guide)
   - [1. Prerequisites](#1-prerequisites)
   - [2. Clone the Repository](#2-clone-the-repository)
-  - [3. Backend Setup (NET API)](#3-backend-setup-net-api)
+  - [3. Backend Setup NET API](#3-backend-setup-net-api)
   - [4. Frontend Setup](#4-frontend-setup)
-- [ESP32 Configuration](#esp32-configuration)
+  - [ESP32 Configuration](#esp32-configuration)
 - [Future Improvements](#future-improvements)
 - [Important Notes](#important-notes)
 - [Design Choices](#design-choices)
 - [Responsive Design](#responsive-design)
 - [License](#license)
 - [Author](#author)
-
 
 ## Tech Stack
 
@@ -147,6 +147,9 @@ Real-time readings and automation
 
 **View Charts**  
 Historical data and sensor trends
+
+**Deactivate Tray**
+Pause monitoring and automation for trays no longer in use
 
 **Logout**
 Displayed in the user menu, when logged in.
