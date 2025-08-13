@@ -109,7 +109,7 @@ namespace SmartTray.Tests.Mappers
 
             List<TraySensorReadingResponse> readingsResponse = readingMapper.ConvertToResponseList(traySensorReadings);
 
-            // Index 1
+            // Index 0
             readingsResponse[0].Date.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
             readingsResponse[0].Temperature.Should().Be(traySensorReadings[0].Temperature);
             readingsResponse[0].Humidity.Should().Be(traySensorReadings[0].Humidity);
@@ -118,7 +118,7 @@ namespace SmartTray.Tests.Mappers
             readingsResponse[0].UvLedsOn.Should().Be(traySensorReadings[0].UvLedsOn);
             readingsResponse[0].HeatingMatOn.Should().Be(traySensorReadings[0].HeatingMatOn);
 
-            // Index 2
+            // Index 1
             readingsResponse[1].Date.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
             readingsResponse[1].Temperature.Should().Be(traySensorReadings[1].Temperature);
             readingsResponse[1].Humidity.Should().Be(traySensorReadings[1].Humidity);
