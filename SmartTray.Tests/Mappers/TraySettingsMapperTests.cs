@@ -9,7 +9,7 @@ using SmartTray.Domain.Models;
 
 namespace SmartTray.Tests.Mappers
 {
-    public class TraySettingsTests
+    public class TraySettingsMapperTests
     {
         [Fact]
         public void When_Converting_Tray_Settings_Request_It_Should_Be_Equal_Tray_Settings()

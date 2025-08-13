@@ -10,10 +10,10 @@ namespace SmartTray.Domain.Services
         private readonly ITrayRepository _trayRepository;
 
         public TraySensorReadingService(
-            ITraySensorReadingRepository traySensorReadingDbAccess,
+            ITraySensorReadingRepository traySensorReadingRepository,
             ITrayRepository trayRepository)
         {
-            _traySensorReadingRepository = traySensorReadingDbAccess;
+            _traySensorReadingRepository = traySensorReadingRepository;
             _trayRepository = trayRepository;
         }
 
@@ -23,7 +23,7 @@ namespace SmartTray.Domain.Services
             Tray tray = await _trayRepository.GetByIdAndToken(trayId, token);
 
             // Check if token corresponds to the tray token, if so, insert into database.
-            if (tray.Token == token)
+            if (tray != null && tray.Token == token)
             {
                 // The FK to the tray
                 reading.Tray = tray;

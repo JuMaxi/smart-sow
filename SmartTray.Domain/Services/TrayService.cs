@@ -9,10 +9,10 @@ namespace SmartTray.Domain.Services
         private readonly IUserRepository _userRepository;
 
         public TrayService(
-            ITrayRepository trayDbAccess,
+            ITrayRepository trayRepository,
             IUserRepository userRepository)
         {
-            _trayRepository = trayDbAccess;
+            _trayRepository = trayRepository;
             _userRepository = userRepository;
         }
 

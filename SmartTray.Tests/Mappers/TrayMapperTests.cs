@@ -1,5 +1,4 @@
-﻿using Castle.Components.DictionaryAdapter.Xml;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
 using SmartTray.API.Mappers;
