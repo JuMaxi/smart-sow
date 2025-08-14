@@ -67,10 +67,13 @@ namespace SmartTray.Domain.Services
             // Fecth the tray from data base. Needs to make it for not creating a new tray while updating
             Tray tray = await _trayRepository.GetById(trayId, userId);
 
-            // The default status is 1, active. Change to status 0 Inative.
-            tray.Status = 0;
+            if (tray != null)
+            {
+                // The default status is 1, active. Change to status 0 Inative.
+                tray.Status = 0;
 
-            await _trayRepository.UpdateStatus(tray);
+                await _trayRepository.UpdateStatus(tray);
+            }
         }
     }
 }
