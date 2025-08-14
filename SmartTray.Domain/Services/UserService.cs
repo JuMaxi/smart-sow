@@ -17,24 +17,27 @@ namespace SmartTray.Domain.Services
         // Method to insert a new user
         public async Task Insert(UserDTO userDTO)
         {
-            // Calling this function that generates a randon Salt to be stored into the database for aditional safety
-            string salt = HashingHelper.GetRandomSalt();
-
-            // Calling this function that generates a hash with base in the user password. It will be stored into the database with the salt.
-            // Password is not stored into the data base
-            string hash = HashingHelper.CalculateHash(userDTO.Password + salt);
-
-            // Convert UserDTO to User
-            User user = new()
+            if (userDTO != null)
             {
-                Name = userDTO.Name,
-                Email = userDTO.Email,
-                PasswordHash = hash,
-                Salt = salt,
-                Postcode = userDTO.Postcode
-            };
+                // Calling this function that generates a randon Salt to be stored into the database for aditional safety
+                string salt = HashingHelper.GetRandomSalt();
 
-            await _userRepository.Insert(user);
+                // Calling this function that generates a hash with base in the user password. It will be stored into the database with the salt.
+                // Password is not stored into the data base
+                string hash = HashingHelper.CalculateHash(userDTO.Password + salt);
+
+                // Convert UserDTO to User
+                User user = new()
+                {
+                    Name = userDTO.Name,
+                    Email = userDTO.Email,
+                    PasswordHash = hash,
+                    Salt = salt,
+                    Postcode = userDTO.Postcode
+                };
+
+                await _userRepository.Insert(user);
+            }
         }
 
         // Method to fetch a user by id from the database
@@ -47,13 +50,19 @@ namespace SmartTray.Domain.Services
         // To update the password, users will have another "button" to it and a different method.
         public async Task Update(UserDTO userDTO)
         {
-            User toUpdate = await _userRepository.GetById(userDTO.Id);
+            if (userDTO != null)
+            {
+                User toUpdate = await _userRepository.GetById(userDTO.Id);
 
-            toUpdate.Name = userDTO.Name;
-            toUpdate.Email = userDTO.Email;
-            toUpdate.Postcode = userDTO.Postcode;
+                if (toUpdate != null)
+                {
+                    toUpdate.Name = userDTO.Name;
+                    toUpdate.Email = userDTO.Email;
+                    toUpdate.Postcode = userDTO.Postcode;
 
-            await _userRepository.Update(toUpdate);
+                    await _userRepository.Update(toUpdate);
+                }
+            }
         }
 
         public async Task<LoginResult> Login(string email, string password)
