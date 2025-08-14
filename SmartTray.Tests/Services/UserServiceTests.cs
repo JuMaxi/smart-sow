@@ -154,5 +154,26 @@ namespace SmartTray.Tests.Services
 
             await userRepositoryMock.Received(0).Update(null);
         }
+
+        // Verifying the Login method is calling the interface userRepository method
+        [Fact]
+        public async void When_Calling_Login_It_Should_Receive_One_Call_To_The_Interface_UserRepository()
+        {
+            IUserRepository userRepositoryMock = Substitute.For<IUserRepository>();
+
+            UserService userService = new(userRepositoryMock);
+
+            User user = new()
+            {
+                Id = 1,
+                Email = "juliana@email.com",
+            };
+
+            userRepositoryMock.GetByEmail(user.Email).Returns(user);
+
+            await userService.Login(user.Email, "hgIt6s3£");
+
+            await userRepositoryMock.Received(1).GetByEmail(user.Email);
+        }
     }
 }
