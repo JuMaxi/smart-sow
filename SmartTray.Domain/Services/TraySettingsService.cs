@@ -5,37 +5,46 @@ namespace SmartTray.Domain.Services
 {
     public class TraySettingsService : ITraySettingsService
     {
-        private readonly ITraySettingsRepository _growthSettingsRepository;
+        private readonly ITraySettingsRepository _traySettingsRepository;
 
-        public TraySettingsService(ITraySettingsRepository growthSettingsDbAccess)
+        public TraySettingsService(ITraySettingsRepository traySettingsRepository)
         {
-            _growthSettingsRepository = growthSettingsDbAccess;
+            _traySettingsRepository = traySettingsRepository;
         }
 
         public async Task Insert(TraySettings settings)
         {
-            await _growthSettingsRepository.Insert(settings);
+            if (settings != null)
+            {
+                await _traySettingsRepository.Insert(settings);
+            }
         }
 
         public async Task<TraySettings> GetById(int id)
         {
-            return await _growthSettingsRepository.GetById(id);
+            return await _traySettingsRepository.GetById(id);
         }
 
         public async Task Update(TraySettings settings)
         {
-            TraySettings toUpdate = await _growthSettingsRepository.GetById(settings.Id);
+            if (settings != null)
+            {
+                TraySettings toUpdate = await _traySettingsRepository.GetById(settings.Id);
 
-            toUpdate.TemperatureCelsius = settings.TemperatureCelsius;
-            toUpdate.Humidity = settings.Humidity;
-            toUpdate.DailySolarHours = settings.DailySolarHours;
+                if (toUpdate != null)
+                {
+                    toUpdate.TemperatureCelsius = settings.TemperatureCelsius;
+                    toUpdate.Humidity = settings.Humidity;
+                    toUpdate.DailySolarHours = settings.DailySolarHours;
 
-            await _growthSettingsRepository.Update(toUpdate);
+                    await _traySettingsRepository.Update(toUpdate);
+                }
+            }
         }
 
         public async Task Delete(int id)
         {
-            await _growthSettingsRepository.Delete(id);
+            await _traySettingsRepository.Delete(id);
         }
     }
 
