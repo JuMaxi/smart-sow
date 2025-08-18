@@ -190,7 +190,7 @@ Install the following:
 ### 2. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/smart-sow.git
+git clone https://github.com/JuMaxi/smart-sow.git
 cd smart-sow
 ```
 

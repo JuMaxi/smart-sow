@@ -87,5 +87,6 @@ namespace SmartTray.Tests.Services
 
             await traySensorReadingRepositoryMock.Received(1).GetDayReadings(1, 1, date);
         }
+
     }
 }
